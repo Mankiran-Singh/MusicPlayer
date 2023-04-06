@@ -1,7 +1,10 @@
-<div matDialogContent>
+<div matDialogContent class="mat">
     <input type="file" (change)="chooseFile($event)"><br/>  
-    <button style="border-radius: 50px;" (click)="addData()">
+    <button style="border-radius: 50px;" [hidden]="!addimage" (click)="addData(file)">
      <mat-icon style="border-radius: 50px;">file_upload</mat-icon>
+    </button>
+    <button style="border-radius: 50px;" (click)="uploadImage(file)">
+        <mat-icon style="border-radius:50px;">image_upload</mat-icon>
     </button>
     <button (click)="onCancelUserDialog()">X</button>
 </div>

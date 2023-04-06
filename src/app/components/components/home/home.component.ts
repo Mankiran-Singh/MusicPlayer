@@ -9,6 +9,9 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddSongsComponent } from '../../add-songs/add-songs.component';
 import { LoadingBarService } from '@ngx-loading-bar/core';
+import { SongsComponent } from '../../songs/songs.component';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -25,6 +28,7 @@ export class HomeComponent {
   constructor(public authService:AuthService,
     private loadingBar:LoadingBarService,
     private router:Router,private dialogref:MatDialog,
+    private dialog:MatDialog,
     private fireService:FirebaseService){
     this.fireService.getAudio().pipe(map((res:any)=>{
       for(const key in res){
@@ -50,8 +54,12 @@ export class HomeComponent {
          debounceTime(1000)
       )
      search.subscribe((res:any)=>{
-      console.log(res)
-        this.reqData=res //imp
+        for(let i=0;i<this.audioArray.length;i++){
+           if(this.audioArray[i].name.includes(res))
+           {
+             this.reqData=this.audioArray[i].name
+           }
+        }
         this.loadingBar.stop()
         setTimeout(()=>{
           this.reqData=null
@@ -88,19 +96,30 @@ export class HomeComponent {
     })
   }
    audio=new Audio();
+    
+  playable=false;
   pauseAudio(j:any) { 
+    console.log("==>"+this.audioArray[j].url)
     this.audio.src=this.audioArray[j].url
     this.audio.pause();
+    this.audioArray[j].play=true;
   } 
-
   play(j:any){
+    console.log(this.audioArray[j].url)
     this.audio.src=this.audioArray[j].url,
     this.audio.load()
     this.audio.play()
+    this.audioArray[j].play=false;
   }
   
-  openDialog(){
-       this.dialogref.open(AddSongsComponent); 
-    
+ async openDialog(){
+     const modal=this.dialogref.open(AddSongsComponent);
+     modal.updatePosition({
+      left:'100px',
+      bottom:'100px'
+     })
+  }
+  openSongs(){
+    this.dialog.open(SongsComponent);
   }
 }

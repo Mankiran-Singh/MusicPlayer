@@ -4,7 +4,7 @@ nav {
   }
 
   nav ul {
-    width: 484px;
+    width: 480px;
     list-style-type: none;
     display: flex;
     justify-content: space-between;
@@ -15,14 +15,7 @@ nav {
     color: white;
     text-decoration: none;
   }
-  nav a:hover {
-    color: #1db954;
-  }
 
-  footer { 
-    height: 538px; 
-    background-color: black; 
-  }
   .spotify-logo{
      width:10%;
      height:90%;
@@ -34,15 +27,14 @@ nav {
     width: 1170px;   /* add 970px for smaller screen */
     margin: 0 auto;
     padding: 0 15px;
-    display: flex;
-    
+    display: flex; 
   }
   nav li {
     font-weight: bold;
   }
 
   .upper { 
-    height: 600px; 
+    height: 600px;
     //background: linear-gradient(#f037a5 -60%,#fae62d 140%);
     background-image: url("/../assets/dirty-music-background-21777451.jpg");    
   }
@@ -68,13 +60,16 @@ nav {
     color:white;
     height:25px;
     position:relative;
-    right:85px;
+    left:30px;
+    width:450px;
+    border-radius:50px;
   }
 table{
   position:relative;
-  bottom:550px;
+  top:30px;
   background-color: black;
   color: white;
   border-radius: 50px;
+  border-color: aliceblue;
   width:300px;
 }   

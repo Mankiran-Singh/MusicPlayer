@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { SongsComponent } from './components/songs/songs.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'signup',pathMatch:'full'},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path:'forgotpassword',component:ForgotPasswordComponent},
   {path:'reset',component:ResetPasswordComponent},
   {path:'home',component:HomeComponent},
-  {path:'addsongs',component:AddSongsComponent}
+  {path:'addsongs',component:AddSongsComponent},
+  {path:'songs',component:SongsComponent}
 ];
 
 @NgModule({

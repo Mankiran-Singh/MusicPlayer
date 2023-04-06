@@ -25,10 +25,12 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore'
 import {provideStorage,getStorage} from '@angular/fire/storage'
 import { HttpClientModule } from '@angular/common/http';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { SafePipeModule } from 'safe-pipe';
 import { MaterialModule } from './material.module';
 import {MatDialogModule} from '@angular/material/dialog'
 import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { SongsComponent } from './components/songs/songs.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,9 +40,11 @@ import { LoadingBarModule } from '@ngx-loading-bar/core';
     ResetPasswordComponent,
     HomeComponent,
     AddSongsComponent,
+    SongsComponent
   ],
   imports: [
     BrowserModule,
+    SweetAlert2Module,
     AppRoutingModule,
     NgbModule,
     FormsModule,

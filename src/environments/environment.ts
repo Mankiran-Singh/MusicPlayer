@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-
+export let arraySongs:any=[];
 export const environment={
   firebase: {
     projectId: 'spotify-32974',

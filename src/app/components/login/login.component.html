@@ -1,49 +1,30 @@
-<html lang="en"><head>
-	<title>Login V3</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body style="width:900px;height: 440px;">
-	<div class="limiter" style="height:300px;margin: auto;">
-		<div class="container-login100" style="background-image: url('images/bg-01.jpg');" style="width:280px;margin: auto;">
-			<div class="wrap-login100" style="height:400px">
-				<form class="login100-form validate-form" style="margin:auto">
-					<span class="login100-form-logo" style="width: 70px;height: 70px;left:400px">
-						<img [src]="url" style="width:100px;height:100px">
-					</span>
+<div class="form-bg">
+	<h3>Login</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="form-container" style="position:relative;left:380px;top:80px">
+                    <div class="form-icon" style="position:relative;bottom: 28px;right:28px"><img [src]='url' width="100px"></div>
 
-					<div class="wrap-input100 validate-input" data-validate="Enter username">
-						<input class="input100" type="text" name="username" placeholder="Username">
-						<span class="focus-input100" data-placeholder=""></span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100" data-placeholder=""></span>
-					</div>
-
-					<div class="contact100-form-checkbox">
-						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-						<label class="label-checkbox100" for="ckb1">
-							Remember me
-						</label>
-					</div>
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" style="width:5px;height:20px">
-							Login
-						</button>
-                      
-                            <a class="txt1" href="#" style="color: aliceblue;font-size: small;">
-                                Forgot Password?
-                            </a>
-                        
-					</div>
-
-					
-				</form>
-			</div>
-		</div>
-	</div>
-</body>
-</html>
+                    <form class="form-horizontal justify-content-center align-item-center;margin:auto" [formGroup]="loginForm" (ngSubmit)="login()">
+                         <div class="form-group">
+                            <input class="form-control" type="email" placeholder="email address" formControlName="email"><br>
+                            <span style="font-size: small;color:rgb(251, 251, 252)"*ngIf="email && email.invalid && email.errors?.['required'] && showErrors">This field is not valid</span>
+                          </div>
+                        <div class="form-group" styel="padding:100px">
+                          <input class="form-control" [type]="changetype?'password':'text'" placeholder="password" name="password" formControlName="password">
+						  <span style="font-size:small;font-family: 'Times New Roman', Times, serif;color:rgb(251, 251, 252)"*ngIf="password && password.invalid && password.errors?.['required'] && showErrors">This field is not valid</span> 
+						  <span class="eyeicon" (click)="viewpass()"><i [ngClass]="visible?'fa fa-eye':'fa fa-eye-slash'"></i></span>
+                          <a href="forgotpassword" style="color:white;font-size: smaller;">Forgot password?</a>
+						</div><hr>
+				
+                        <button type="submit" class="btn btn-default">Login</button><br>
+						<h2 style="color: white;font-size: medium;">If not Registered?</h2>
+						<button type="button" class="btn btn-default" (click)="goToSignUp()">Sign Up</button>
+					</form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+<router-outlet></router-outlet>

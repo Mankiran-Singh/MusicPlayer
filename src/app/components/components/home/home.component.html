@@ -1,0 +1,42 @@
+<nav> 
+    <div class="container">
+      <img class="spotify-logo" [src]="url" alt="spotify-logo">
+      <h3 style="color:aliceblue;position:relative;right:60px;top:20px;font-style: oblique;">Mimify</h3>
+      <form class="d-flex" [formGroup]="searchForm" (ngSubmit)="searching()"> 
+        <input style="border-radius: 50px;height: 30px;width:200px;position:relative;top:20px"class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" formControlName="search" #myInput>
+        <!-- <span style="font-size: small;color:rgb(251, 251, 252);border-radius: 50px;"*ngIf="search && search.invalid && search.errors?.['required'] && showErrors">This field is not valid</span> -->
+        <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+        <li style="color:aliceblue;position:relative;top:30px" routerLink="songs">{{reqData}}</li>      
+      </form>
+        <ul>
+          <ng-container *ngIf="authService.currentUser$ | async as user;">
+            <button matButton (click)="logOut()"><mat-icon>logOut</mat-icon>LogOut</button>
+          </ng-container>
+          <ng-container *ngIf="authService.currentUser$ | async as user;">
+            <button matButton>
+              <mat-icon>account_circle</mat-icon>
+              {{user.displayName}}
+              <mat-icon>expand_more</mat-icon></button>
+          </ng-container>
+          <li><a href="signup">Sign up</a></li>
+          <li><a href="login">Log In</a></li>
+          <button (click)="openDialog()">Add songs</button>
+        </ul>  
+      </div>
+  </nav>
+  <div class="upper">
+    <div class="container">
+      <h4 *ngIf="user$ | async as user"> Welcome to our App {{user.displayName}}!</h4>
+      <br>
+    </div>
+    <table>
+      <tr *ngFor="let audio of audioArray;let j=index">
+        &nbsp;&nbsp;&nbsp;<td>{{j+1}}.</td>&nbsp;
+        <td>{{audio.name}}</td>
+        <td>
+            <button style="width:40px" (click)="play(j)"><img style="border-radius: 50px;width:30px" [src]="urlPlay"></button>
+            <button style="width:40px" (click)="pauseAudio(j)"><img style="border-radius: 50px;width:30px;padding:0px" [src]="urlPause"></button>
+        </td>
+      </tr>
+    </table>
+  </div>

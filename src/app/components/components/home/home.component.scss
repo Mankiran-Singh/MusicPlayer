@@ -1,0 +1,80 @@
+nav { 
+    height: 80px; 
+    background-color: rgb(0, 0, 0); 
+  }
+
+  nav ul {
+    width: 484px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+  }
+  nav a:hover {
+    color: #1db954;
+  }
+
+  footer { 
+    height: 538px; 
+    background-color: black; 
+  }
+  .spotify-logo{
+     width:10%;
+     height:90%;
+     position: relative;
+     right:60px;
+  }
+  .container {
+    height: inherit; /* get parent height */
+    width: 1170px;   /* add 970px for smaller screen */
+    margin: 0 auto;
+    padding: 0 15px;
+    display: flex;
+    
+  }
+  nav li {
+    font-weight: bold;
+  }
+
+  .upper { 
+    height: 600px; 
+    //background: linear-gradient(#f037a5 -60%,#fae62d 140%);
+    background-image: url("/../assets/dirty-music-background-21777451.jpg");    
+  }
+ 
+  .d-flex{
+    width:300px;
+    height:30px;
+    position:relative;
+    top:20px;
+    border-radius: 50px;
+  }
+  button{
+    border-radius: 50px;
+    background-color: black;
+    color:white;
+    padding: 0px;
+    height:32px;
+    width:100px;
+    position:relative;
+  }
+  h4{
+    background-color: black;
+    color:white;
+    height:25px;
+    position:relative;
+    right:85px;
+  }
+table{
+  position:relative;
+  bottom:550px;
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+  width:300px;
+}   

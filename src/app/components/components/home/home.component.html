@@ -34,7 +34,10 @@
         <td><img style=' width:40px;
           height:40px;
           border-radius: 50px;'[src]='audio.image'></td>
-        <td>{{audio.name}}</td>
+         <td><li (click)="getAudio(j)">{{audio.name}}</li>
+         <audio controls="controls">
+          <source [src]="urlsound" type="audio/mpeg">
+         </audio></td>
         <td>
           <ng-container *ngIf="audio.play;else pause">
             <button id="play" style="width:40px" (click)="play(j)"><img style="border-radius: 50px;width:30px" [src]="urlPlay"></button>

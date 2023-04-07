@@ -25,6 +25,10 @@
                           <span style="font-size:small;font-family: 'Times New Roman', Times, serif;color:rgb(251, 251, 252)"*ngIf="confirmPassword && confirmPassword.invalid && confirmPassword.errors?.['required'] && showErrors">This field is not valid</span> 
                           <span class="eyeicon" (click)="viewpass()"><i [ngClass]="visible?'fa fa-eye':'fa fa-eye-slash'"></i></span>
                         </div>
+                        <div class="form-group">
+                          <input class="form-control" type="tel" placeholder="phone Number" formControlName="phoneNo" oninput="this.value = this.value.replace(/[^0-9]/g, '')" min="10" max="15"><br>
+                          <span style="font-size: small;color:rgb(251, 251, 252)"*ngIf="phoneNo && phoneNo.invalid && phoneNo.errors?.['required'] && showErrors">This field is not valid</span>
+                        </div>
                      <span  style="font-size: small;color:rgb(251, 251, 252)" *ngIf="signUpForm.errors?.['passwordsDontMatch']">
                       Passwords should Match
                      </span>

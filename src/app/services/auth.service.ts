@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import {Auth, authState} from '@angular/fire/auth';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPhoneNumber, updateProfile } from 'firebase/auth';
 import { from, switchMap } from 'rxjs';
 
 @Injectable({

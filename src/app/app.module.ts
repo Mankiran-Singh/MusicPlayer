@@ -31,6 +31,11 @@ import { MaterialModule } from './material.module';
 import {MatDialogModule} from '@angular/material/dialog'
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { SongsComponent } from './components/songs/songs.component';
+import { OtpComponent } from './components/otp/otp.component';
+import {AngularFireModule} from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { WindowService } from './services/window.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +45,8 @@ import { SongsComponent } from './components/songs/songs.component';
     ResetPasswordComponent,
     HomeComponent,
     AddSongsComponent,
-    SongsComponent
+    SongsComponent,
+    OtpComponent
   ],
   imports: [
     BrowserModule,
@@ -63,9 +69,12 @@ import { SongsComponent } from './components/songs/songs.component';
     provideStorage(()=> getStorage()),
     MaterialModule,
     MatDialogModule,
-    LoadingBarModule
+    LoadingBarModule,
+    AngularFireModule.initializeApp(environment.firebase), 
+    AngularFireAuthModule,    
+    AngularFirestoreModule 
   ],
-  providers: [FirebaseService,InterceptorsService,AuthService],
+  providers: [FirebaseService,InterceptorsService,AuthService,WindowService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

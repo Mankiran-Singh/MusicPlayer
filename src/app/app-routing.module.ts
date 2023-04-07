@@ -4,6 +4,7 @@ import { AddSongsComponent } from './components/add-songs/add-songs.component';
 import { HomeComponent } from './components/components/home/home.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LoginComponent } from './components/login/login.component';
+import { OtpComponent } from './components/otp/otp.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { SongsComponent } from './components/songs/songs.component';
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path:'reset',component:ResetPasswordComponent},
   {path:'home',component:HomeComponent},
   {path:'addsongs',component:AddSongsComponent},
-  {path:'songs',component:SongsComponent}
+  {path:'songs',component:SongsComponent},
+  {path:'otp',component:OtpComponent}
 ];
 
 @NgModule({

@@ -42,7 +42,7 @@ export class AddSongsComponent {
       ()=>{
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
              this.fireService.postAudioUrl({'image':this.image,'play':true,'name':this.file.name,'type':this.file.type,'url':downloadURl}).subscribe((res)=>{
-             })
+            })
         })
      })
     }else{

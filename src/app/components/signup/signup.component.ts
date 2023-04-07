@@ -21,6 +21,7 @@ export class SignupComponent {
       email:new FormControl('',[Validators.required,Validators.email]),
       password:new FormControl('',[Validators.required]),
       confirmPassword:new FormControl('',[Validators.required]),
+      phoneNo:new FormControl('',[Validators.required])
     },
     {validators:passwordsMatchValidator()});
   }
@@ -54,7 +55,9 @@ export class SignupComponent {
   get confirmPassword(){
     return this.signUpForm.get('confirmPassword')
   }
-
+  get phoneNo(){
+    return this.signUpForm.get('phoneNo')
+  }
   goToLogin(){
     this.router.navigate(['login'])
   }
@@ -65,5 +68,4 @@ export class SignupComponent {
     this.visible = !this.visible;
     this.changetype = !this.changetype;
   }
-  
 }

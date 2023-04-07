@@ -54,7 +54,8 @@ export class HomeComponent {
          debounceTime(1000)
       )
      search.subscribe((res:any)=>{
-        for(let i=0;i<this.audioArray.length;i++){
+        for(let i=0;i<this.audioArray.length;i++)
+        {
            if(this.audioArray[i].name.includes(res))
            {
              this.reqData=this.audioArray[i].name
@@ -121,5 +122,11 @@ export class HomeComponent {
   }
   openSongs(){
     this.dialog.open(SongsComponent);
+  }
+
+  urlsound=''
+  getAudio(j:any){
+    console.log(this.audioArray[j].url)
+    this.urlsound=this.audioArray[j].url
   }
 }

@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Constant } from 'src/app/files/constant';
 import { debounceTime, fromEvent, map } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddSongsComponent } from '../../add-songs/add-songs.component';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { SongsComponent } from '../../songs/songs.component';
@@ -113,20 +113,24 @@ export class HomeComponent {
     this.audioArray[j].play=false;
   }
   
- async openDialog(){
-     const modal=this.dialogref.open(AddSongsComponent);
-     modal.updatePosition({
-      left:'100px',
-      bottom:'100px'
-     })
+  config: MatDialogConfig = {
+    panelClass: "dialog-responsive"
   }
+ async openDialog(){
+    // const modal=this.dialogref.open(AddSongsComponent);
+   
+    let dialogRef = this.dialogref.open(AddSongsComponent, this.config); 
+  }
+
   openSongs(){
     this.dialog.open(SongsComponent);
   }
 
-  urlsound=''
+  urlSound=''
+
   getAudio(j:any){
-    console.log(this.audioArray[j].url)
-    this.urlsound=this.audioArray[j].url
+      this.audioArray[j].audioPlay=false
+      this.urlSound=this.audioArray[j].url
+      this.audioArray[j].showAudio = !this.audioArray[j].showAudio;
   }
 }

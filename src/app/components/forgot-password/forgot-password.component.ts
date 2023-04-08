@@ -46,7 +46,6 @@ export class ForgotPasswordComponent implements OnInit{
       const auth=getAuth()
        signInWithPhoneNumber(auth,"+91"+this.forgetPasswordForm.value.phoneNo,this.windowRef.reCaptchaVerifier).then((confirmationResult)=>{
           this.windowRef.confirmationResult=confirmationResult
-          this.windowService.raiseDataEmitterEvent(this.windowRef.confirmationResult)
           localStorage.setItem('verificationId',confirmationResult.verificationId)
           this.router.navigate(['otp'])
         })

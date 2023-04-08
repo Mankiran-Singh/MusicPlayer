@@ -30,11 +30,6 @@ export class OtpComponent {
    });
    return new FormGroup(group);
   }
-  // ngOnInit(){
-  //   this.otpForm=new FormGroup({
-  //     otp:new FormControl('',[Validators.required])
-  //   })
-  // }
 
   stringOtp=''
   showErrors=false;
@@ -47,13 +42,12 @@ export class OtpComponent {
       var credential = firebase.auth.PhoneAuthProvider.credential(this.code,this.stringOtp);
       firebase.auth().signInWithCredential(credential).then((res)=>{
         console.log(res)
-        this.router.navigate(['reset'])
+        this.router.navigate(['home'])
       })
     }
     else{
       this.showErrors=true;
     }
-    console.log("Bhar")
   }
   get otp(){
     return this.otpForm.get('otp')    

@@ -26,3 +26,15 @@ export function passwordsMatchValidator():ValidatorFn{
     }
   }
 }
+
+export function passwordsMatchValidatorOldPassword():ValidatorFn{
+  return(control:AbstractControl):any=>{
+    const oldpassword=control.get('oldPassword')?.value 
+    const confirmPassword=control.get('confirmPassword')?.value   
+    if(oldpassword && confirmPassword && oldpassword!==confirmPassword){
+        return {
+          passwordsDontMatch: true,
+        };
+    }
+  }
+}

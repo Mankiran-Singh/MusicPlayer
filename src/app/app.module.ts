@@ -36,6 +36,7 @@ import {AngularFireModule} from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { WindowService } from './services/window.service';
+import { HotToastModule } from '@ngneat/hot-toast';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +64,7 @@ import { WindowService } from './services/window.service';
     MatMenuModule,
     HttpClientModule,
     SafePipeModule,
+    HotToastModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(()=>getFirestore()),

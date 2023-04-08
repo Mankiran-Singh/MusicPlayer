@@ -12,7 +12,6 @@
                             <div class="form-group col-sm-2" *ngFor="let input of formInput;  index as i">
                                 <input #formRow type="text" formControlName="{{input}}" class="input" maxlength="1" (keyup)="keyUpEvent($event, i)">
                              </div>
-                             <!-- <input class="form-control" type="text" placeholder="enter otp" formControlName="otp"><br> -->
                             </div>
                           <span style="font-size: small;color:rgb(251, 251, 252)" *ngIf="otp && otp.invalid && otp.errors?.['required'] && showErrors">This field is not valid</span>
                         </div>

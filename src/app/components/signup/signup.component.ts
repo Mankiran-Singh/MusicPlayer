@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { getAuth } from '@angular/fire/auth';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -14,7 +15,9 @@ export class SignupComponent {
   url=Images.url
   urlBackground=Images.urlBackground
   signUpForm:any
-  constructor(private router:Router,private authService:AuthService,private toast:HotToastService){}
+  constructor(private router:Router,private authService:AuthService,private toast:HotToastService){
+     console.log(getAuth())
+  }
   ngOnInit(){
     this.signUpForm=new FormGroup({
       name:new FormControl('',[Validators.required]),

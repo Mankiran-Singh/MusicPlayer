@@ -6,24 +6,38 @@
         <input style="border-radius: 50px;height: 30px;width:200px;position:relative;top:0px"class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" formControlName="search" #myInput>
         <!-- <span style="font-size: small;color:rgb(251, 251, 252);border-radius: 50px;"*ngIf="search && search.invalid && search.errors?.['required'] && showErrors">This field is not valid</span> -->
         <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-        <ul style="color:rgb(255, 255, 255);position:relative;top:10px;background-color: black;" (click)="openSongs()">
+        <br><br><ul style="color:rgb(255, 255, 255);position:relative;top:10px;background-color: black;" (click)="openSongs()">
          <li>{{reqData}}</li>
         </ul>      
       </form>
         <ul>
-          <ng-container *ngIf="authService.currentUser$ | async as user;">
-            <button matButton (click)="logOut()"><mat-icon>logOut</mat-icon>LogOut</button>
-          </ng-container>
-          <ng-container *ngIf="authService.currentUser$ | async as user;">
-            <button matButton style="width:40px;">
+          <!-- <ng-container *ngIf="authService.currentUser$ | async as user;"> -->
+            <li style="color: white;position: relative;top: 12px;" (click)="logOut()"><span class="material-icons">logout</span></li>
+          <!-- </ng-container> -->
+          <!-- <ng-container *ngIf="authService.currentUser$ | async as user;"> -->
+            <li style="width:40px;color: white;position: relative;top: 12px;">
               <mat-icon>account_circle</mat-icon>
-              <!-- {{user.displayName}} -->
-              <!-- <mat-icon>expand_more</mat-icon> -->
-            </button>
-          </ng-container>
-          <!-- <li><a href="signup">Sign up</a></li>
-          <li><a href="login">Log In</a></li> -->
-          <li style="color: white;" (click)="openDialog()">Add songs</li>
+            </li>
+          <!-- </ng-container> -->
+          <li style="position: relative;top: 12px;"><a href="home"><mat-icon>home</mat-icon></a></li>
+          <!-- <li><a href="login">Log In</a></li>  -->
+          <div class="main">
+           <li style="color: aliceblue;position: relative;top: 10px;"(click)="toggleDialog()">Add Songs</li>
+            <div *ngIf="isOpen" class="dialog"> 
+              <mat-dialog-content>
+                <mat-dialog-actions>
+                   <input style="position:relative;left:100px" type="file" (change)="chooseFile($event)"><br/>  
+                      <button style="position: relative;left: 100px;width:30px" [hidden]="!addImage" (click)="addData(file)">
+                       <mat-icon style="color:white;">file_upload</mat-icon>
+                      </button>
+                      <button style="position: relative;left: 136px;width: 30px;" (click)="uploadImage(file)">
+                          <mat-icon style="color:white;">image_upload</mat-icon>
+                      </button>
+                      <li mat-button mat-dialog-close><mat-icon style="color: white;">mat-dialog-close</mat-icon></li>
+                </mat-dialog-actions>
+               </mat-dialog-content>
+            </div>
+          </div>
         </ul>  
       </div>
   </nav>
@@ -47,8 +61,8 @@
         
         <td>
           <ng-container *ngIf="audio.play;else pause">
-            <button id="play" style="width:38px" (click)="play(j)"><img style="border-radius: 50px;width:30px" [src]="urlPlay"></button>
-          </ng-container>
+           <button id="play" style="width:38px" (click)="play(j)"><img style="border-radius: 50px;width:30px" [src]="urlPlay"></button>
+           </ng-container>
           <ng-template #pause>
             <button  id="pause" style="width:38px" (click)="pauseAudio(j)"><img style="border-radius: 50px;width:30px;padding:0px" [src]="urlPause"></button>
           </ng-template>

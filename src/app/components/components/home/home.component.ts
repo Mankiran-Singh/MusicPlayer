@@ -3,14 +3,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Images } from 'src/app/files/constant';
 import { AuthService } from 'src/app/services/auth.service';
-import { Constant } from 'src/app/files/constant';
 import { debounceTime, fromEvent, map } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { AddSongsComponent } from '../../add-songs/add-songs.component';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-import { SongsComponent } from '../../songs/songs.component';
 import Swal from 'sweetalert2';
+import { DialogService } from 'src/app/services/dialog.service';
+import {Storage, 
+  ref, uploadBytesResumable,
+  getDownloadURL} from '@angular/fire/storage';
+import { arraySongs } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-home',
@@ -27,9 +31,10 @@ export class HomeComponent {
   idArray:any=[]
   constructor(public authService:AuthService,
     private loadingBar:LoadingBarService,
-    private router:Router,private dialogref:MatDialog,
-    private dialog:MatDialog,
-    private fireService:FirebaseService){
+    private router:Router,
+    private _dialog: MatDialog,
+    private fireService:FirebaseService,
+    public storage:Storage,){
     this.fireService.getAudio().pipe(map((res:any)=>{
       for(const key in res){
         if(res.hasOwnProperty(key)){
@@ -112,25 +117,90 @@ export class HomeComponent {
     this.audio.play()
     this.audioArray[j].play=false;
   }
-  
-  config: MatDialogConfig = {
-    panelClass: "dialog-responsive"
+    isOpen=false;
+  toggleDialog(){
+    this.isOpen = !this.isOpen;
   }
- async openDialog(){
-    // const modal=this.dialogref.open(AddSongsComponent);
-   
-    let dialogRef = this.dialogref.open(AddSongsComponent, this.config); 
-  }
-
   openSongs(){
-    this.dialog.open(SongsComponent);
+    
   }
-
   urlSound=''
 
   getAudio(j:any){
       this.audioArray[j].audioPlay=false
       this.urlSound=this.audioArray[j].url
       this.audioArray[j].showAudio = !this.audioArray[j].showAudio;
+  }
+  public file:any={}
+  chooseFile(event:any){
+    this.file=event.target.files[0];
+  }
+
+  addImage=false;
+  urlDownload:any;
+  addData(file:any){
+    this.addImage=false;
+    if(file.type=='audio/mpeg'){
+      const storageRef=ref(this.storage,`mimify/${file.name}`)
+      const uploadTask=uploadBytesResumable(storageRef,file);
+      arraySongs.push(uploadTask)
+      uploadTask.on('state_changed',
+      (snapshot)=>{
+        const progress=(snapshot.bytesTransferred / snapshot.totalBytes)
+        console.log('upload is'+progress+'%done');
+      },
+      (error)=>{
+         console.log(error.message)
+      },
+      ()=>{
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
+             this.fireService.postAudioUrl({'image':this.image,'audioPlay':true,'showAudio':true,'play':true,'name':this.file.name,'type':this.file.type,'url':downloadURl}).subscribe((res)=>{
+              console.log(res)
+            })
+        })
+     })
+    }else{
+      this.sweet()
+    }
+  }
+
+  image='';
+  uploadImage(file:any){
+    this.addImage=true;
+    const storageRef=ref(this.storage,`mimify/${this.file.name}`)
+    const uploadTask=uploadBytesResumable(storageRef,this.file);
+    arraySongs.push(uploadTask)
+    uploadTask.on('state_changed',
+    (snapshot)=>{
+      const progress=(snapshot.bytesTransferred / snapshot.totalBytes)
+      console.log('upload is'+progress+'%done');
+    },
+    (error)=>{
+       console.log(error.message)
+    },
+    ()=>{
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
+         this.image=downloadURl 
+      })
+   })
+  }
+
+  sweet(){
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+  Toast.fire({
+    icon: 'error',
+    title: 'Please select mp3 type audio'
+  })
   }
 }

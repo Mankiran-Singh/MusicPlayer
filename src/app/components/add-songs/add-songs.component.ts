@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Inject } from '@angular/core';
 import {Storage, 
   ref, uploadBytesResumable,
   getDownloadURL} from '@angular/fire/storage';
   import { SafePipe } from 'safe-pipe';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { arraySongs } from 'src/environments/environment';
 import Swal from 'sweetalert2';
@@ -17,16 +17,25 @@ export class AddSongsComponent {
   public file:any={}
     constructor(public storage:Storage,
     private fireService:FirebaseService,
-    private dialogRef:MatDialog){}
-  
+    ){}
+
+
+
+  // ngOnInit() {
+  //   const matDialogConfig = new MatDialogConfig()
+  //   const rect: DOMRect = this.positionRelativeToElement.nativeElement.getBoundingClientRect()
+
+  //   matDialogConfig.position = { right: `10px`, top: `${rect.bottom + 2}px` }
+  //   this.dialogRef.updatePosition(matDialogConfig.position)
+  // }
   chooseFile(event:any){
     this.file=event.target.files[0];
   }
 
-  addimage=false;
+  addImage=false;
   urlDownload:any;
   addData(file:any){
-    this.addimage=false;
+    this.addImage=false;
     if(file.type=='audio/mpeg'){
       const storageRef=ref(this.storage,`mimify/${file.name}`)
       const uploadTask=uploadBytesResumable(storageRef,file);
@@ -51,13 +60,9 @@ export class AddSongsComponent {
     }
   }
 
-  onCancelUserDialog(): void {
-    this.dialogRef.closeAll()
-  }
-
   image='';
   uploadImage(file:any){
-    this.addimage=true;
+    this.addImage=true;
     const storageRef=ref(this.storage,`mimify/${this.file.name}`)
     const uploadTask=uploadBytesResumable(storageRef,this.file);
     arraySongs.push(uploadTask)

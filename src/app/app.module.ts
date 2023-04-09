@@ -28,7 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { SafePipeModule } from 'safe-pipe';
 import { MaterialModule } from './material.module';
-import {MatDialogModule} from '@angular/material/dialog'
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule,MatDialogRef} from '@angular/material/dialog'
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { SongsComponent } from './components/songs/songs.component';
 import { OtpComponent } from './components/otp/otp.component';
@@ -47,7 +47,7 @@ import { HotToastModule } from '@ngneat/hot-toast';
     HomeComponent,
     AddSongsComponent,
     SongsComponent,
-    OtpComponent
+    OtpComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +76,7 @@ import { HotToastModule } from '@ngneat/hot-toast';
     AngularFireAuthModule,    
     AngularFirestoreModule 
   ],
-  providers: [FirebaseService,InterceptorsService,AuthService,WindowService],
+  providers: [FirebaseService,InterceptorsService,AuthService,WindowService, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

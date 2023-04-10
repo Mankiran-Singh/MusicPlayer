@@ -2,14 +2,17 @@
     <div class="container">
       <img class="spotify-logo" [src]="url" alt="spotify-logo">
       <h3 style="color:aliceblue;position:relative;right:60px;top:12px;font-style: oblique;">Mimify</h3>
-      <form class="d-flex" [formGroup]="searchForm" (ngSubmit)="searching()"> 
-        <input style="border-radius: 50px;height: 30px;width:200px;position:relative;top:0px"class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" formControlName="search" #myInput>
+    
+        <input style="border-radius: 50px;height: 30px;width:200px;position:relative;top: 12px;"class="form-control mr-2" type="search" placeholder="Search" aria-label="Search"  #myInput>
         <!-- <span style="font-size: small;color:rgb(251, 251, 252);border-radius: 50px;"*ngIf="search && search.invalid && search.errors?.['required'] && showErrors">This field is not valid</span> -->
         <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-        <br><br><ul style="color:rgb(255, 255, 255);position:relative;top:10px;background-color: black;" (click)="openSongs()">
-         <li>{{reqData}}</li>
+        <ul style="color:rgb(255, 255, 255);position:relative;top:50px;right:450px;" (click)="openSongs(audioSongsArray)">
+              <div style="position: relative;top:200px;left:500px;border-radius: 50px;">
+                <app-songs></app-songs>
+              </div>
+              <li>{{reqData}}</li>
         </ul>      
-      </form>
+
         <ul>
           <!-- <ng-container *ngIf="authService.currentUser$ | async as user;"> -->
             <li style="color: white;position: relative;top: 12px;" (click)="logOut()"><span class="material-icons">logout</span></li>
@@ -20,7 +23,7 @@
             </li>
           <!-- </ng-container> -->
           <li style="position: relative;top: 12px;"><a href="home"><mat-icon>home</mat-icon></a></li>
-          <!-- <li><a href="login">Log In</a></li>  -->
+          <li style="position: relative;top: 12px;"><a href="favorite"><mat-icon>favorite</mat-icon></a></li> 
           <div class="main">
            <li style="color: aliceblue;position: relative;top: 10px;"(click)="toggleDialog()">Add Songs</li>
             <div *ngIf="isOpen" class="dialog"> 
@@ -66,6 +69,14 @@
           <ng-template #pause>
             <button  id="pause" style="width:38px" (click)="pauseAudio(j)"><img style="border-radius: 50px;width:30px;padding:0px" [src]="urlPause"></button>
           </ng-template>
+        </td>
+        <td>
+          <ng-container *ngIf="audio.like;else dislike">
+            <button id="like" style="width:38px" (click)="like(audio,j)"><img style="border-radius: 50px;width:30px" [src]="urlDislike"></button>
+            </ng-container>
+           <ng-template #dislike>
+             <button  id="dislike" style="width:38px" (click)="disLike(audio,j)"><img style="border-radius: 50px;width:32px;padding:0px" [src]="urlLike"></button>
+           </ng-template>
         </td>
       </tr>
     </table>

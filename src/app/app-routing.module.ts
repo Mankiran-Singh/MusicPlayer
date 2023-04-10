@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddSongsComponent } from './components/add-songs/add-songs.component';
 import { HomeComponent } from './components/components/home/home.component';
+import { FavoriteComponent } from './components/favorite/favorite.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LoginComponent } from './components/login/login.component';
 import { OtpComponent } from './components/otp/otp.component';
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path:'home',component:HomeComponent},
   {path:'addsongs',component:AddSongsComponent},
   {path:'songs',component:SongsComponent},
-  {path:'otp',component:OtpComponent}
+  {path:'otp',component:OtpComponent},
+  {path:'favorite',component:FavoriteComponent}
 ];
 
 @NgModule({

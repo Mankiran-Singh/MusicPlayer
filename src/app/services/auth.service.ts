@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { EventEmitter, Injectable, NgZone } from '@angular/core';
 import {Auth, authState} from '@angular/fire/auth';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPhoneNumber, updateProfile } from 'firebase/auth';
 import { from, switchMap } from 'rxjs';
@@ -19,5 +19,11 @@ export class AuthService {
   signUp(name:string,email:string,password:string){
     return from(createUserWithEmailAndPassword(this.auth,email,password)).pipe(
       switchMap(({user}) => updateProfile(user,{displayName:name})))
+  }
+
+  dataEmitter=new EventEmitter<any>();
+  raiseDataEmitterEvent(data:any)
+  {
+      this.dataEmitter.emit(data)
   }
 }

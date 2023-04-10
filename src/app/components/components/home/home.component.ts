@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, ViewChild} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Images } from 'src/app/files/constant';
@@ -19,22 +19,29 @@ import { arraySongs } from 'src/environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [
+    
+  ]
 })
 export class HomeComponent {
   url=Images.url
-  searchForm:any
   urlPlay=Images.urlPlay
   user$=this.authService.currentUser$;
+  urlLike=Images.urlHeart;
+  urlDislike=Images.urlDislike;
   audioArray:any=[];
   urlPause=Images.urlPause
   idArray:any=[]
+
+
   constructor(public authService:AuthService,
     private loadingBar:LoadingBarService,
     private router:Router,
     private _dialog: MatDialog,
     private fireService:FirebaseService,
-    public storage:Storage,){
+    public storage:Storage,
+    private dialogService:DialogService){
     this.fireService.getAudio().pipe(map((res:any)=>{
       for(const key in res){
         if(res.hasOwnProperty(key)){
@@ -48,11 +55,10 @@ export class HomeComponent {
   
   @ViewChild('myInput') myInput:any;
   ngOnInit(){
-     this.searchForm=new FormGroup({
-       search:new FormControl('',[Validators.required])
-     })
+   
   }
   reqData:any;
+  audioSongsArray:any=[]
   ngAfterViewInit(){
     const search = fromEvent<any>(this.myInput.nativeElement,'keyup').pipe(
       map(event =>event.target.value),
@@ -64,6 +70,7 @@ export class HomeComponent {
            if(this.audioArray[i].name.includes(res))
            {
              this.reqData=this.audioArray[i].name
+             this.audioSongsArray=this.audioArray[i]
            }
         }
         this.loadingBar.stop()
@@ -76,25 +83,24 @@ export class HomeComponent {
   searchName='';
   showErrors=false;
   searching(){
-    if(this.searchForm.valid){
-      this.fireService.getAudio().pipe(map((res:any)=>{
-        for(const key in res){
-          if(res.hasOwnProperty(key)){
-           // if(this.searchForm.value.search==res[key].name)
-              console.log(res[key].name)
-              this.searchName=res[key].name
-          }
-        }
-      })).subscribe((res)=>{
-      })
-    }else{
-      this.showErrors=true;
-    }
+    // if(this.searchForm.valid){
+    //   this.fireService.getAudio().pipe(map((res:any)=>{
+    //     for(const key in res){
+    //       if(res.hasOwnProperty(key)){
+    //        // if(this.searchForm.value.search==res[key].name)
+    //           this.searchName=res[key].name
+    //       }
+    //     }
+    //   })).subscribe((res)=>{
+    //   })
+    // }else{
+    //   this.showErrors=true;
+    // }
   }
   
-  get search(){
-    return this.searchForm.get('search')
-  }
+  // get search(){
+  //   return this.searchForm.get('search')
+  // }
   
   logOut(){
     this.authService.logOut().subscribe(()=>{
@@ -121,11 +127,12 @@ export class HomeComponent {
   toggleDialog(){
     this.isOpen = !this.isOpen;
   }
-  openSongs(){
-    
-  }
-  urlSound=''
 
+  openSongs(arraySongs:any){
+    this.authService.raiseDataEmitterEvent(arraySongs)
+  }
+
+  urlSound=''
   getAudio(j:any){
       this.audioArray[j].audioPlay=false
       this.urlSound=this.audioArray[j].url
@@ -154,8 +161,15 @@ export class HomeComponent {
       },
       ()=>{
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
-             this.fireService.postAudioUrl({'image':this.image,'audioPlay':true,'showAudio':true,'play':true,'name':this.file.name,'type':this.file.type,'url':downloadURl}).subscribe((res)=>{
-              console.log(res)
+             this.fireService.postAudioUrl({'image':this.image,'like':true,'audioPlay':true,'showAudio':true,'play':true,'name':this.file.name,'type':this.file.type,'url':downloadURl}).subscribe((res)=>{
+              this.fireService.getAudio().pipe(map((res:any)=>{
+                for(const key in res){
+                  if(res.hasOwnProperty(key)){
+                    this.audioArray.push({...res[key]})
+                  }
+                }
+              })).subscribe((res)=>{
+              })
             })
         })
      })
@@ -203,4 +217,20 @@ export class HomeComponent {
     title: 'Please select mp3 type audio'
   })
   }
+
+  like(audio:any,index:any){
+    this.audioArray[index].like=false
+    this.fireService.postAudioFavourite({'audio':audio}).subscribe((res)=>{
+      console.log("++>",res)
+      this.router.navigate(['favorite'])
+    })
+  }
+  disLike(audio:any,index:any){
+    if(this.audioArray[index].like==false){
+       this.audioArray[index].like=false
+    }else{
+      this.audioArray[index].like=true
+    }
+  }
+
 }

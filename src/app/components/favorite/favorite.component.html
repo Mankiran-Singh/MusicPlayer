@@ -1,0 +1,33 @@
+  <div class="upper" style="overflow-y: hidden;overflow-x: hidden;">
+    <h2>Favourites</h2>
+    <br>
+    <table>
+      <tr *ngFor="let audio of audioArray;let j=index">
+        &nbsp;&nbsp;&nbsp;<td>{{j+1}}.</td>
+        <td><img style=' width:40px;
+          height:40px;
+          border-radius: 50px;'[src]='audio.image'></td>
+         <td>
+             <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.name}}
+               <ng-container *ngIf="!audio.audioPlay && audio.showAudio">
+                 <audio controls="controls">
+                  <source [src]="urlSound" type="audio/mpeg">
+                 </audio>
+               </ng-container>
+             </ul>
+         </td>
+        
+        <td>
+          <ng-container *ngIf="audio.play;else pause">
+           <button id="play" style="width:38px" (click)="play(j)"><img style="border-radius: 50px;width:30px" [src]="urlPlay"></button>
+           </ng-container>
+          <ng-template #pause>
+            <button  id="pause" style="width:38px" (click)="pauseAudio(j)"><img style="border-radius: 50px;width:30px;padding:0px" [src]="urlPause"></button>
+          </ng-template>
+        </td>
+        <td>
+            <button  id="pause" style="width:38px" (click)="delete(j)"><img style="border-radius: 50px;width:30px;height:30px;padding:0px" [src]="urlDelete"></button>
+        </td>
+      </tr>
+    </table>
+  </div>

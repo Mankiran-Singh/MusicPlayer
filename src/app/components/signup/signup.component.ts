@@ -37,7 +37,6 @@ export class SignupComponent {
         this.toast.observe({
            success: 'Congrats! You are signed Up',
            loading:'Signing Up... PLease Wait..',
-           error:({message}) =>'${message}'
         })
       ).subscribe(()=>{
         this.router.navigate(['home'])

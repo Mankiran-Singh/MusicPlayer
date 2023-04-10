@@ -5,6 +5,7 @@ import { Images } from 'src/app/files/constant';
 import { WindowService } from 'src/app/services/window.service';
 import { environment } from 'src/environments/environment';
 import firebase from 'firebase/compat/app';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-otp',
   templateUrl: './otp.component.html',
@@ -43,6 +44,7 @@ export class OtpComponent {
       firebase.auth().signInWithCredential(credential).then((res)=>{
         console.log(res)
         this.router.navigate(['home'])
+        this.sweetAlert();
       })
     }
     else{
@@ -63,5 +65,15 @@ export class OtpComponent {
      this.rows._results[pos].nativeElement.focus();
     }
   }
-
+ 
+  sweetAlert(){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Login Successful',
+      showConfirmButton: false,
+      timer: 1500,
+      width:'400px',
+    })
+  }
 }

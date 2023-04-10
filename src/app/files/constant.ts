@@ -3,7 +3,10 @@ export const Images={
  urlBackground:'./assets/background.jpg',
  urlSpotify:'./assets/spotify.png',
  urlPlay:'./assets/download.png',
- urlPause:'./assets/pause.png'
+ urlPause:'./assets/pause.png',
+ urlHeart:'./assets/like2.png',
+ urlDislike:'./assets/dislike.png',
+ delete:'./assets/delete.png'
 }
 export const Constant = {
     Auth : {

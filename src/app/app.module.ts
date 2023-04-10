@@ -37,6 +37,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { WindowService } from './services/window.service';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FavoriteComponent } from './components/favorite/favorite.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,9 +50,11 @@ import { HotToastModule } from '@ngneat/hot-toast';
     AddSongsComponent,
     SongsComponent,
     OtpComponent,
+    FavoriteComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SweetAlert2Module,
     AppRoutingModule,
     NgbModule,
@@ -76,7 +80,7 @@ import { HotToastModule } from '@ngneat/hot-toast';
     AngularFireAuthModule,    
     AngularFirestoreModule 
   ],
-  providers: [FirebaseService,InterceptorsService,AuthService,WindowService, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
+  providers: [FirebaseService,InterceptorsService,AuthService,WindowService,Storage,{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

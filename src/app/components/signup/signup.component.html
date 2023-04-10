@@ -20,18 +20,18 @@
                           <span style="font-size:small;color:rgb(251, 251, 252);padding: 100px;"*ngIf="password && password.invalid && password.errors?.['required'] && showErrors">This field is not valid</span>
                           <span class="eyeicon" (click)="viewpass()"><i [ngClass]="visible?'fa fa-eye':'fa fa-eye-slash'" style="padding: 0px;"></i></span>
                         </div>
-                        <div class="form-group" style="padding: 0px;">
+                        <!-- <div class="form-group" style="padding: 0px;">
                           <input class="form-control" [type]="changetype?'password':'text'" placeholder="Confirm Password" name="confirmPassword" formControlName="confirmPassword">
                           <span style="font-size:small;font-family: 'Times New Roman', Times, serif;color:rgb(251, 251, 252)"*ngIf="confirmPassword && confirmPassword.invalid && confirmPassword.errors?.['required'] && showErrors">This field is not valid</span> 
                           <span class="eyeicon" (click)="viewpass()"><i [ngClass]="visible?'fa fa-eye':'fa fa-eye-slash'"></i></span>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                           <input class="form-control" type="tel" placeholder="phone Number" formControlName="phoneNo" oninput="this.value = this.value.replace(/[^0-9]/g, '')" min="10" max="15"><br>
                           <span style="font-size: small;color:rgb(251, 251, 252)"*ngIf="phoneNo && phoneNo.invalid && phoneNo.errors?.['required'] && showErrors">This field is not valid</span>
                         </div>
-                     <span  style="font-size: small;color:rgb(251, 251, 252)" *ngIf="signUpForm.errors?.['passwordsDontMatch']">
+                     <!-- <span  style="font-size: small;color:rgb(251, 251, 252)" *ngIf="signUpForm.errors?.['passwordsDontMatch']">
                       Passwords should Match
-                     </span>
+                     </span> -->
 
                         <button type="button" type="submit" class="btn btn-default" [disabled]="">Sign Up</button><br>
                          <h2 style="color: white;font-size:medium;">Already Registered ?</h2>

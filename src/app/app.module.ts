@@ -39,6 +39,11 @@ import { WindowService } from './services/window.service';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FavoriteComponent } from './components/favorite/favorite.component';
+import { AudioComponent } from './components/audio/audio.component';
+import { RecentPlayedComponent } from './components/recent-played/recent-played.component';
+import { StripeComponent } from './components/stripe/stripe.component';
+import { CourseguardService } from './services/courseguard.service';
+import { AuthguardService } from './services/authguard.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +55,10 @@ import { FavoriteComponent } from './components/favorite/favorite.component';
     AddSongsComponent,
     SongsComponent,
     OtpComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    AudioComponent,
+    RecentPlayedComponent,
+    StripeComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +88,10 @@ import { FavoriteComponent } from './components/favorite/favorite.component';
     AngularFireAuthModule,    
     AngularFirestoreModule 
   ],
-  providers: [FirebaseService,InterceptorsService,AuthService,WindowService,Storage,{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
+  providers: [FirebaseService,InterceptorsService,
+    AuthService,WindowService,Storage,
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},CourseguardService,
+     AuthguardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

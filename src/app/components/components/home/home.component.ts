@@ -33,8 +33,10 @@ export class HomeComponent {
   audioArray:any=[];
   urlPause=Images.urlPause
   idArray:any=[]
+  token='';
+  id:any=0;
 
-
+  arrayPayment:any=[]
   constructor(public authService:AuthService,
     private loadingBar:LoadingBarService,
     private router:Router,
@@ -42,21 +44,34 @@ export class HomeComponent {
     private fireService:FirebaseService,
     public storage:Storage,
     private dialogService:DialogService){
-    this.fireService.getAudio().pipe(map((res:any)=>{
-      for(const key in res){
-        if(res.hasOwnProperty(key)){
-          this.audioArray.push({...res[key]})
-          this.idArray.push(key)
-        }
-      }
-    })).subscribe((res)=>{
-    })
+        this.fireService.getPayment().pipe(map((res:any)=>{
+          for(const key in res){
+            if(res.hasOwnProperty(key)){
+              this.token=res[key].token
+              this.id=res[key].id
+              this.arrayPayment.push({...res[key]})
+            }
+          }
+        })).subscribe((res)=>{
+        })
+  
   }
   
   @ViewChild('myInput') myInput:any;
   ngOnInit(){
-   
+    console.log("OnInit called----")
+    this.fireService.getAudio().pipe(map((res:any)=>{
+      for(const key in res){
+        if(res.hasOwnProperty(key)){
+          this.audioArray.push({...res[key],'id':key})
+        }
+      }
+    })).subscribe((res:any)=>{
+    })
+    this.invokeStripe();
+    
   }
+
   reqData:any;
   audioSongsArray:any=[]
   ngAfterViewInit(){
@@ -82,48 +97,55 @@ export class HomeComponent {
   
   searchName='';
   showErrors=false;
-  searching(){
-    // if(this.searchForm.valid){
-    //   this.fireService.getAudio().pipe(map((res:any)=>{
-    //     for(const key in res){
-    //       if(res.hasOwnProperty(key)){
-    //        // if(this.searchForm.value.search==res[key].name)
-    //           this.searchName=res[key].name
-    //       }
-    //     }
-    //   })).subscribe((res)=>{
-    //   })
-    // }else{
-    //   this.showErrors=true;
-    // }
-  }
-  
-  // get search(){
-  //   return this.searchForm.get('search')
-  // }
   
   logOut(){
     this.authService.logOut().subscribe(()=>{
       this.router.navigate(['login'])
     })
   }
-   audio=new Audio();
+
+  audio=new Audio();
     
   playable=false;
   pauseAudio(j:any) { 
-    console.log("==>"+this.audioArray[j].url)
     this.audio.src=this.audioArray[j].url
     this.audio.pause();
     this.audioArray[j].play=true;
+    const flag=(localStorage.getItem('postRequestCheck'))
+    let check:any={}
+    if(flag!=null)
+    {
+      check=JSON.parse(flag);
+    }
+    if(!check[this.audioArray[j].id])
+    {
+      this.fireService.postRecentlyPlayed(this.audioArray[j]).subscribe((res:any)=>{
+        check[this.audioArray[j].id]=true;  
+        console.log("check",check)
+        localStorage.setItem('postRequestCheck',JSON.stringify(check))
+      })
+    }
   } 
+
   play(j:any){
-    console.log(this.audioArray[j].url)
-    this.audio.src=this.audioArray[j].url,
-    this.audio.load()
-    this.audio.play()
-    this.audioArray[j].play=false;
+    if(this?.arrayPayment[j]?.token==undefined && this.audioArray[j].amount!=0){
+      this.sweetAlert2();
+    }
+    else{
+      this.audio.src=this.audioArray[j].url,
+      this.audio.load()
+      this.audio.play()
+      this.audioArray[j].play=false;
+      if(this.audioArray[j].play==false){
+        for(let i=0;i<j;i++){
+           this.audioArray[i].play=true;
+        }
+        // for(let i=this.audioArray[this.audioArray.length-j];)
+      }
+    }
   }
-    isOpen=false;
+
+  isOpen=false;
   toggleDialog(){
     this.isOpen = !this.isOpen;
   }
@@ -136,7 +158,7 @@ export class HomeComponent {
   getAudio(j:any){
       this.audioArray[j].audioPlay=false
       this.urlSound=this.audioArray[j].url
-      this.audioArray[j].showAudio = !this.audioArray[j].showAudio;
+      this.audioArray[j].showAudio =true
   }
   public file:any={}
   chooseFile(event:any){
@@ -146,8 +168,8 @@ export class HomeComponent {
   addImage=false;
   urlDownload:any;
   addData(file:any){
-    this.addImage=false;
-    if(file.type=='audio/mpeg'){
+    this.amount=true;
+    if(file.type=='audio/mpeg' && this.paymentArray[0].payment!=undefined || null){
       const storageRef=ref(this.storage,`mimify/${file.name}`)
       const uploadTask=uploadBytesResumable(storageRef,file);
       arraySongs.push(uploadTask)
@@ -161,11 +183,14 @@ export class HomeComponent {
       },
       ()=>{
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
-             this.fireService.postAudioUrl({'image':this.image,'like':true,'audioPlay':true,'showAudio':true,'play':true,'name':this.file.name,'type':this.file.type,'url':downloadURl}).subscribe((res)=>{
+             this.fireService.postAudioUrl({'image':this.image,
+             'like':true,'audioPlay':true,'showAudio':true,
+             'play':true,'name':this.file.name,'songPlay':true,
+             'type':this.file.type,'url':downloadURl,'liked':true,'premium':true,'amount':this.paymentArray[0].payment}).subscribe((res)=>{
               this.fireService.getAudio().pipe(map((res:any)=>{
                 for(const key in res){
                   if(res.hasOwnProperty(key)){
-                    this.audioArray.push({...res[key]})
+                    this.audioArray.push({...res[key],'id':key})
                   }
                 }
               })).subscribe((res)=>{
@@ -199,6 +224,19 @@ export class HomeComponent {
    })
   }
 
+  paymentArray:any=[]
+  payForm=new FormGroup({
+    payment: new FormControl('',[Validators.required])
+  })
+
+  amount=false;
+  pay(){
+    this.addImage=false;
+    console.log(this.payForm.value)
+    this.paymentArray.push(this.payForm.value)
+    this.amount=true;
+  }
+
   sweet(){
   const Toast = Swal.mixin({
     toast: true,
@@ -218,19 +256,89 @@ export class HomeComponent {
   })
   }
 
-  like(audio:any,index:any){
-    this.audioArray[index].like=false
-    this.fireService.postAudioFavourite({'audio':audio}).subscribe((res)=>{
-      console.log("++>",res)
-      this.router.navigate(['favorite'])
+  sweetAlert2(){   
+    Swal.fire({
+     icon: 'error',
+     title: 'Oops...',
+     text: 'Please pay for it....!',
     })
   }
-  disLike(audio:any,index:any){
-    if(this.audioArray[index].like==false){
-       this.audioArray[index].like=false
-    }else{
-      this.audioArray[index].like=true
+
+  like(audio:any,index:any,audioId:any){
+    this.audioArray[index].like=false
+    this.fireService.postAudioFavourite({'audio':audio,'audioLiked':this.audioArray[index].like,'index':index,'audioId':audioId}).subscribe((res)=>{
+      this.fireService.putAudiourl(audio,audioId).subscribe((res)=>{
+        this.router.navigate(['favorite'])
+      })
+    })
+  }
+
+  disLike(audio:any,index:any,audioId:any){
+    this.audioArray[index].like=true
+    this.fireService.putAudiourl(audio,audioId).subscribe((res)=>{
+       this.fireService.deleteFavourites(audioId).subscribe((res)=>{
+          this.router.navigate(['favorite'])
+       }) 
+    })
+  }
+
+  paymentHandler: any = null;
+  makePayment(amount: any,j:any,audioId:any,audio:any) {
+    const paymentHandler:any = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_51MwHzHSA3InbaajBmzfGEdDcnXtYOpKAqAfZxHIYAGIX02NB4irxV0gTTiJeDTwnDwYqWYeZi7DCYONPiz0kxTXp00qsLMBTFz',
+      locale: 'auto',
+      token: (stripeToken: any)=>{
+        this.fireService.postPayment({'token':stripeToken.id,'id':j}).subscribe((res:any)=>{
+           this.sweetalert();
+           audio.amount=0;
+           this.fireService.putAudiourl(audio,audioId).subscribe((res)=>{
+                console.log(res)
+           })
+        })
+      },
+    });
+    paymentHandler.open({
+      name: 'Positronx',
+      description: '3 widgets',
+      amount: amount * 100,
+    });
+  }
+  
+  stripeToken:any;
+  invokeStripe() {
+    if (!window.document.getElementById('stripe-script')) {
+      const script = window.document.createElement('script');
+      script.id = 'stripe-script';
+      script.type = 'text/javascript';
+      script.src = 'https://checkout.stripe.com/checkout.js';
+      script.onload = () => {
+        this.paymentHandler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_51MwHzHSA3InbaajBmzfGEdDcnXtYOpKAqAfZxHIYAGIX02NB4irxV0gTTiJeDTwnDwYqWYeZi7DCYONPiz0kxTXp00qsLMBTFz',
+          locale: 'auto',
+          token: function (stripeToken: any) {
+            this.sweetalert('Payment has been successfull!');
+          },
+        });
+      };
+      window.document.body.appendChild(script);
     }
   }
 
+  sweetalert(){
+    const Toast1 = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    Toast1.fire({
+      icon: 'success',
+      title: 'Payment Successful'
+    })
+    }
 }

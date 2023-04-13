@@ -6,7 +6,10 @@ export const Images={
  urlPause:'./assets/pause.png',
  urlHeart:'./assets/like2.png',
  urlDislike:'./assets/dislike.png',
- delete:'./assets/delete.png'
+ delete:'./assets/delete.png',
+ back:'./assets/back.avif',
+ nextSong:'./assets/nextSong.png',
+ previousSong:'./assets/backSong.png'
 }
 export const Constant = {
     Auth : {

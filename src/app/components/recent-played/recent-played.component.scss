@@ -90,6 +90,7 @@ table{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   width: 80px;
   height: 100px;
   top: 100px;
@@ -157,8 +158,3 @@ audio::-webkit-media-controls-mute-button {
   border-radius: 50%;
 }
 
-.pay{
-  position: relative;
-  left:130px;
-  top:10px;
-}

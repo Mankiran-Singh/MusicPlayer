@@ -20,7 +20,7 @@ export class AuthService {
     return from(createUserWithEmailAndPassword(this.auth,email,password)).pipe(
       switchMap(({user}) => updateProfile(user,{displayName:name})))
   }
-
+  postRequestCheck:any={}
   dataEmitter=new EventEmitter<any>();
   raiseDataEmitterEvent(data:any)
   {

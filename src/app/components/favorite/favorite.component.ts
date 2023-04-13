@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-import { map } from 'rxjs';
+import { debounceTime, fromEvent, map } from 'rxjs';
 import { Images } from 'src/app/files/constant';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -20,35 +20,40 @@ export class FavoriteComponent {
   urlPause=Images.urlPause
   urlDelete=Images.delete
   idArray:any=[]
-
-
-  constructor(private fireService:FirebaseService){
+  urlLike=Images.urlHeart
+  urlDislike=Images.urlDislike
+  constructor(private fireService:FirebaseService,private router:Router,private authService:AuthService){
     this.fireService.getAudioFavourite().pipe(map((res:any)=>{
       for(const key in res){
         if(res.hasOwnProperty(key)){
-          console.log("==>",res[key])
-          this.audioArray.push({...res[key].audio})
+          let array:any=Object.values(res[key])
+          this.audioArray.push({'res':array[0].audio,'index':array[0].index,'id':key})        
         }
       }
     })).subscribe((res)=>{
     })
   }
- 
+  logOut(){
+    this.authService.logOut().subscribe(()=>{
+      this.router.navigate(['login'])
+    })
+  }
+
    audio=new Audio();
     
   playable=false;
   pauseAudio(j:any) { 
-    console.log("==>"+this.audioArray[j].url)
-    this.audio.src=this.audioArray[j].url
+    console.log("==>"+this.audioArray[j].res.url)
+    this.audio.src=this.audioArray[j].res.url
     this.audio.pause();
-    this.audioArray[j].play=true;
+    this.audioArray[j].res.play=true;
   } 
   play(j:any){
-    console.log(this.audioArray[j].url)
-    this.audio.src=this.audioArray[j].url,
+    console.log(this.audioArray[j].res.url)
+    this.audio.src=this.audioArray[j].res.url,
     this.audio.load()
     this.audio.play()
-    this.audioArray[j].play=false;
+    this.audioArray[j].res.play=false;
   }
 
   urlSound=''
@@ -58,11 +63,46 @@ export class FavoriteComponent {
       this.audioArray[j].showAudio = !this.audioArray[j].showAudio;
   }
 
-  delete(index:any){
-    console.log(index)
-   this.fireService.delete(index)
-   .subscribe((res)=>{
-      console.log(res)
-   })
+  like(j:any){
+    this.audioArray[j].res.like=false;
   }
-}
+
+  disLike(audio:any,audioid:any,j:any){
+    console.log("===>",audioid)
+    this.audioArray[j].res.like=true
+    this.fireService.deleteFavourites(audioid)
+    .subscribe((res)=>{
+      this.fireService.putAudiourl(audio.res,audio.res.id).subscribe((res)=>{
+        console.log(res)
+        this.router.navigate(['home'])
+      })
+    })
+  }
+
+  openSongs(arraySongs:any){
+    this.authService.raiseDataEmitterEvent(arraySongs)
+  }
+
+  reqData:any;
+  audioSongsArray:any=[]
+  @ViewChild('myInput') myInput:any;
+  ngAfterViewInit(){
+    const search = fromEvent<any>(this.myInput.nativeElement,'keyup').pipe(
+      map(event =>event.target.value),
+         debounceTime(1000)
+      )
+     search.subscribe((res:any)=>{
+        for(let i=0;i<this.audioArray.length;i++)
+        {
+           if(this.audioArray[i].name.includes(res))
+           {
+             this.reqData=this.audioArray[i].name
+             this.audioSongsArray=this.audioArray[i]
+           }
+        }
+        //this.loadingBar.stop()
+        setTimeout(()=>{
+          this.reqData=null
+        },2000)
+      })
+  }}

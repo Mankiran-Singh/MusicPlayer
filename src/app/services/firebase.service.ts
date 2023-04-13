@@ -7,26 +7,59 @@ import { Injectable } from '@angular/core';
 export class FirebaseService {
   constructor(private http:HttpClient) { }
   urlDownload='gs://spotify-32974.appspot.com/mimify'
-   url='https://spotify-32974-default-rtdb.firebaseio.com/mimicry.json'
+  url='https://spotify-32974-default-rtdb.firebaseio.com/mimicry'
+  urlFavorite='https://spotify-32974-default-rtdb.firebaseio.com/favourite/'
+  urlRecent='https://spotify-32974-default-rtdb.firebaseio.com/recentPlayed/'
+  urlPayment='https://spotify-32974-default-rtdb.firebaseio.com/paid'
 
   getAudio(){
-    return this.http.get(this.url);
+    return this.http.get(this.url+".json");
   }
   postAudioUrl(data:any){
-    return this.http.post(this.url,data)
+    return this.http.post(this.url+".json",data)
+  }
+
+  putAudiourl(audio:any,audioId:any){
+    return this.http.put(`${this.url}/${audioId}.json`,audio)
   }
   
-  urlFavorite='https://spotify-32974-default-rtdb.firebaseio.com/favourite.json'
+  deleteAudioUrl(index:any){
+    return this.http.delete(`${this.url}${index}.json`)
+  }
 
   postAudioFavourite(data:any){
-    return this.http.post(this.urlFavorite,data)
+    return this.http.post(`${this.urlFavorite}${data.audioId}.json`,data)
   }
 
   getAudioFavourite(){
-    return this.http.get(this.urlFavorite)
+    return this.http.get(this.urlFavorite+".json")
   }
 
-  delete(index:any){
-   return this.http.delete(`https://spotify-32974-default-rtdb.firebaseio.com/favourite.json${index}`)
+  deleteFavourites(id:any){
+   return this.http.delete(`${this.urlFavorite}${id}.json`)
+  }
+
+  deleteFavouritesFromHome(id:any){
+    return this.http.delete(`https://spotify-32974-default-rtdb.firebaseio.com/favourite/${id}.json`)
+  }
+
+  putFavourites(audio:any,audioId:any){
+    return this.http.put(`${this.urlFavorite}/${audioId}.json`,audio)
+  }
+
+  postRecentlyPlayed(data:any){
+    return this.http.post(this.urlRecent+".json",data)
+  }
+
+  getRecentPlayed(){
+    return this.http.get(this.urlRecent+".json")
+  }
+
+  postPayment(data:any){
+    return this.http.post(this.urlPayment+".json",data)
+  }
+
+  getPayment(){
+    return this.http.get(this.urlPayment+".json")
   }
 }

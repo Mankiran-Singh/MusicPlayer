@@ -1,3 +1,28 @@
+<nav> 
+  <div class="container">
+    <img class="spotify-logo" [src]="url" alt="spotify-logo">
+    <h3 style="color:aliceblue;position:relative;right:60px;top:12px;font-style: oblique;">Mimify</h3>
+  
+      <input style="border-radius: 50px;height: 30px;width:200px;position:relative;top: 12px;"class="form-control mr-2" type="search" placeholder="Search" aria-label="Search"  #myInput>
+      <ul style="color:rgb(255, 255, 255);position:relative;top:50px;right:450px;" (click)="openSongs(audioSongsArray)">
+            <div style="position: relative;top:200px;left:500px;border-radius: 50px;">
+              <app-songs></app-songs>
+            </div>
+            <li>{{reqData}}</li>
+      </ul>      
+
+      <ul>
+          <li style="color: white;position: relative;top: 12px;" (click)="logOut()"><span class="material-icons">logout</span></li>
+          <li style="width:40px;color: white;position: relative;top: 12px;">
+            <mat-icon>account_circle</mat-icon>
+          </li>
+        
+        <li style="position: relative;top: 12px;"><a href="home"><mat-icon>home</mat-icon></a></li>
+        <li style="position: relative;top: 12px;"><a href="favorite"><mat-icon>favorite</mat-icon></a></li> 
+        <li style="position: relative;top: 12px;"><a href="recent"><mat-icon>volume_up</mat-icon></a></li> 
+      </ul>  
+    </div>
+</nav>
   <div class="upper" style="overflow-y: hidden;overflow-x: hidden;">
     <h2>Favourites</h2>
     <br>
@@ -6,10 +31,10 @@
         &nbsp;&nbsp;&nbsp;<td>{{j+1}}.</td>
         <td><img style=' width:40px;
           height:40px;
-          border-radius: 50px;'[src]='audio.image'></td>
+          border-radius: 50px;'[src]='audio.res.image'></td>
          <td>
-             <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.name}}
-               <ng-container *ngIf="!audio.audioPlay && audio.showAudio">
+             <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.res.name}}
+               <ng-container *ngIf="!audio.res.audioPlay && audio.res.showAudio">
                  <audio controls="controls">
                   <source [src]="urlSound" type="audio/mpeg">
                  </audio>
@@ -18,7 +43,7 @@
          </td>
         
         <td>
-          <ng-container *ngIf="audio.play;else pause">
+          <ng-container *ngIf="audio.res.play;else pause">
            <button id="play" style="width:38px" (click)="play(j)"><img style="border-radius: 50px;width:30px" [src]="urlPlay"></button>
            </ng-container>
           <ng-template #pause>
@@ -26,7 +51,12 @@
           </ng-template>
         </td>
         <td>
-            <button  id="pause" style="width:38px" (click)="delete(j)"><img style="border-radius: 50px;width:30px;height:30px;padding:0px" [src]="urlDelete"></button>
+            <ng-container *ngIf="audio.res.like;else dislike">
+              <button id="like" style="width:38px" (click)="like(j)"><img style="border-radius: 50px;width:30px" [src]="urlDislike"></button>
+              </ng-container>
+             <ng-template #dislike>
+               <button  id="dislike" style="width:38px" (click)="disLike(audio,audio.id,j)"><img style="border-radius: 50px;width:32px;padding:0px" [src]="urlLike"></button>
+             </ng-template>
         </td>
       </tr>
     </table>

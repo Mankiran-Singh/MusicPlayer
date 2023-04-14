@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SongsComponent implements OnInit{
 
-// @Input() arraySongs:any=[];
 particularSong:any=[]
 constructor(private authService:AuthService){}
 ngOnInit(){
@@ -17,5 +16,8 @@ ngOnInit(){
     this.particularSong.push(res)
   })
 }
-
+hide=false
+  hideContainer(){
+     this.hide=true
+  }
 }

@@ -33,13 +33,7 @@
           height:40px;
           border-radius: 50px;'[src]='audio.res.image'></td>
          <td>
-             <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.res.name}}
-               <ng-container *ngIf="!audio.res.audioPlay && audio.res.showAudio">
-                 <audio controls="controls">
-                  <source [src]="urlSound" type="audio/mpeg">
-                 </audio>
-               </ng-container>
-             </ul>
+             <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.res.name}}</ul>
          </td>
         
         <td>

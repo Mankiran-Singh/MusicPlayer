@@ -1,12 +1,12 @@
-<div class="container" [hidden]="!hide">
-   <ul style="position: relative;left:155px;border-radius: 50px;top:10px;width:30px;"  (click)="hideContainer()">X</ul>
+<div class="container" *ngIf="!hide">
+   <ul style="color:black;position: relative;left:155px;border-radius: 50px;top:10px;width:30px;"  (click)="hideContainer()">X</ul>
    <img [src]="urlBackground">
    <!-- <tr *ngFor="let audio of songPlayer;let j=index"> -->
     <td><img style="position:relative;bottom:170px;left:30px;width:130px;height:130px;" [src]="songPlayer.image"></td>
      <td>
         <ng-container *ngIf="songPlayer.songPlay;else pause">
-         <button id="play" style="width:38px;position:relative;right:50px;bottom:40px;" (click)="play(ind)"><img style="border-radius: 50px;height: 30px;width:30px;" [src]="urlPlay"></button>
-         </ng-container>
+          <button id="play" style="width:38px;position:relative;right:50px;bottom:40px;" (click)="play(ind)"><img style="border-radius: 50px;height: 30px;width:30px;" [src]="urlPlay"></button>
+        </ng-container>
         <ng-template #pause>
           <button  id="pause" style="width:38px;position:relative;right:50px;bottom:40px;" (click)="pauseAudio(ind)"><img style="border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;" [src]="urlPause"></button>
         </ng-template>
@@ -15,7 +15,7 @@
          <button id="play" style="width:38px;position:relative;right:45px;bottom:40px;" ><img style="border-radius: 50px;height: 30px;width:30px;" [src]="urlNextSong" (click)="nextSong(audio,ind)"></button>
       </td>
       <td>
-            <button  id="pause" style="width:38px;position:relative;right:175px;bottom:40px;" ><img style="border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;" [src]="urlPreviousSong" (click)="previousSong(audio,ind)"></button>
+         <button  id="pause" style="width:38px;position:relative;right:175px;bottom:40px;" ><img style="border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;" [src]="urlPreviousSong" (click)="previousSong(audio,ind)"></button>
       </td>
       <br>
       <td>

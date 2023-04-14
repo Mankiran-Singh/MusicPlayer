@@ -54,7 +54,6 @@ export class HomeComponent {
           }
         })).subscribe((res)=>{
         })
-  
   }
   
   @ViewChild('myInput') myInput:any;
@@ -106,25 +105,12 @@ export class HomeComponent {
 
   audio=new Audio();
     
-  playable=false;
   pauseAudio(j:any) { 
     this.audio.src=this.audioArray[j].url
     this.audio.pause();
     this.audioArray[j].play=true;
-    const flag=(localStorage.getItem('postRequestCheck'))
-    let check:any={}
-    if(flag!=null)
-    {
-      check=JSON.parse(flag);
-    }
-    if(!check[this.audioArray[j].id])
-    {
       this.fireService.postRecentlyPlayed(this.audioArray[j]).subscribe((res:any)=>{
-        check[this.audioArray[j].id]=true;  
-        console.log("check",check)
-        localStorage.setItem('postRequestCheck',JSON.stringify(check))
       })
-    }
   } 
 
   play(j:any){
@@ -140,7 +126,9 @@ export class HomeComponent {
         for(let i=0;i<j;i++){
            this.audioArray[i].play=true;
         }
-        // for(let i=this.audioArray[this.audioArray.length-j];)
+        for(let i=j+1;i<this.audioArray[j].length;i++){
+          this.audioArray[i].play=true
+        } 
       }
     }
   }
@@ -150,16 +138,20 @@ export class HomeComponent {
     this.isOpen = !this.isOpen;
   }
 
+  open=false;
   openSongs(arraySongs:any){
     this.authService.raiseDataEmitterEvent(arraySongs)
+    this.open!=this.open
   }
 
   urlSound=''
+  showAudio=false;
   getAudio(j:any){
       this.audioArray[j].audioPlay=false
       this.urlSound=this.audioArray[j].url
-      this.audioArray[j].showAudio =true
+      this.showAudio=true
   }
+  
   public file:any={}
   chooseFile(event:any){
     this.file=event.target.files[0];
@@ -265,19 +257,23 @@ export class HomeComponent {
   }
 
   like(audio:any,index:any,audioId:any){
+    if(this?.arrayPayment[index]?.token==undefined && this.audioArray[index].amount!=0){
+      this.sweetAlert2();
+    }
+    else{
     this.audioArray[index].like=false
     this.fireService.postAudioFavourite({'audio':audio,'audioLiked':this.audioArray[index].like,'index':index,'audioId':audioId}).subscribe((res)=>{
       this.fireService.putAudiourl(audio,audioId).subscribe((res)=>{
-        this.router.navigate(['favorite'])
+          console.log(res,"added to favorites")
       })
     })
+   }
   }
 
   disLike(audio:any,index:any,audioId:any){
     this.audioArray[index].like=true
     this.fireService.putAudiourl(audio,audioId).subscribe((res)=>{
        this.fireService.deleteFavourites(audioId).subscribe((res)=>{
-          this.router.navigate(['favorite'])
        }) 
     })
   }

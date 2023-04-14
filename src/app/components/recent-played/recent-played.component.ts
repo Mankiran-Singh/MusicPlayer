@@ -31,24 +31,24 @@ export class RecentPlayedComponent {
         }
       }
     })).subscribe((res:any)=>{
-    //   for (let i in this.audioArray) {
+      for (let i in this.audioArray) {
               
-    //     // Extract the title
-    //    let objTitle = this.audioArray[i]['id'];
+        // Extract the title
+       let objTitle = this.audioArray[i]['id'];
       
-    //     // Use the title as the index
-    //     this.uniqueObject[objTitle] = this.audioArray[i];
-    // }
+        // Use the title as the index
+        this.uniqueObject[objTitle] = this.audioArray[i];
+    }
       
-    // // Loop to push unique object into array
-    // for (let i in this.uniqueObject) {
-    //     this.newArray.push(this.uniqueObject[i]);
-    // }
+    // Loop to push unique object into array
+    for (let i in this.uniqueObject) {
+        this.newArray.push(this.uniqueObject[i]);
+    }
       
-    // // Display the unique objects
-    // console.log("===========",this.newArray);
+    // Display the unique objects
+    //console.log("===========",this.newArray);
     })
-    console.log(this.myset.entries())
+    // console.log(this.myset.entries())
   }
   audio=new Audio();
     

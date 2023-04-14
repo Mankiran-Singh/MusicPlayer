@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, last } from 'rxjs';
 import { Images } from 'src/app/files/constant';
 import * as moment from 'moment';
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-audio',
   templateUrl: './audio.component.html',
@@ -17,6 +18,7 @@ export class AudioComponent implements OnInit{
 
   @Input() arraySongs:any=[]
   @Input() index:any;
+  @Input() audioPlay:any
   songPlayer:any={}
 
   audioEvents = [
@@ -31,10 +33,14 @@ export class AudioComponent implements OnInit{
     "loadstart"
   ];
    ind:any=0;
+   audioPlayable=false;
   ngOnInit(){
      console.log(this.index,this.arraySongs)
      this.ind=this.index;
+    //  this.arraySongs[this.index].songPlay=false;
      this.songPlayer=this.arraySongs[this.index]
+     this.play(this.index)
+    // this.arraySongs[this.index].play=false;
      console.log("=>",this.songPlayer)
   }
 
@@ -50,19 +56,24 @@ export class AudioComponent implements OnInit{
   duration:any=0;
   seek:any=0;
   play(j:any){
+    if(this.arraySongs[j].amount>0){
+     this.sweetalert();
+    }
+    else{
      this.arraySongs[j].songPlay=false;
      this.streamObserver(this.arraySongs[j].url).subscribe((res)=>{
       console.log(res)
      })
+    }
   }
   
-  hide=true;
+  hide=false;
   hideContainer(){
-     this.hide=false;
+     this.hide=true;
   }
  
   setVolume(event:any){
-    this.audio.currentTime=event.target.value
+    this.audio.volume=event.target.value
     console.log("===>",event.target.value)
   }
 
@@ -108,9 +119,31 @@ export class AudioComponent implements OnInit{
  
   nextSong(audioObj:any,j:any){
       this.songPlayer=this.arraySongs[(j+1)%this.arraySongs.length] 
+      this.pauseAudio(j);
+      this.ind=(j+1)%this.arraySongs.length
+      if(this.arraySongs[this.ind].amount>0){
+        this.sweetalert();
+      }else{
+       this.play(this.ind);
+      }
   }
 
   previousSong(audioObj:any,j:any){
-      this.songPlayer=this.arraySongs[(j-1)%this.arraySongs.length]
+    this.songPlayer=this.arraySongs[(j-1)%this.arraySongs.length] 
+    this.pauseAudio(j);
+    this.ind=(j-1)%this.arraySongs.length
+    this.play(this.ind);
   }
+
+  sweetalert(){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: 'Paid one... Please Pay to listen',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    
+  }
+
 }

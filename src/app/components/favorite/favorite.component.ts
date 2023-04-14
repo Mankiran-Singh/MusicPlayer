@@ -33,6 +33,7 @@ export class FavoriteComponent {
     })).subscribe((res)=>{
     })
   }
+
   logOut(){
     this.authService.logOut().subscribe(()=>{
       this.router.navigate(['login'])
@@ -74,7 +75,6 @@ export class FavoriteComponent {
     .subscribe((res)=>{
       this.fireService.putAudiourl(audio.res,audio.res.id).subscribe((res)=>{
         console.log(res)
-        this.router.navigate(['home'])
       })
     })
   }

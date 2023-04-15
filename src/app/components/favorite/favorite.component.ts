@@ -55,6 +55,16 @@ export class FavoriteComponent {
     this.audio.load()
     this.audio.play()
     this.audioArray[j].res.play=false;
+    if(this.audioArray[j].res.play==false){
+      for(let i=j+1;i<this.audioArray.length;i++)
+      {
+        this.audioArray[i].res.play= true;
+      }
+      for(let i=j-1;i>=0;i--)
+      {
+        this.audioArray[i].res.play= true;
+      }
+    }
   }
 
   urlSound=''

@@ -54,18 +54,28 @@ export class RecentPlayedComponent {
     
   playable=false;
   pauseAudio(j:any) { 
-    console.log("==>"+this.audioArray[j].url)
-    this.audio.src=this.audioArray[j].url
+   // console.log("==>"+this.audioArray[j].url)
+    this.audio.src=this.newArray[j].url
     this.audio.pause();
-    this.audioArray[j].play=true;
+    this.newArray[j].play=true;
   } 
 
   play(j:any){
-    console.log("===>",this.audioArray[j].url)
-    this.audio.src=this.audioArray[j].url,
+   // console.log("===>",this.audioArray[j].url)
+    this.audio.src=this.newArray[j].url,
     this.audio.load()
     this.audio.play()
-    this.audioArray[j].play=false;
+    this.newArray[j].play=false;
+    if(this.newArray[j].play==false){
+      for(let i=j+1;i<this.newArray.length;i++)
+      {
+        this.newArray[i].play= true;
+      }
+      for(let i=j-1;i>=0;i--)
+      {
+        this.newArray[i].play= true;
+      }
+    }
   }
   logOut(){
     this.authService.logOut().subscribe(()=>{

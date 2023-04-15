@@ -68,7 +68,8 @@ export class AudioComponent implements OnInit{
   }
   
   hide=false;
-  hideContainer(){
+  hideContainer(j:any){
+    this.pauseAudio(j);
      this.hide=true;
   }
  

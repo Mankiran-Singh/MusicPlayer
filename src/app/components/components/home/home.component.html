@@ -79,10 +79,10 @@
         <td>
           <div class="pay">
             <ng-container *ngIf="audio.amount==0;else pay">
-              <button id='paid' class="btn btn-success">₹0</button>
+              <button id='paid' class="btn btn-success">$0</button>
             </ng-container>
             <ng-template #pay>
-              <button id='pay' (click)="makePayment(audio.amount,j,audio.id,audio)" class="btn btn-danger btn-block">₹{{audio.amount}}</button>
+              <button id='pay' (click)="makePayment(audio.amount,j,audio.id,audio)" class="btn btn-danger btn-block">${{audio.amount}}</button>
             </ng-template>
           </div>
         </td>

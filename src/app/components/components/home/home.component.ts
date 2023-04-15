@@ -113,6 +113,7 @@ export class HomeComponent {
       })
   } 
 
+  // k=this.audioArray.length;
   play(j:any){
     if(this?.arrayPayment[j]?.token==undefined && this.audioArray[j].amount!=0){
       this.sweetAlert2();
@@ -123,12 +124,14 @@ export class HomeComponent {
       this.audio.play()
       this.audioArray[j].play=false;
       if(this.audioArray[j].play==false){
-        for(let i=0;i<j;i++){
-           this.audioArray[i].play=true;
+        for(let i=j+1;i<this.audioArray.length;i++)
+        {
+          this.audioArray[i].play= true;
         }
-        for(let i=j+1;i<this.audioArray[j].length;i++){
-          this.audioArray[i].play=true
-        } 
+        for(let i=j-1;i>=0;i--)
+        {
+          this.audioArray[i].play= true;
+        }
       }
     }
   }

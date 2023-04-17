@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
 })
 export class AudioComponent implements OnInit{
 
-  urlBackground=Images.back
+  urlBackground=Images.urlImage
   urlPlay=Images.urlPlay;
   urlPause=Images.urlPause;
   urlNextSong=Images.nextSong;
@@ -37,11 +37,9 @@ export class AudioComponent implements OnInit{
   ngOnInit(){
      console.log(this.index,this.arraySongs)
      this.ind=this.index;
-    //  this.arraySongs[this.index].songPlay=false;
      this.songPlayer=this.arraySongs[this.index]
      this.play(this.index)
-    // this.arraySongs[this.index].play=false;
-     console.log("=>",this.songPlayer)
+     this.arraySongs[this.index].play=false;
   }
 
   audio=new Audio();
@@ -113,7 +111,7 @@ export class AudioComponent implements OnInit{
       obj.removeEventListener(event,handler)
    });
   }
-  formatTime(time: number, format: string = "HH:mm:ss") {
+  formatTime(time: number, format = "HH:mm:ss") {
     const momentTime = time * 1000;
     return moment.utc(momentTime).format(format);
   }
@@ -121,11 +119,13 @@ export class AudioComponent implements OnInit{
   nextSong(audioObj:any,j:any){
       this.songPlayer=this.arraySongs[(j+1)%this.arraySongs.length] 
       this.pauseAudio(j);
+      this.arraySongs[j].play=true
       this.ind=(j+1)%this.arraySongs.length
       if(this.arraySongs[this.ind].amount>0){
         this.sweetalert();
       }else{
        this.play(this.ind);
+       this.arraySongs[this.ind].play=false;
       }
   }
 

@@ -15,11 +15,11 @@ import { CourseguardService } from './services/courseguard.service';
 
 const routes: Routes = [
   {path:'',redirectTo:'signup',pathMatch:'full'},
-  {path:'login',component:LoginComponent,},
-  {path:'signup',component:SignupComponent,},
+  {path:'login',component:LoginComponent,canActivate:[AuthguardService]},
+  {path:'signup',component:SignupComponent,canActivate:[AuthguardService]},
   {path:'forgotpassword',component:ForgotPasswordComponent},
   {path:'reset',component:ResetPasswordComponent},
-  {path:'home',component:HomeComponent,},
+  {path:'home',component:HomeComponent,canActivate:[CourseguardService]},
   {path:'addsongs',component:AddSongsComponent},
   {path:'songs',component:SongsComponent},
   {path:'otp',component:OtpComponent},

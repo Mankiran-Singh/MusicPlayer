@@ -40,7 +40,7 @@ export class OtpComponent {
          this.stringOtp+=value
       }
       console.log(this.stringOtp)
-      var credential = firebase.auth.PhoneAuthProvider.credential(this.code,this.stringOtp);
+      const credential = firebase.auth.PhoneAuthProvider.credential(this.code,this.stringOtp);
       firebase.auth().signInWithCredential(credential).then((res)=>{
         console.log(res)
         this.router.navigate(['home'])

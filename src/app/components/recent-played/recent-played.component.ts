@@ -31,17 +31,17 @@ export class RecentPlayedComponent {
         }
       }
     })).subscribe((res:any)=>{
-      for (let i in this.audioArray) {
+      for (const i in this.audioArray) {
               
         // Extract the title
-       let objTitle = this.audioArray[i]['id'];
+       const objTitle = this.audioArray[i]['id'];
       
         // Use the title as the index
         this.uniqueObject[objTitle] = this.audioArray[i];
     }
       
     // Loop to push unique object into array
-    for (let i in this.uniqueObject) {
+    for (const i in this.uniqueObject) {
         this.newArray.push(this.uniqueObject[i]);
     }
       
@@ -79,6 +79,7 @@ export class RecentPlayedComponent {
   }
   logOut(){
     this.authService.logOut().subscribe(()=>{
+      localStorage.removeItem('verificationId')
       this.router.navigate(['login'])
     })
   }
@@ -106,8 +107,10 @@ export class RecentPlayedComponent {
       })
   }
 
+  open=false;
   openSongs(arraySongs:any){
     this.authService.raiseDataEmitterEvent(arraySongs)
+    this.open=true
   }
 }
 

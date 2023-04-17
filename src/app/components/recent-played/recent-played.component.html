@@ -6,11 +6,11 @@
         
             <input style="border-radius: 50px;height: 30px;width:200px;position:relative;top: 12px;"class="form-control mr-2" type="search" placeholder="Search" aria-label="Search"  #myInput>
             <ul style="color:rgb(255, 255, 255);position:relative;top:50px;right:450px;" (click)="openSongs(audioSongsArray)">
-                  <div style="position: relative;top:200px;left:500px;border-radius: 50px;">
-                    <app-songs></app-songs>
-                  </div>
-                  <li>{{reqData}}</li>
-            </ul>      
+              <div *ngIf="open"style="position: relative;top:200px;left:500px;border-radius: 50px;">
+                <app-songs></app-songs>
+              </div>
+              <li>{{reqData}}</li>
+            </ul>    
       
             <ul>
                 <li style="color: white;position: relative;top: 12px;" (click)="logOut()"><span class="material-icons">logout</span></li>

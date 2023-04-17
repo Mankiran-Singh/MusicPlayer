@@ -5,7 +5,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 export class WindowService {
 
-  constructor() { }
 
   get windowRef(){
      return window

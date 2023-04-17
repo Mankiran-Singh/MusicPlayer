@@ -9,7 +9,8 @@ export const Images={
  delete:'./assets/delete.png',
  back:'./assets/back.avif',
  nextSong:'./assets/nextSong.png',
- previousSong:'./assets/backSong.png'
+ previousSong:'./assets/backSong.png',
+ urlImage:'./assets/backgroundImage.jpeg'
 }
 export const Constant = {
     Auth : {

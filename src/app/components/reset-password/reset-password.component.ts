@@ -15,8 +15,8 @@ import { Auth } from '@angular/fire/auth';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent {
-  visible:boolean = true;
-  changetype:boolean =true;
+  visible = true;
+  changetype =true;
   url=Images.url
   viewpass(){
     this.visible = !this.visible;

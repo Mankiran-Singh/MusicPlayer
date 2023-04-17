@@ -26,7 +26,7 @@ export class FavoriteComponent {
     this.fireService.getAudioFavourite().pipe(map((res:any)=>{
       for(const key in res){
         if(res.hasOwnProperty(key)){
-          let array:any=Object.values(res[key])
+          const array:any=Object.values(res[key])
           this.audioArray.push({'res':array[0].audio,'index':array[0].index,'id':key})        
         }
       }
@@ -89,8 +89,10 @@ export class FavoriteComponent {
     })
   }
 
+  open=true;
   openSongs(arraySongs:any){
     this.authService.raiseDataEmitterEvent(arraySongs)
+    this.open=!this.open
   }
 
   reqData:any;

@@ -63,8 +63,8 @@ export class SignupComponent {
   goToLogin(){
     this.router.navigate(['login'])
   }
-  visible:boolean = true;
-  changetype:boolean =true;
+  visible = true;
+  changetype =true;
 
   viewpass(){
     this.visible = !this.visible;

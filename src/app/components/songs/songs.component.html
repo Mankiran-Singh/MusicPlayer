@@ -1,10 +1,13 @@
-  <table>
-    <tr *ngFor="let song of particularSong">
-      <td>
-        <img [src]="song.image" style="position: relative;left:10px;">
-        <audio controls="controls">
-        <source [src]="song.url">
-        </audio>
-      </td>
-    </tr>
-  </table>
+  <div *ngIf="!hide" class="container">
+    <table>
+       <!-- <ul style="color: white;position: relative;right:10px;"  (click)="hideContainer()">X</ul> -->
+      <tr *ngFor="let song of particularSong">
+        <td>
+          <img [src]="song.image" (click)="hideContainer()"   style="position:relative;left:10px;">
+          <audio controls="controls">
+          <source [src]="song.url">
+          </audio>
+        </td>
+      </tr>
+    </table>
+  </div>

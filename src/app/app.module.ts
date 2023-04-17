@@ -41,7 +41,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FavoriteComponent } from './components/favorite/favorite.component';
 import { AudioComponent } from './components/audio/audio.component';
 import { RecentPlayedComponent } from './components/recent-played/recent-played.component';
-import { StripeComponent } from './components/stripe/stripe.component';
 import { CourseguardService } from './services/courseguard.service';
 import { AuthguardService } from './services/authguard.service';
 @NgModule({
@@ -58,7 +57,6 @@ import { AuthguardService } from './services/authguard.service';
     FavoriteComponent,
     AudioComponent,
     RecentPlayedComponent,
-    StripeComponent
   ],
   imports: [
     BrowserModule,

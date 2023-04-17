@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-export let arraySongs:any=[];
+export const arraySongs:any=[];
 export const environment={
   firebase: {
     projectId: 'spotify-32974',
@@ -14,7 +14,7 @@ export const environment={
 };
 
 
-export let passwordsDontMatch=false;
+export const passwordsDontMatch=false;
 export function passwordsMatchValidator():ValidatorFn{
   return(control:AbstractControl):any=>{
     const password=control.get('password')?.value 

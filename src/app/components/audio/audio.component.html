@@ -1,6 +1,7 @@
 <div class="container" *ngIf="!hide">
-   <ul style="color:black;position: relative;left:155px;border-radius: 50px;top:10px;width:30px;"  (click)="hideContainer(ind)">X</ul>
-   <img [src]="urlBackground">
+   <ul style="color:#faf8f8;position: relative;left:150px;border-radius: 50px;top:10px;width:30px;"  (click)="hideContainer(ind)">X</ul>
+   <img [src]="urlBackground" style=" border: solid 2px rgb(255, 255, 255);
+   margin: -2px;">
    <!-- <tr *ngFor="let audio of songPlayer;let j=index"> -->
     <td><img style="position:relative;bottom:170px;left:30px;width:130px;height:130px;" [src]="songPlayer.image"></td>
      <td>
@@ -22,9 +23,8 @@
         <div class="align">
          <h4>{{currentTime}}</h4>
          <input style="position:relative;right: 215px;"class="timeline" type="range" min="0" max="{{duration}}" [value]="seek" (input)="setSeekTo($event)">
-         <h3 style="font-size: smaller;position:relative;right: 100px;bottom:30px;">{{duration}}</h3>
+         <h3 style="font-size: smaller;position:relative;right: 110px;bottom:30px;">{{duration}}</h3>
          <mat-icon style="color: white;">volume_up</mat-icon><input style="position:relative;right: 215px;bottom:80px;width:40px;" class="timeline" type="range" min="0" max="1" step="0.01" value="0.5" (input)="setVolume($event)">
         </div> 
       </td> 
-   <!-- </tr> -->
 </div>

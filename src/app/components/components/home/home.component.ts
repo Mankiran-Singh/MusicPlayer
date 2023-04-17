@@ -67,12 +67,12 @@ export class HomeComponent {
       }
     })).subscribe((res:any)=>{
     })
-    this.invokeStripe();
-    
+    this.invokeStripe(); 
   }
 
   reqData:any;
   audioSongsArray:any=[]
+
   ngAfterViewInit(){
     const search = fromEvent<any>(this.myInput.nativeElement,'keyup').pipe(
       map(event =>event.target.value),
@@ -81,7 +81,9 @@ export class HomeComponent {
      search.subscribe((res:any)=>{
         for(let i=0;i<this.audioArray.length;i++)
         {
-           if(this.audioArray[i].name.includes(res))
+          this.audioArray[i].name=this.audioArray[i].name.toLowerCase();
+          //console.log("+++>",this.audioArray[i].amount)
+           if(this.audioArray[i].name.includes(res.toLowerCase()))
            {
              this.reqData=this.audioArray[i].name
              this.audioSongsArray=this.audioArray[i]
@@ -99,6 +101,7 @@ export class HomeComponent {
   
   logOut(){
     this.authService.logOut().subscribe(()=>{
+      localStorage.removeItem('verificationId')
       this.router.navigate(['login'])
     })
   }
@@ -141,10 +144,14 @@ export class HomeComponent {
     this.isOpen = !this.isOpen;
   }
 
-  open=false;
+  open=true;
   openSongs(arraySongs:any){
-    this.authService.raiseDataEmitterEvent(arraySongs)
-    this.open!=this.open
+    if(arraySongs.amount==0){
+       this.authService.raiseDataEmitterEvent({'image':arraySongs.image,'url':arraySongs.url})
+       this.open=false
+    }else{
+       this.sweetAlert2()
+    }
   }
 
   urlSound=''
@@ -162,6 +169,7 @@ export class HomeComponent {
 
   addImage=false;
   urlDownload:any;
+  addedData=false;
   addData(file:any){
     this.amount=true;
     if(file.type=='audio/mpeg' && this.paymentArray[0].payment!=undefined || null){
@@ -188,7 +196,9 @@ export class HomeComponent {
                     this.audioArray.push({...res[key],'id':key})
                   }
                 }
+                this.addedData=true
               })).subscribe((res)=>{
+        
               })
             })
         })
@@ -225,11 +235,13 @@ export class HomeComponent {
   })
 
   amount=false;
+  submitted=false;
   pay(){
     this.addImage=false;
     console.log(this.payForm.value)
     this.paymentArray.push(this.payForm.value)
     this.amount=true;
+    this.submitted=true;
   }
 
   sweet(){

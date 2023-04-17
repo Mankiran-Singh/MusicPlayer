@@ -12,12 +12,12 @@ particularSong:any=[]
 constructor(private authService:AuthService){}
 ngOnInit(){
   this.authService.dataEmitter.subscribe((res)=>{
-    console.log(res)
     this.particularSong.push(res)
   })
 }
+
 hide=false
   hideContainer(){
-     this.hide=true
+     this.hide=!this.hide
   }
 }

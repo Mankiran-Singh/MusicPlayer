@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CourseguardService } from './courseguard.service';
+import { PlayPauseService } from './play-pause.service';
 
-describe('CourseguardService', () => {
-  let service: CourseguardService;
+describe('PlayPauseService', () => {
+  let service: PlayPauseService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CourseguardService);
+    service = TestBed.inject(PlayPauseService);
   });
 
   it('should be created', () => {

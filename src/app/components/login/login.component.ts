@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Images } from 'src/app/files/constant';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import firebase from 'firebase/compat/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
-import { WindowService } from 'src/app/services/window.service';
+import { getAuth,signInWithPhoneNumber } from 'firebase/auth';
+import { WindowService } from 'src/app/services/recaptcha/window.service';
 import { Auth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 @Component({
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit{
     this.windowRef=this.windowService.windowRef
     this.windowRef.reCaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{
       size:'normal',
-      callback: (response:any)=>{
+      callback: ()=>{
         this.disableOtpSendButton=false
       }
    });
@@ -56,6 +56,10 @@ export class LoginComponent implements OnInit{
   
   get phoneNo(){
     return this.loginForm.get('phoneNo')
+  }
+
+  signUp(){
+    this.router.navigate(['signup'])
   }
    
 }

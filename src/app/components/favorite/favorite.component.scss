@@ -1,36 +1,9 @@
-nav { 
-    height: 60px; 
-    background-image: url("/../assets/backgroundImage.jpeg");    
-  }
-
-  nav ul {
-    width: 480px;
-    list-style-type: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: auto;
-  }
-  nav a {
-    color: white;
-    text-decoration: none;
-  }
-
-  .spotify-logo{
-     width:10%;
-     height:90%;
-     position: relative;
-     right:60px;
-  }
   .container {
     height: inherit; /* get parent height */
     width: 1170px;   /* add 970px for smaller screen */
     margin: 0 auto;
     padding: 0 15px;
     display: flex; 
-  }
-  nav li {
-    font-weight: bold;
   }
 
   .upper { 
@@ -72,16 +45,7 @@ table{
   border-color: aliceblue;
   width:300px;
 }   
-// .dialog-responsive {
-//   width: 40%;
-//   left: 30px;
-// }
 
-// @media only screen and (max-width: 760px) {
-//   .dialog-responsive {
-//       width: 100%;
-//   }
-// }
 .main {
   position: relative;
 }
@@ -164,4 +128,21 @@ h2{
     font-style: italic;
     position: relative;
     left: 500px;
+}
+.audioImage{
+  width:40px;
+  height:40px;
+  border-radius: 50px;
+}
+.play{
+  border-radius: 50px;width:30px
+}
+.pause{
+  border-radius: 50px;width:30px;padding:0px
+}
+.dislike{
+  border-radius: 50px;width:30px
+}
+.like{
+  border-radius: 50px;width:32px;padding:0px
 }

@@ -1,8 +1,8 @@
-.demo{background-image: url("/../assets/dirty-music-background-21777451.jpg");     }
+.demo{background-image: url("/../assets/dirty-music-background-21777451.jpg");}
 .form-container{
-    background-image: url("/../assets/dirty-music-background-21777451.jpg");    
+    background-image: url("/../assets/dirty-music-background-21777451.jpg");
     background: #2a033b ;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Nunito',sans-serif;
     padding: 40px;
     left:100px;
     border-radius: 20px;
@@ -12,11 +12,14 @@
     margin:auto;
     position:relative;
     top:100px;
+    position:relative;left:380px;top:120px;height: 400px;
 }
+
 .form-bg{
-    height:630px;
+    height:668px;
     background-image: url("/../assets/dirty-music-background-21777451.jpg");    
 }
+
 .form-container .form-icon{
     color:rgb(8, 42, 58);
     font-size: 55px;
@@ -26,8 +29,8 @@
     height:70px;
     margin: 0 auto 15px;
     border-radius: 50px;
-    // box-shadow: 7px 7px 10px #cbced1, -7px -7px 10px #fff;
     right: 100px;
+    position:relative;bottom: 28px;right:28px;
 }
 .form-container .title{
     color:rgb(13, 48, 61);
@@ -77,9 +80,9 @@
     padding: 7px 12px 10px;
     border-radius: 20px;
     left: 100px;
-    // box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px #fff;
     border: none;
     transition: all 0.5s ease 0s;
+    position:relative;top:100px;left:2px;
 }
 .form-container .form-horizontal .btn:hover,
 .form-container .form-horizontal .btn:focus{
@@ -111,4 +114,13 @@ h3{
   left:600px;
   border-radius: 50px;
   top:70px;
+}
+.recaptcha-container{
+    width:50px;height:15px;position: relative;right:40px;
+}
+.recaptcha{
+    width:50px;height:15px;position: relative;right:40px;
+}
+h1{
+    color: white;font-size: smaller;position: relative;top: 50px;
 }

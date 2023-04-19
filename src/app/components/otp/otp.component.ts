@@ -2,8 +2,7 @@ import { Component, ViewChildren } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Images } from 'src/app/files/constant';
-import { WindowService } from 'src/app/services/window.service';
-import { environment } from 'src/environments/environment';
+import { WindowService } from 'src/app/services/recaptcha/window.service';
 import firebase from 'firebase/compat/app';
 import Swal from 'sweetalert2';
 @Component({
@@ -36,10 +35,11 @@ export class OtpComponent {
   showErrors=false;
   verifyOtp(){
     if(this.otpForm.valid){
-      for (const [key, value] of Object.entries(this.otpForm.value)) {
+      for (const [key,value] of Object.entries(this.otpForm.value)) {
          this.stringOtp+=value
       }
       console.log(this.stringOtp)
+      console.log(this.code)
       const credential = firebase.auth.PhoneAuthProvider.credential(this.code,this.stringOtp);
       firebase.auth().signInWithCredential(credential).then((res)=>{
         console.log(res)

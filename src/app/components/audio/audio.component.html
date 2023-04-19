@@ -1,29 +1,27 @@
 <div class="container" *ngIf="!hide">
-   <ul style="color:#faf8f8;position: relative;left:150px;border-radius: 50px;top:10px;width:30px;"  (click)="hideContainer(ind)">X</ul>
-   <img [src]="urlBackground" style=" border: solid 2px rgb(255, 255, 255);
-   margin: -2px;">
-   <!-- <tr *ngFor="let audio of songPlayer;let j=index"> -->
-    <td><img style="position:relative;bottom:170px;left:30px;width:130px;height:130px;" [src]="songPlayer.image"></td>
+   <ul (click)="hideContainer(ind)">X</ul>
+   <img [src]="urlBackground" class="background">
+    <td><img class="songPlayImage" [src]="songPlayer?.image"></td>
      <td>
-        <ng-container *ngIf="songPlayer.songPlay;else pause">
-          <button id="play" style="width:38px;position:relative;right:50px;bottom:40px;" (click)="play(ind)"><img style="border-radius: 50px;height: 30px;width:30px;" [src]="urlPlay"></button>
+        <ng-container *ngIf="songPlayer?.songPlay;else pause">
+          <button id="play" class="play" (click)="play(ind)"><img class="playImage" [src]="urlPlay"></button>
         </ng-container>
         <ng-template #pause>
-          <button  id="pause" style="width:38px;position:relative;right:50px;bottom:40px;" (click)="pauseAudio(ind)"><img style="border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;" [src]="urlPause"></button>
+          <button  id="pause" class="pause" (click)="pauseAudio(ind)"><img class="pauseImage" [src]="urlPause"></button>
         </ng-template>
       </td>
       <td>
-         <button id="play" style="width:38px;position:relative;right:45px;bottom:40px;" ><img style="border-radius: 50px;height: 30px;width:30px;" [src]="urlNextSong" (click)="nextSong(audio,ind)"></button>
+         <button class="nextSong"><img class="nextSongImage" [src]="urlNextSong" (click)="nextSong(ind)"></button>
       </td>
       <td>
-         <button  id="pause" style="width:38px;position:relative;right:175px;bottom:40px;" ><img style="border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;" [src]="urlPreviousSong" (click)="previousSong(audio,ind)"></button>
+         <button class="previousSong"><img class="previousSongImage" [src]="urlPreviousSong" (click)="previousSong(ind)"></button>
       </td>
       <br>
       <td>
         <div class="align">
          <h4>{{currentTime}}</h4>
-         <input style="position:relative;right: 215px;"class="timeline" type="range" min="0" max="{{duration}}" [value]="seek" (input)="setSeekTo($event)">
-         <h3 style="font-size: smaller;position:relative;right: 110px;bottom:30px;">{{duration}}</h3>
+         <input style="position:relative;right: 215px;" class="timeline" type="range" min="0" max="{{duration}}" [value]="seek" (input)="setSeekTo($event)">
+         <h3>{{duration}}</h3>
          <mat-icon style="color: white;">volume_up</mat-icon><input style="position:relative;right: 215px;bottom:80px;width:40px;" class="timeline" type="range" min="0" max="1" step="0.01" value="0.5" (input)="setVolume($event)">
         </div> 
       </td> 

@@ -126,3 +126,39 @@ button{
     left:250px;
     bottom:100px;
   }
+ul{
+  color:#faf8f8;position: relative;left:150px;border-radius: 50px;top:10px;width:30px;
+}
+.songPlayImage{
+  position:relative;bottom:170px;left:30px;width:130px;height:130px;
+}
+.background{
+   border: solid 2px rgb(255, 255, 255); margin: -2px;
+}
+.play{
+  width:38px;position:relative;right:50px;bottom:40px;
+}
+.pause{
+  width:38px;position:relative;right:50px;bottom:40px;
+}
+.nextSong{
+  width:38px;position:relative;right:45px;bottom:40px;
+}
+.previousSong{
+  width:38px;position:relative;right:175px;bottom:40px;
+}
+.nextSongImage{
+  border-radius: 50px;height: 30px;width:30px;
+}
+.previousSongImage{
+  border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;
+}
+.playImage{
+  border-radius: 50px;height: 30px;width:30px;
+}
+.pauseImage{
+  border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;
+}
+h3{
+  font-size: smaller;position:relative;right: 110px;bottom:30px;
+}

@@ -10,9 +10,10 @@
     width: 300px;
     left: 100px;
     margin:auto;
+    position:relative;left:380px;top:20px
 }
 .form-bg{
-    height:630px;
+    height:668px;
     background-image: url("/../assets/dirty-music-background-21777451.jpg");    
 }
 .form-container .form-icon{
@@ -24,8 +25,8 @@
     height:70px;
     margin: 0 auto 15px;
     border-radius: 50px;
-    // box-shadow: 7px 7px 10px #cbced1, -7px -7px 10px #fff;
     right: 100px;
+    position:relative;bottom: 28px;right:28px
 }
 
 .form-container .form-horizontal .form-group{ margin: 0 0 25px 0;left: 100px;

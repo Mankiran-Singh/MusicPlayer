@@ -1,0 +1,48 @@
+<nav>
+  <div class="container">
+    <img class="spotify-logo" [src]="url" alt="spotify-logo">
+    <h3>Mimify</h3>
+    <input class="search" type="search" placeholder="Search" aria-label="Search" #myInput>
+    <ul class="song" (click)="openSongs(audioSongsArray)">
+      <div [hidden]="open" class="app-songs">
+        <app-songs></app-songs>
+      </div>
+      <li>{{reqData}}</li>
+    </ul>
+    <ul>
+      <li (click)="logOut()"><span class="material-icons">logout</span></li>
+      <li><a routerLink="profile"><mat-icon>account_circle</mat-icon></a></li>
+      <li><a routerLink=""><mat-icon>home</mat-icon></a></li>
+      <li><a routerLink="favorite"><mat-icon>favorite</mat-icon></a></li>
+      <li><a routerLink="recent"><mat-icon>volume_up</mat-icon></a></li>
+      <div class="main">
+        <li (click)="toggleDialog()"><mat-icon>note_add</mat-icon></li>
+        <div *ngIf="isOpen" class="dialog">
+          <mat-dialog-content>
+            <mat-dialog-actions>
+              <input class="chooseFile" type="file" (change)="chooseFile($event)"><br/>
+              <button class="dataButton" [hidden]="!amount" (click)="addData(file)">
+                <mat-icon class="fileIcon">file_upload</mat-icon>
+                  <div *ngIf="amount">
+                    <h6>Amount Added</h6>
+                  </div>
+              </button>
+              <button class="addImage" (click)="uploadImage(file)">
+                <mat-icon class="matIconImage">image_upload</mat-icon>
+                <div *ngIf="addImage">
+                  <h6>Image added</h6>
+                </div>
+              </button>
+              <li mat-button mat-dialog-close><mat-icon style="color: white;">mat-dialog-close</mat-icon></li>
+              <form [formGroup]="payForm" (ngSubmit)="pay()" [hidden]="!addImage">
+                <input class="pay" type="number" formControlName="payment" placeholder="Amount...">
+                <button class="submit" type="submit">Add</button>
+              </form>
+            </mat-dialog-actions>
+          </mat-dialog-content>
+        </div>
+      </div>
+    </ul>
+  </div>
+</nav>
+<router-outlet></router-outlet>

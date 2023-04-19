@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, last } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Images } from 'src/app/files/constant';
 import * as moment from 'moment';
-import Swal from 'sweetalert2'
+import { FirebaseService } from 'src/app/services/firebase/firebase.service';
+import { PlayPauseService } from 'src/app/services/playPause/play-pause.service';
 @Component({
   selector: 'app-audio',
   templateUrl: './audio.component.html',
@@ -19,8 +20,9 @@ export class AudioComponent implements OnInit{
   @Input() arraySongs:any=[]
   @Input() index:any;
   @Input() audioPlay:any
-  songPlayer:any={}
 
+  songPlayer:any={}
+  constructor(private fireService:FirebaseService,private playPause:PlayPauseService){}
   audioEvents = [
     "ended",
     "error",
@@ -38,29 +40,29 @@ export class AudioComponent implements OnInit{
      console.log(this.index,this.arraySongs)
      this.ind=this.index;
      this.songPlayer=this.arraySongs[this.index]
-     this.play(this.index)
-     this.arraySongs[this.index].play=false;
+     this?.play(this.index)
+     this.arraySongs[this.index].play=true;
+     this.fireService.postRecentlyPlayed(this.arraySongs[this.index]).subscribe()
   }
 
   audio=new Audio();
   playable=false;
   pauseAudio(j:any) { 
-    console.log("==>"+this.arraySongs[j].url)
-    this.audio.src=this.arraySongs[j].url
+    this.audio.src=this.arraySongs[j]?.url
     this.audio.pause();
     this.arraySongs[j].songPlay=true;
   } 
+  
   currentTime:any=0;
   duration:any=0;
   seek:any=0;
   play(j:any){
-    if(this.arraySongs[j].amount>0){
-     this.sweetalert();
+    if(this.arraySongs[j]?.amount>0){
+     this.playPause.sweetAlert2();
     }
     else{
      this.arraySongs[j].songPlay=false;
-     this.streamObserver(this.arraySongs[j].url).subscribe((res)=>{
-      console.log(res)
+     this.streamObserver(this.arraySongs[j]?.url).subscribe(()=>{
      })
     }
   }
@@ -81,11 +83,11 @@ export class AudioComponent implements OnInit{
   }
    
   streamObserver(url:any){
-    return new Observable((observer:any)=>{
+    return new Observable(()=>{
       this.audio.src=url
       this.audio.load();
       this.audio.play();
-      const handler= (event:Event)=>{
+      const handler= ()=>{
         this.seek=this.audio.currentTime
         this.duration=this.formatTime(this.audio.duration)
         this.currentTime=this.formatTime(this.audio.currentTime)
@@ -106,45 +108,49 @@ export class AudioComponent implements OnInit{
          obj.addEventListener(event,handler)
       });
   }
+
   removeEvent(obj:any, events:any,handler:any){
     events.forEach((event:any) => {
       obj.removeEventListener(event,handler)
    });
   }
+
   formatTime(time: number, format = "HH:mm:ss") {
     const momentTime = time * 1000;
     return moment.utc(momentTime).format(format);
   }
  
-  nextSong(audioObj:any,j:any){
+  nextSong(j:any){
       this.songPlayer=this.arraySongs[(j+1)%this.arraySongs.length] 
       this.pauseAudio(j);
       this.arraySongs[j].play=true
       this.ind=(j+1)%this.arraySongs.length
       if(this.arraySongs[this.ind].amount>0){
-        this.sweetalert();
+        this.playPause.sweetAlert2();
       }else{
        this.play(this.ind);
        this.arraySongs[this.ind].play=false;
+       this.arraySongs[this.ind].play=true;
+       this.fireService.postRecentlyPlayed(this.arraySongs[this.ind]).subscribe()
       }
-  }
+    }
 
-  previousSong(audioObj:any,j:any){
-    this.songPlayer=this.arraySongs[(j-1)%this.arraySongs.length] 
+  previousSong(j:any){
+    this.songPlayer=this.arraySongs[(j-1)] 
     this.pauseAudio(j);
-    this.ind=(j-1)%this.arraySongs.length
-    this.play(this.ind);
+    this.arraySongs[j].play=true
+    this.ind=(j-1)
+    if(j-1<0){
+      this.songPlayer=this.arraySongs[this.arraySongs.length-1]
+      this.ind=this.arraySongs.length-1
+    }
+    if(this.arraySongs[this.ind].amount>0){
+      this.playPause.sweetAlert2();
+    }else{
+     this.play(this.ind);
+     this.arraySongs[this.ind].play=false;
+     this.arraySongs[this.ind].play=true;
+     this.fireService.postRecentlyPlayed(this.arraySongs[this.ind]).subscribe()
+    }
   }
-
-  sweetalert(){
-    Swal.fire({
-      position: 'top-end',
-      icon: 'error',
-      title: 'Paid one... Please Pay to listen',
-      showConfirmButton: false,
-      timer: 1500
-    })
-    
-  }
-
 }

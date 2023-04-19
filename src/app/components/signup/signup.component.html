@@ -3,10 +3,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                <div class="form-container" style="position:relative;left:380px;top:20px">
-                    <div class="form-icon" style="position:relative;bottom: 28px;right:28px"><img [src]='url' width="100px"></div>
+                <div class="form-container">
+                    <div class="form-icon"><img [src]='url' width="100px"></div>
 
-                    <form class="form-horizontal justify-content-center align-item-center;margin:auto" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+                    <form class="form-horizontal" [formGroup]="signUpForm" (ngSubmit)="signUp()">
                       <div class="form-group">
                         <input class="form-control" type="text" placeholder="Name" formControlName="name"><br>
                         <span style="font-size: small;color:rgb(251, 251, 252)"*ngIf="name && name.invalid && name.errors?.['required'] && showErrors">This field is not valid</span>
@@ -32,7 +32,10 @@
                      <!-- <span  style="font-size: small;color:rgb(251, 251, 252)" *ngIf="signUpForm.errors?.['passwordsDontMatch']">
                       Passwords should Match
                      </span> -->
-
+                        <div class="form-group">
+                            <input formControlName="file" id="file" type="file"  (change)="onFileChange($event)">
+                            <span style="font-size: small;color:rgb(251, 251, 252)"*ngIf="file && file.invalid && file.errors?.['required'] && showErrors">This field is not valid</span>
+                          </div>
                         <button type="button" type="submit" class="btn btn-default" [disabled]="">Sign Up</button><br>
                          <h2 style="color: white;font-size:medium;">Already Registered ?</h2>
                         <button type="button" class="btn btn-default" (click)="goToLogin()">Login</button>

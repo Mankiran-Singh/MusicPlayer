@@ -1,51 +1,18 @@
-<div style="overflow-y: hidden;overflow-x: hidden;">
-    <nav> 
-        <div class="container">
-          <img class="spotify-logo" [src]="url" alt="spotify-logo">
-          <h3 style="color:aliceblue;position:relative;right:60px;top:12px;font-style: oblique;">Mimify</h3>
-        
-            <input style="border-radius: 50px;height: 30px;width:200px;position:relative;top: 12px;"class="form-control mr-2" type="search" placeholder="Search" aria-label="Search"  #myInput>
-            <ul style="color:rgb(255, 255, 255);position:relative;top:50px;right:450px;" (click)="openSongs(audioSongsArray)">
-              <div *ngIf="open"style="position: relative;top:200px;left:500px;border-radius: 50px;">
-                <app-songs></app-songs>
-              </div>
-              <li>{{reqData}}</li>
-            </ul>    
-      
-            <ul>
-                <li style="color: white;position: relative;top: 12px;" (click)="logOut()"><span class="material-icons">logout</span></li>
-                <li style="width:40px;color: white;position: relative;top: 12px;">
-                  <mat-icon>account_circle</mat-icon>
-                </li>
-              
-              <li style="position: relative;top: 12px;"><a href="home"><mat-icon>home</mat-icon></a></li>
-              <li style="position: relative;top: 12px;"><a href="favorite"><mat-icon>favorite</mat-icon></a></li> 
-              <li style="position: relative;top: 12px;"><a href="recent"><mat-icon>volume_up</mat-icon></a></li> 
-            </ul>  
-          </div>
-      </nav>
+  <div style="overflow-y: hidden;overflow-x: hidden;">
     <div class="upper" style="overflow-y: hidden;">
         <h2 style="color:beige;text-align: center;">Recently Played</h2>
       <br>
       <table>
-        <tr *ngFor="let audio of newArray;let j=index">
-          <td><img style=' width:40px;
-            height:40px;
-            border-radius: 50px;position:relative;left:30px;top:13px;'[src]='audio.image'></td>
+        <tr *ngFor="let audio of newAudioArray;let j=index">
+          <td><img class="addImage" [src]='audio.image'></td>
             <td><ul style="padding: 0px;position: fixed;">{{audio.name}}
-              <!-- <ng-container *ngIf="!audio.audioPlay && audio.showAudio">
-                <div class="app-songs">
-                  <app-audio [arraySongs]="audioArray" [index]="j"></app-audio>
-                </div>
-              </ng-container>-->
             </ul></td>
-          
           <td>
             <ng-container *ngIf="audio.play;else pause">
-             <button id="play" style="width:38px;position:relative;left:150px;top:10px;" (click)="play(j)"><img style="border-radius: 50px;width:30px" [src]="urlPlay"></button>
+             <button id="play" class="play" (click)="play(j)"><img class="playImage" [src]="urlPlay"></button>
              </ng-container>
             <ng-template #pause>
-              <button  id="pause" style="width:38px;position:relative;left:150px;top:10px;" (click)="pauseAudio(j)"><img style="border-radius: 50px;width:30px;padding:0px" [src]="urlPause"></button>
+              <button  id="pause" class="pause" (click)="pauseAudio(j)"><img class="pauseImage" [src]="urlPause"></button>
             </ng-template>
           </td>
           <td>

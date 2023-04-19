@@ -12,28 +12,4 @@ export const Images={
  previousSong:'./assets/backSong.png',
  urlImage:'./assets/backgroundImage.jpeg'
 }
-export const Constant = {
-    Auth : {
-       login: 'Login',
-       signIn : 'User/Registration',
-       url:''
-    },
-    
-   Url :
-   {
-     changePassword :'Password/ChangePassword',
-     resetPassword :'Password/ResetPassword',
-     sendMail :'Password/ForgetPassword',
-     logout :'Login/logOut',
-     googleLogin : 'Login/GoogleAuth',
-     user :'User',
-     fileUpload:'File/file',
-     profile:'User/profile',
-     update:'User',
-     profileImage:'File/Profileimage'
-   },
-   urlStorage:
-   {
-      urlDownload:'gs://spotify-32974.appspot.com/mimify'
-   }
-}
+

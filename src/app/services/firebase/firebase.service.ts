@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
 export class FirebaseService {
   constructor(private http:HttpClient) { }
   urlDownload='gs://spotify-32974.appspot.com/mimify'

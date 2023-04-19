@@ -1,36 +1,10 @@
-nav { 
-    height: 60px; 
-    background-image: url("/../assets/backgroundImage.jpeg");    
-  }
 
-  nav ul {
-    width: 480px;
-    list-style-type: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: auto;
-  }
-  nav a {
-    color: white;
-    text-decoration: none;
-  }
-
-  .spotify-logo{
-     width:10%;
-     height:90%;
-     position: relative;
-     right:60px;
-  }
   .container {
     height: inherit; /* get parent height */
     width: 1170px;   /* add 970px for smaller screen */
     margin: 0 auto;
     padding: 0 15px;
     display: flex; 
-  }
-  nav li {
-    font-weight: bold;
   }
 
   .upper { 
@@ -71,16 +45,7 @@ table{
   border-color: aliceblue;
   width:300px;
 }   
-// .dialog-responsive {
-//   width: 40%;
-//   left: 30px;
-// }
 
-// @media only screen and (max-width: 760px) {
-//   .dialog-responsive {
-//       width: 100%;
-//   }
-// }
 .main {
   position: relative;
 }
@@ -100,7 +65,7 @@ table{
 }
 .app-songs{
  position: relative;
- left:400px;
+ left:600px;
  bottom: 100px;
  padding: 0px;
 }
@@ -152,13 +117,46 @@ audio::-webkit-media-controls-volume-slider {
    right:300px;
    left:100px;
 }
-audio::-webkit-media-controls-mute-button {
+audio::-webkit-media-controls-mute-button{
   background-color: #B1D4E0;
   border-radius: 50%;
 }
 
 .pay{
   position: relative;
-  left:130px;
-  top:10px;
+  right:170px;
+  bottom:5px;
+}
+.audioImage{
+  width:40px;
+  height:40px;
+  border-radius: 50px;
+  position:relative;
+  bottom:5px;
+  left: 30px;
+}
+.like{
+  width:38px;position:relative;right:180px;bottom:5px;
+}
+.dislike{
+  width:38px;position:relative;right:180px;bottom:5px;
+}
+.play{
+  width:38px;position:relative;left:150px;top:10px;
+}
+.pause{
+  width:38px;position:relative;left:150px;top:10px;
+}
+.playImage{
+  border-radius: 50px;width:30px
+}
+.pauseImage{
+  border-radius: 50px;width:30px;padding:0px
+}
+.getAudio{
+  position: fixed;
+}
+.alignText{
+  position: relative;
+  right: 200px;
 }

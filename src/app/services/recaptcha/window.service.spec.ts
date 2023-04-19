@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-
-import { WindowService } from './window.service';
+import { WindowService } from 'src/app/services/recaptcha/window.service';
 
 describe('WindowService', () => {
   let service: WindowService;

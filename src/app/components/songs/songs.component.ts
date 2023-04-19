@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component,OnInit } from '@angular/core';
+import { DialogService } from 'src/app/services/events/dialog.service';
 
 @Component({
   selector: 'app-songs',
@@ -9,9 +9,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SongsComponent implements OnInit{
 
 particularSong:any=[]
-constructor(private authService:AuthService){}
+constructor(private dialog:DialogService){}
 ngOnInit(){
-  this.authService.dataEmitter.subscribe((res)=>{
+  this.dialog.dataEmitter.subscribe((res)=>{
     this.particularSong.push(res)
   })
 }

@@ -37,7 +37,6 @@ export class AudioComponent implements OnInit{
    ind:any=0;
    audioPlayable=false;
   ngOnInit(){
-     console.log(this.index,this.arraySongs)
      this.ind=this.index;
      this.songPlayer=this.arraySongs[this.index]
      this?.play(this.index)
@@ -75,7 +74,6 @@ export class AudioComponent implements OnInit{
  
   setVolume(event:any){
     this.audio.volume=event.target.value
-    console.log("===>",event.target.value)
   }
 
   setSeekTo(event:any){
@@ -91,7 +89,6 @@ export class AudioComponent implements OnInit{
         this.seek=this.audio.currentTime
         this.duration=this.formatTime(this.audio.duration)
         this.currentTime=this.formatTime(this.audio.currentTime)
-        console.log("===>",this.currentTime)
       }
       this.addEvent(this.audio,this.audioEvents,handler);
 

@@ -67,10 +67,8 @@ export class FavoriteComponent{
   disLike(audio:any,audioid:any,j:any){
     console.log("===>",audioid)
     this.audioArray[j].res.like=true
-    this.fireService.deleteFavourites(audioid)
-    .subscribe(()=>{
-      this.fireService.putAudiourl(audio.res,audio.res.id).subscribe((res)=>{
-        console.log(res)
+    this.fireService.deleteFavourites(audioid).subscribe(()=>{
+      this.fireService.putAudiourl(audio.res,audio.res.id).subscribe(()=>{
       })
     })
   }

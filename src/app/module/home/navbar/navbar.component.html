@@ -11,8 +11,8 @@
     </ul>
     <ul>
       <li (click)="logOut()"><span class="material-icons">logout</span></li>
-      <li><a routerLink="profile"><mat-icon>account_circle</mat-icon></a></li>
-      <li><a routerLink=""><mat-icon>home</mat-icon></a></li>
+      <!-- <li><a routerLink="profile"><mat-icon>account_circle</mat-icon></a></li> -->
+      <li><a routerLink="/home/home"><mat-icon>home</mat-icon></a></li>
       <li><a routerLink="favorite"><mat-icon>favorite</mat-icon></a></li>
       <li><a routerLink="recent"><mat-icon>volume_up</mat-icon></a></li>
       <div class="main">
@@ -21,13 +21,13 @@
           <mat-dialog-content>
             <mat-dialog-actions>
               <input class="chooseFile" type="file" (change)="chooseFile($event)"><br/>
-              <button class="dataButton" [hidden]="!amount" (click)="addData(file)">
+              <button class="dataButton" [hidden]="!amount" [disabled]="clicked"   (click)="addData(file);clicked=true;">
                 <mat-icon class="fileIcon">file_upload</mat-icon>
                   <div *ngIf="amount">
                     <h6>Amount Added</h6>
                   </div>
               </button>
-              <button class="addImage" (click)="uploadImage(file)">
+              <button class="addImage"  (click)="uploadImage(file)">
                 <mat-icon class="matIconImage">image_upload</mat-icon>
                 <div *ngIf="addImage">
                   <h6>Image added</h6>

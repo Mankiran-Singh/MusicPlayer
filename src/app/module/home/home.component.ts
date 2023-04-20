@@ -4,14 +4,13 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { map } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase/firebase.service'
 import { PlayPauseService} from 'src/app/services/playPause/play-pause.service'
+import { DialogService } from 'src/app/services/events/dialog.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  animations: [
-  ]
+  styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent {
   url=Images.url
   urlPlay=Images.urlPlay
   urlLike=Images.urlHeart;
@@ -26,7 +25,8 @@ export class HomeComponent implements OnInit{
 
   constructor(public authService:AuthService,
       private playPauseService:PlayPauseService,
-      private fireService:FirebaseService){
+      private fireService:FirebaseService,
+      private dialog:DialogService){
         this.fireService.getPayment().pipe(map((res:any)=>{
           for(const key in res){
               this.token=res[key].token
@@ -34,16 +34,22 @@ export class HomeComponent implements OnInit{
               this.playPauseService.arrayPayment.push({...res[key]})
           }
         })).subscribe()
+      this.dialog.dataEmitter2.subscribe(()=>{
+        //  this.fireService.getAudio().pipe(map((res:any)=>{
+        //   for(const key in res){
+        //       this.playPauseService.audioArray.push({...res[key],'id':key})
+        //   }
+        // })).subscribe();     
+      })
   }
   
   @ViewChild('myInput') myInput:any;
   ngOnInit(){
-    console.log("OnInit called----")
     this.fireService.getAudio().pipe(map((res:any)=>{
       for(const key in res){
           this.playPauseService.audioArray.push({...res[key],'id':key})
       }
-    })).subscribe();
+    })).subscribe(); 
     this.invokeStripe(); 
   }
 
@@ -52,9 +58,9 @@ export class HomeComponent implements OnInit{
   getAudio(j:any){
       if(this.audioArraySongs[j].amount==0){
         this.index=j;
-      this.playPauseService.audioArray[j].audioPlay=false
-      this.urlSound=this.playPauseService.audioArray[j].url
-      this.showAudio=!this.showAudio
+        this.playPauseService.audioArray[j].audioPlay=false
+        this.urlSound=this.playPauseService.audioArray[j].url
+        this.showAudio=!this.showAudio
       }
       else{
         this.playPauseService.sweetAlert2()
@@ -68,8 +74,7 @@ export class HomeComponent implements OnInit{
     else{
     this.playPauseService.audioArray[index].like=false
     this.fireService.postAudioFavourite({'audio':audio,'audioLiked':this.playPauseService.audioArray[index].like,'index':index,'audioId':audioId}).subscribe(()=>{
-      this.fireService.putAudiourl(audio,audioId).subscribe((res)=>{
-          console.log(res,"added to favorites")
+      this.fireService.putAudiourl(audio,audioId).subscribe(()=>{
       })
     })
    }
@@ -89,10 +94,9 @@ export class HomeComponent implements OnInit{
       locale: 'auto',
       token: (stripeToken: any)=>{
         this.fireService.postPayment({'token':stripeToken.id,'id':j}).subscribe(()=>{
-           this.playPauseService.sweetalert();
-           audio.amount=0;
-           this.fireService.putAudiourl(audio,audioId).subscribe((res)=>{
-                console.log(res)
+            this.playPauseService.sweetalert();
+            audio.amount=0;
+            this.fireService.putAudiourl(audio,audioId).subscribe(()=>{
            })
         })
       },
@@ -124,4 +128,5 @@ export class HomeComponent implements OnInit{
     }
   }
    index:any;
+
 }

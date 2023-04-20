@@ -16,16 +16,17 @@ export class RecentPlayedComponent{
   urlPause=Images.urlPause
   newAudioArray:any = [];
   uniqueObject :any= {};
+  audioArray:any=[]
   constructor(private playPause:PlayPauseService,
     private fireService:FirebaseService){
     this.fireService.getRecentPlayed().pipe(map((res:any)=>{
       for(const key in res){
-           this.playPause.audioArray.push(res[key])      
+           this.audioArray.push(res[key])      
       }
     })).subscribe(()=>{
-      for (const i in this.playPause.audioArray) {
-        const objTitle = this.playPause.audioArray[i]['id'];
-        this.uniqueObject[objTitle] = this.playPause.audioArray[i];
+      for (const i in this.audioArray) {
+        const objTitle = this.audioArray[i]['id'];
+        this.uniqueObject[objTitle] = this.audioArray[i];
       }
       for (const i in this.uniqueObject){
         if(this.uniqueObject[i].amount==0){

@@ -20,8 +20,8 @@ export class DialogService {
   }
 
   dataEmitter2=new EventEmitter<any>();
-  raiseDataEmitterEvent2(data:any)
+  raiseDataEmitterEvent2()
   {
-      this.dataEmitter2.emit(data)
+      this.dataEmitter2.emit()
   }
 }

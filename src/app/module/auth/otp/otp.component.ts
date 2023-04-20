@@ -38,8 +38,7 @@ export class OtpComponent {
       for (const [key,value] of Object.entries(this.otpForm.value)) {
          this.stringOtp+=value
       }
-      console.log(this.stringOtp)
-      console.log(this.code)
+
       const credential = firebase.auth.PhoneAuthProvider.credential(this.code,this.stringOtp);
       firebase.auth().signInWithCredential(credential).then((res)=>{
         console.log(res)
@@ -51,9 +50,11 @@ export class OtpComponent {
       this.showErrors=true;
     }
   }
+  
   get otp(){
     return this.otpForm.get('otp')    
   }
+
   keyUpEvent(event:any, index:any) {
     let pos = index;
     if (event.keyCode === 8 && event.which === 8) {  

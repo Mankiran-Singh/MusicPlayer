@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { debounceTime, fromEvent, map } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { FirebaseService } from 'src/app/services/firebase/firebase.service'
-import Swal from 'sweetalert2';
 import {Images} from 'src/app/files/constant';
 import {Storage, 
   ref, uploadBytesResumable,
@@ -19,6 +18,7 @@ import { PlayPauseService } from 'src/app/services/playPause/play-pause.service'
 })
 export class NavbarComponent {
 
+  clicked=false;
   token='';
   id:any=0;
   audioArray:any=[]
@@ -30,24 +30,10 @@ export class NavbarComponent {
     private dialog:DialogService,
     private authService:AuthService,
     private router:Router,
-    private playPause:PlayPauseService){
-        this.fireService.getPayment().pipe(map((res:any)=>{
-          for(const key in res){
-              this.token=res[key].token
-              this.id=res[key].id
-              this.arrayPayment.push({...res[key]})
-          }
-        })).subscribe()
-  }
+    private playPause:PlayPauseService){}
   
   @ViewChild('myInput') myInput:any;
   ngOnInit(){
-    console.log("OnInit called----")
-    this.fireService.getAudio().pipe(map((res:any)=>{
-      for(const key in res){
-          this.audioArray.push({...res[key],'id':key})
-      }
-    })).subscribe();
   }
 
   reqData:any;
@@ -59,13 +45,13 @@ export class NavbarComponent {
          debounceTime(1000)
       )
      search.subscribe((res:any)=>{
-        for(let i=0;i<this.audioArray.length;i++)
+        for(let i=0;i<this.playPause.audioArray.length;i++)
         {
-          this.audioArray[i].name=this.audioArray[i].name.toLowerCase();
-           if(this.audioArray[i].name.includes(res.toLowerCase()))
+          this.playPause.audioArray[i].name=this.playPause.audioArray[i].name.toLowerCase();
+           if(this.playPause.audioArray[i].name.includes(res.toLowerCase()))
            {
-             this.reqData=this.audioArray[i].name
-             this.audioSongsArray=this.audioArray[i]
+             this.reqData=this.playPause.audioArray[i].name
+             this.audioSongsArray=this.playPause.audioArray[i]
            }
         }
         setTimeout(()=>{
@@ -98,7 +84,6 @@ export class NavbarComponent {
   submitted=false;
   pay(){
     this.addImage=false;
-    console.log(this.payForm.value)
     this.paymentArray.push(this.payForm.value)
     this.amount=true;
     this.submitted=true;
@@ -121,7 +106,6 @@ export class NavbarComponent {
 
   addImage=false;
   urlDownload:any;
-  addedData=false;
   addData(file:any){
     this.amount=true;
     if(file.type=='audio/mpeg' && this.paymentArray[0].payment!=undefined || null){
@@ -140,13 +124,14 @@ export class NavbarComponent {
              this.fireService.postAudioUrl({'image':this.image,
              'like':true,'audioPlay':true,'showAudio':true,
              'play':true,'name':this.file.name,'songPlay':true,
-             'type':this.file.type,'url':downloadURl,'liked':true,'premium':true,'amount':this.paymentArray[0].payment}).subscribe(()=>{
-              this.fireService.getAudio().pipe(map((res:any)=>{
-                for(const key in res){
-                    this.audioArray.push({...res[key],'id':key})
-                }
-                this.addedData=true
-              })).subscribe()
+             'type':this.file.type,'url':downloadURl,'liked':true,'premium':true,'amount':this.paymentArray[0].payment})
+             .subscribe((res)=>{
+              // this.fireService.getAudio().pipe(map((res:any)=>{
+              //   for(const key in res){
+              //       this.playPause.audioArray.push({...res[key],'id':key})
+              //   }
+              // })).subscribe()
+              this.dialog.raiseDataEmitterEvent2()
             })
         })
      })

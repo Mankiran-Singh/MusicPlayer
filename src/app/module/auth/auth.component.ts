@@ -1,25 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { getAuth } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { Images } from 'src/app/files/constant';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import {passwordsMatchValidator } from 'src/app/files/passwordMatch';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  selector: 'app-auth',
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss']
 })
-export class SignupComponent implements OnInit{
+export class AuthComponent implements OnInit{
   url=Images.url
   urlBackground=Images.urlBackground
   signUpForm:any
 
-  constructor(private router:Router,private authService:AuthService,private toast:HotToastService){
-     console.log(getAuth())
-  }
+  constructor(private router:Router,private authService:AuthService,private toast:HotToastService){}
 
   ngOnInit(){
     this.signUpForm=new FormGroup({
@@ -30,7 +26,8 @@ export class SignupComponent implements OnInit{
       file:new FormControl('',[Validators.required]),
       fileSource: new FormControl('', [Validators.required])
     },
-    {validators:passwordsMatchValidator()});
+    //{validators:passwordsMatchValidator()}
+    );
   }
  
   showErrors=false;
@@ -81,8 +78,9 @@ export class SignupComponent implements OnInit{
     return this.signUpForm.get('file')
   }
   goToLogin(){
-    this.router.navigate(['login'])
+    this.router.navigate(['auth/login'])
   }
+  
   visible = true;
   changetype =true;
 

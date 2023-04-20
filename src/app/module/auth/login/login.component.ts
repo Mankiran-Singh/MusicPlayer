@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit{
        signInWithPhoneNumber(auth,"+91"+this.loginForm.value.phoneNo,this.windowRef.reCaptchaVerifier).then((confirmationResult)=>{
           this.windowRef.confirmationResult=confirmationResult
           localStorage.setItem('verificationId',confirmationResult.verificationId)
-          this.router.navigate(['otp'])
+          this.router.navigate(['auth/otp'])
         })
     }else{
       this.showErrors=true
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit{
   }
 
   signUp(){
-    this.router.navigate(['signup'])
+    this.router.navigate(['auth/signup'])
   }
    
 }

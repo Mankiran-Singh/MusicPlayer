@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Images } from 'src/app/files/constant';
 import * as moment from 'moment';
@@ -9,7 +9,7 @@ import { PlayPauseService } from 'src/app/services/playPause/play-pause.service'
   templateUrl: './audio.component.html',
   styleUrls: ['./audio.component.scss']
 })
-export class AudioComponent implements OnInit{
+export class AudioComponent implements OnChanges,OnInit{
 
   urlBackground=Images.urlImage
   urlPlay=Images.urlPlay;
@@ -36,12 +36,25 @@ export class AudioComponent implements OnInit{
   ];
    ind:any=0;
    audioPlayable=false;
-  ngOnInit(){
+   ngOnInit(): void {
+      this.hideContainer(this.index);
+   }
+  ngOnChanges(){
      this.ind=this.index;
      this.songPlayer=this.arraySongs[this.index]
      this?.play(this.index)
      this.arraySongs[this.index].play=true;
      this.fireService.postRecentlyPlayed(this.arraySongs[this.index]).subscribe()
+  //    if(this.arraySongs[this.index].songPlay==false){
+  //     for(let i=this.index+1;i<this.arraySongs.length;i++)
+  //    {
+  //     this.arraySongs[this.index].songPlay= true;
+  //    }
+  //     for(let i=this.index-1;i>=0;i--)
+  //    {
+  //     this.arraySongs[this.index].songPlay= true;
+  //    }
+  //  }
   }
 
   audio=new Audio();

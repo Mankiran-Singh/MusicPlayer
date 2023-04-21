@@ -10,6 +10,7 @@ export const Images={
  back:'./assets/back.avif',
  nextSong:'./assets/nextSong.png',
  previousSong:'./assets/backSong.png',
- urlImage:'./assets/backgroundImage.jpeg'
+ urlImage:'./assets/backgroundImage.jpeg',
+ urlGif:'./assets/loading.gif'
 }
 

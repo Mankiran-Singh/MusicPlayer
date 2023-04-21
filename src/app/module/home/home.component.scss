@@ -8,7 +8,7 @@
   }
 
   .upper { 
-    height: 608px;
+    height: 576px;
     //background: linear-gradient(#f037a5 -60%,#fae62d 140%);
     background-image: url("/../assets/backgroundImage.jpeg");    
   }
@@ -65,8 +65,8 @@ table{
 }
 .app-songs{
  position: relative;
- left:600px;
- bottom: 100px;
+ left:500px;
+ bottom: 250px;
  padding: 0px;
 }
 audio::-webkit-media-controls-panel {
@@ -159,4 +159,14 @@ audio::-webkit-media-controls-mute-button{
 .alignText{
   position: relative;
   right: 200px;
+}
+.play{
+  border-radius: 50px;width:30px
+}
+.pause{
+  border-radius: 50px;width:30px;padding:0px
+}
+.playPause{
+  position: relative;
+  left:100px;
 }

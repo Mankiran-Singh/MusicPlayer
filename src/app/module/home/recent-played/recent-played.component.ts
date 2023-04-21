@@ -60,6 +60,21 @@ export class RecentPlayedComponent{
       }
     }
   }
+
+  index:any;
+  urlSound:any;
+  getAudio(j:any){
+    if(this.newAudioArray[j].amount==0){
+      this.index=j;
+      this.newAudioArray[this.index].audioPlay=false
+      this.urlSound=this.newAudioArray[this.index].url
+      // this.showAudio=!this.showAudio
+     // this.playPauseService.audioArray[this.index].play=true
+    }
+    else{
+      this.playPause.sweetAlert2()
+    }
+}
 }
 
 

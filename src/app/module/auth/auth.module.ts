@@ -6,7 +6,7 @@ import { OtpComponent } from './otp/otp.component';
 import { AuthComponent } from './auth.component';
 import { RouterModule } from '@angular/router';
 import { AuthRoutingModule } from './auth-routing.module';
-import { HomeModule } from '../home/home.module';
+
 
 @NgModule({
   declarations: [
@@ -19,8 +19,7 @@ import { HomeModule } from '../home/home.module';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    AuthRoutingModule,
-    HomeModule
+    AuthRoutingModule
   ]
 })
 export class AuthModule { }

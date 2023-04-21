@@ -10,6 +10,9 @@ import { RecentPlayedComponent } from './recent-played/recent-played.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SongsComponent } from './songs/songs.component';
 import { MatDialogModule} from '@angular/material/dialog'
+import { SpinnerComponent } from 'src/app/module/spinner/spinner.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { AuthRoutingModule } from '../auth/auth-routing.module';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -17,15 +20,17 @@ import { MatDialogModule} from '@angular/material/dialog'
     AudioComponent,
     FavoriteComponent,
     RecentPlayedComponent,
-    SongsComponent
+    SongsComponent,SpinnerComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
+    AuthRoutingModule,
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxSpinnerModule
   ]
 })
 export class HomeModule { }

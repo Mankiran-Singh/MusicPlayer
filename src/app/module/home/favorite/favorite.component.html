@@ -1,15 +1,16 @@
+  <app-navbar></app-navbar>
   <div class="upper" style="overflow-y: hidden;overflow-x: hidden;">
     <h2>Favourites</h2>
     <br>
     <table>
       <tr *ngFor="let audio of audioArray;let j=index">
-        <td><img class="audioImage" [src]='audio.res.image'></td>
+        <td><img class="audioImage" [src]='audio.image'></td>
          <td>
-             <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.res.name}}</ul>
+             <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.name}}</ul>
          </td>
         
         <td>
-          <ng-container *ngIf="audio.res.play;else pause">
+          <ng-container *ngIf="audio.play;else pause">
            <button id="play" style="width:38px" (click)="play(j)"><img class="play" [src]="urlPlay"></button>
            </ng-container>
           <ng-template #pause>
@@ -17,7 +18,7 @@
           </ng-template>
         </td>
         <td>
-            <ng-container *ngIf="audio.res.like;else dislike">
+            <ng-container *ngIf="audio.like;else dislike">
               <button id="like" style="width:38px" (click)="like(j)"><img class="dislike" [src]="urlDislike"></button>
               </ng-container>
              <ng-template #dislike>
@@ -26,4 +27,7 @@
         </td>
       </tr>
     </table>
+    <div class="app-songs">
+      <app-audio [arraySongs]="audioArray" [index]="index"></app-audio>
+    </div>
   </div>

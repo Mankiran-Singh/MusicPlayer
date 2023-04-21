@@ -34,12 +34,12 @@ export class HomeComponent {
               this.playPauseService.arrayPayment.push({...res[key]})
           }
         })).subscribe()
-      this.dialog.dataEmitter2.subscribe(()=>{
-        //  this.fireService.getAudio().pipe(map((res:any)=>{
-        //   for(const key in res){
-        //       this.playPauseService.audioArray.push({...res[key],'id':key})
-        //   }
-        // })).subscribe();     
+      this.dialog.dataEmitter2.pipe(map((res:any)=>{
+        for(const key in res){
+            this.playPauseService.audioArray.push({...res[key],'id':key})
+        }
+      })).subscribe(()=>{
+        //  this.playPauseService.audioArray.push(res) 
       })
   }
   
@@ -58,13 +58,40 @@ export class HomeComponent {
   getAudio(j:any){
       if(this.audioArraySongs[j].amount==0){
         this.index=j;
-        this.playPauseService.audioArray[j].audioPlay=false
-        this.urlSound=this.playPauseService.audioArray[j].url
+        this.playPauseService.audioArray[this.index].audioPlay=false
+        this.urlSound=this.playPauseService.audioArray[this.index].url
         this.showAudio=!this.showAudio
+       // this.playPauseService.audioArray[this.index].play=true
       }
       else{
         this.playPauseService.sweetAlert2()
       }
+  }
+
+  audio=new Audio(); 
+  playable=false;
+  pauseAudio(j:any) { 
+    console.log("==>"+this.playPauseService.audioArray[j].url)
+    this.audio.src=this.playPauseService.audioArray[j].url
+    this.audio.pause();
+    this.playPauseService.audioArray[j].play=true;
+  } 
+  play(j:any){
+    console.log(this.playPauseService.audioArray[j].url)
+    this.audio.src=this.playPauseService.audioArray[j].url,
+    this.audio.load()
+    this.audio.play()
+    this.playPauseService.audioArray[j].play=false;
+    if(this.playPauseService.audioArray[j].play==false){
+      for(let i=j+1;i<this.playPauseService.audioArray.length;i++)
+      {
+        this.playPauseService.audioArray[i].play= true;
+      }
+      for(let i=j-1;i>=0;i--)
+      {
+        this.playPauseService.audioArray[i].play= true;
+      }
+    }
   }
 
   like(audio:any,index:any,audioId:any){
@@ -128,5 +155,4 @@ export class HomeComponent {
     }
   }
    index:any;
-
 }

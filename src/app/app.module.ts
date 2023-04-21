@@ -30,10 +30,12 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CourseguardService } from './services/guards/courseguard.service';
 import { AuthguardService } from './services/guards/authguard.service';
+import { SpinnersAngularModule } from 'spinners-angular';
+import { SpinnerComponent } from 'src/app/module/spinner/spinner.component';
 @NgModule({
   declarations: [
     AppComponent,
-  ],
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -59,7 +61,7 @@ import { AuthguardService } from './services/guards/authguard.service';
     AngularFireModule.initializeApp(environment.firebase), 
     AngularFireAuthModule,    
     AngularFirestoreModule,
-    AuthModule
+
   ],
     providers: [FirebaseService,
     AuthService,WindowService,Storage,

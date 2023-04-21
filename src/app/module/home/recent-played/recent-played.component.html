@@ -1,11 +1,12 @@
-  <div style="overflow-y: hidden;overflow-x: hidden;">
+ <app-navbar></app-navbar>
+ <div style="overflow-y: hidden;overflow-x: hidden;">
     <div class="upper" style="overflow-y: hidden;">
         <h2 style="color:beige;text-align: center;">Recently Played</h2>
       <br>
-      <table>
+      <table style="position: fixed;">
         <tr *ngFor="let audio of newAudioArray;let j=index">
           <td><img class="addImage" [src]='audio.image'></td>
-            <td><ul style="padding: 0px;position: fixed;">{{audio.name}}
+            <td><ul style="padding: 0px;position: fixed;" (click)="getAudio(j)">{{audio.name}}
             </ul></td>
           <td>
             <ng-container *ngIf="audio.play;else pause">
@@ -19,5 +20,8 @@
           </td>
         </tr>
       </table>
+      <div class="app-songs">
+        <app-audio [arraySongs]="newAudioArray" [index]="index"></app-audio>
+      </div>
     </div>
   </div>

@@ -42,7 +42,7 @@ export class AuthComponent implements OnInit{
         this.toast.observe({
         })
       ).subscribe(()=>{
-        this.router.navigate(['home'])
+        this.router.navigate(['auth/login'])
         this.sweetAlert();
       })
     }else{

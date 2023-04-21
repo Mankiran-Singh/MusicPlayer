@@ -93,10 +93,10 @@ li{
   background-color: black;
 }
 .pay{
-  border-radius: 50%;width:97px;position: relative;left:100px;bottom:5x;
+  border-radius: 50%;width:47px;position: relative;left:100px;bottom:5x;
 }
 .submit{
-  color:white;background-color: black;position: relative;left:30px;top:35px;
+  color:white;background-color: black;position: relative;left:120px;top:0px;
   border-radius: 40%;
 }
 .dialog {
@@ -124,4 +124,17 @@ li{
 }
 h6{
   font-size: smaller;color: white;
+}
+.ngx-spinner{
+  width:30px;
+  height: 30px;
+  visibility: hidden;
+  display: none;
+}
+.gif{
+   border-radius: 50px;
+   width: 30px;
+   height: 30px;
+   position: relative;
+   bottom:15px;
 }

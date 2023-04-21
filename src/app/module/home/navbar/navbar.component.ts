@@ -10,6 +10,8 @@ import {Storage,
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/events/dialog.service';
 import { PlayPauseService } from 'src/app/services/playPause/play-pause.service';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-navbar',
@@ -24,13 +26,15 @@ export class NavbarComponent {
   audioArray:any=[]
   arrayPayment:any=[]
   url=Images.url
+  urlGif=Images.urlGif
 
   constructor(public storage:Storage,
     private fireService:FirebaseService,
     private dialog:DialogService,
     private authService:AuthService,
     private router:Router,
-    private playPause:PlayPauseService){}
+    private playPause:PlayPauseService,private spinner:NgxSpinnerService){}
+    
   
   @ViewChild('myInput') myInput:any;
   ngOnInit(){
@@ -66,7 +70,7 @@ export class NavbarComponent {
   logOut(){
     this.authService.logOut().subscribe(()=>{
       localStorage.clear()
-      this.router.navigate(['login'])
+      this.router.navigate(['auth/login'])
     })
   }
   
@@ -107,56 +111,61 @@ export class NavbarComponent {
   addImage=false;
   urlDownload:any;
   addData(file:any){
-    this.amount=true;
-    if(file.type=='audio/mpeg' && this.paymentArray[0].payment!=undefined || null){
+    this.spinner.show();
+    setTimeout(()=>{
+      this.amount=true;
+      if(file.type=='audio/mpeg' && this.paymentArray[0].payment!=undefined || null){
+        const storageRef=ref(this.storage,`mimify/${file.name}`)
+        const uploadTask=uploadBytesResumable(storageRef,file);
+        uploadTask.on('state_changed',
+        (snapshot)=>{
+          const progress=(snapshot.bytesTransferred / snapshot.totalBytes)
+          console.log('upload is'+progress+'%done');
+        },
+        (error)=>{
+           console.log(error.message)
+        },
+        ()=>{
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
+               this.fireService.postAudioUrl({'image':this.image,
+               'like':true,'audioPlay':true,'showAudio':true,
+               'play':true,'name':this.file.name,'songPlay':true,
+               'type':this.file.type,'url':downloadURl,'liked':true,'premium':true,'amount':this.paymentArray[0].payment})
+               .subscribe((res)=>{
+                this.spinner.hide();
+                this.dialog.raiseDataEmitterEvent2(res)
+              })
+          })
+       })
+      }else{
+        this.playPause.sweet();
+      }
+    },5000)
+  }
+
+  image='';
+  uploadImage(file:any){
+     this.spinner.show();
+     
+     setTimeout(()=>{
       const storageRef=ref(this.storage,`mimify/${file.name}`)
       const uploadTask=uploadBytesResumable(storageRef,file);
       uploadTask.on('state_changed',
       (snapshot)=>{
         const progress=(snapshot.bytesTransferred / snapshot.totalBytes)
         console.log('upload is'+progress+'%done');
+        this.addImage=true;
       },
       (error)=>{
          console.log(error.message)
       },
       ()=>{
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
-             this.fireService.postAudioUrl({'image':this.image,
-             'like':true,'audioPlay':true,'showAudio':true,
-             'play':true,'name':this.file.name,'songPlay':true,
-             'type':this.file.type,'url':downloadURl,'liked':true,'premium':true,'amount':this.paymentArray[0].payment})
-             .subscribe((res)=>{
-              // this.fireService.getAudio().pipe(map((res:any)=>{
-              //   for(const key in res){
-              //       this.playPause.audioArray.push({...res[key],'id':key})
-              //   }
-              // })).subscribe()
-              this.dialog.raiseDataEmitterEvent2()
-            })
+           this.image=downloadURl 
+           this.spinner.hide();
         })
      })
-    }else{
-      this.playPause.sweet();
-    }
-  }
-
-  image='';
-  uploadImage(file:any){
-    this.addImage=true;
-    const storageRef=ref(this.storage,`mimify/${file.name}`)
-    const uploadTask=uploadBytesResumable(storageRef,file);
-    uploadTask.on('state_changed',
-    (snapshot)=>{
-      const progress=(snapshot.bytesTransferred / snapshot.totalBytes)
-      console.log('upload is'+progress+'%done');
-    },
-    (error)=>{
-       console.log(error.message)
-    },
-    ()=>{
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
-         this.image=downloadURl 
-      })
-   })
+  
+     })
   }
 }

@@ -1,5 +1,5 @@
- <div style="overflow-y: hidden;overflow-x: hidden;">
-    <app-navbar></app-navbar>
+<app-navbar></app-navbar>
+<div style="overflow-y: hidden;overflow-x: hidden;">
     <div class="upper" style="overflow-y: hidden;">
       <h3 style="color:white;text-align: center;" >Collections And Playlist</h3>
       <br>
@@ -12,6 +12,7 @@
               <td>
                 <div class="alignText" (click)="getAudio(j)">{{audio.name}}</div>
               </td>
+              
             <td>
               <ng-container *ngIf="audio.like;else dislike">
                 <button id="like" class="like" (click)="like(audio,j,audio.id)"><img style="border-radius: 50px;width:30px;" [src]="urlDislike"></button>
@@ -32,7 +33,7 @@
             </td>
             </div>
         </tr>
-        <div class="app-songs" *ngIf="!this.audioArraySongs[index]?.audioPlay && showAudio">
+        <div class="app-songs">
           <app-audio [arraySongs]="audioArraySongs" [index]="index"></app-audio>
         </div>
       </table>

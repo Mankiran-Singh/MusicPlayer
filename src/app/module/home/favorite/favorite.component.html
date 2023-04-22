@@ -25,9 +25,14 @@
                <button  id="dislike" style="width:38px" (click)="disLike(audio,audio.id,j)"><img class="like" [src]="urlLike"></button>
              </ng-template>
         </td>
+        <div class="arrow" (click)="showDivAppSong(j)" [ngClass]="showDiv ? 'downArrow' : 'arrow'">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </tr>
     </table>
-    <div class="app-songs">
+    <div class="app-songs" *ngIf="showDiv">
       <app-audio [arraySongs]="audioArray" [index]="index"></app-audio>
     </div>
   </div>

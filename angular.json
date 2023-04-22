@@ -95,8 +95,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ngx-spinner/animations/ball-scale-multiple.css" ,
               "src/styles.scss"
             ],
             "scripts": []

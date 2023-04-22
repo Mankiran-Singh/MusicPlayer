@@ -1,16 +1,17 @@
-import { Component,OnInit,ViewChild} from '@angular/core';
+import { Component,ElementRef,OnDestroy,OnInit,ViewChild} from '@angular/core';
 import { Images } from 'src/app/files/constant';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { map } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase/firebase.service'
 import { PlayPauseService} from 'src/app/services/playPause/play-pause.service'
 import { DialogService } from 'src/app/services/events/dialog.service';
+import { arraySongs } from 'src/environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   url=Images.url
   urlPlay=Images.urlPlay
   urlLike=Images.urlHeart;
@@ -26,7 +27,7 @@ export class HomeComponent {
   constructor(public authService:AuthService,
       private playPauseService:PlayPauseService,
       private fireService:FirebaseService,
-      private dialog:DialogService){
+      private dialog:DialogService,private host: ElementRef<HTMLElement>){
         this.fireService.getPayment().pipe(map((res:any)=>{
           for(const key in res){
               this.token=res[key].token
@@ -92,6 +93,13 @@ export class HomeComponent {
         this.playPauseService.audioArray[i].play= true;
       }
     }
+    if(this.showDiv==true){
+      for(let i=0;i<this.playPauseService.audioArray.length;i++)
+      {
+         this.pauseAudio(i)
+      }
+      this.playPauseService.sweetAlert3();
+    }
   }
 
   like(audio:any,index:any,audioId:any){
@@ -101,8 +109,7 @@ export class HomeComponent {
     else{
     this.playPauseService.audioArray[index].like=false
     this.fireService.postAudioFavourite({'audio':audio,'audioLiked':this.playPauseService.audioArray[index].like,'index':index,'audioId':audioId}).subscribe(()=>{
-      this.fireService.putAudiourl(audio,audioId).subscribe(()=>{
-      })
+      this.fireService.putAudiourl(audio,audioId).subscribe()
     })
    }
   }
@@ -123,8 +130,7 @@ export class HomeComponent {
         this.fireService.postPayment({'token':stripeToken.id,'id':j}).subscribe(()=>{
             this.playPauseService.sweetalert();
             audio.amount=0;
-            this.fireService.putAudiourl(audio,audioId).subscribe(()=>{
-           })
+            this.fireService.putAudiourl(audio,audioId).subscribe()
         })
       },
     });
@@ -155,4 +161,14 @@ export class HomeComponent {
     }
   }
    index:any;
+
+   showDiv=false;
+   @ViewChild('appAudio') private appAudioSong:any;
+   showDivAppSong(j:any){
+      this.showDiv=!this.showDiv
+      if(this.showDiv===false){
+       // this.pauseAudio(j)
+          this.dialog.raiseDataEmitterEvent(this.playPauseService.audioArray[j]) 
+      }
+   }
 }

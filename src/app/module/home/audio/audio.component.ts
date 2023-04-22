@@ -4,6 +4,7 @@ import { Images } from 'src/app/files/constant';
 import * as moment from 'moment';
 import { FirebaseService } from 'src/app/services/firebase/firebase.service';
 import { PlayPauseService } from 'src/app/services/playPause/play-pause.service';
+import { DialogService } from 'src/app/services/events/dialog.service';
 @Component({
   selector: 'app-audio',
   templateUrl: './audio.component.html',
@@ -22,7 +23,11 @@ export class AudioComponent implements OnChanges,OnInit{
   @Input() audioPlay:any
 
   songPlayer:any={}
-  constructor(private fireService:FirebaseService,private playPause:PlayPauseService){}
+  constructor(private fireService:FirebaseService,private playPause:PlayPauseService,private dialog:DialogService){
+    this.dialog.dataEmitter3.subscribe((res)=>{
+      console.log(res)
+    })
+  }
   audioEvents = [
     "ended",
     "error",
@@ -34,6 +39,7 @@ export class AudioComponent implements OnChanges,OnInit{
     "loadedmetadata",
     "loadstart"
   ];
+
    ind:any=0;
    audioPlayable=false;
    ngOnInit(): void {
@@ -43,8 +49,11 @@ export class AudioComponent implements OnChanges,OnInit{
      this.ind=this.index;
      this.songPlayer=this.arraySongs[this.index]
      this?.play(this.index)
-     this.arraySongs[this.index].play=true;
+     //this.arraySongs[this.index].play=false;
      this.fireService.postRecentlyPlayed(this.arraySongs[this.index]).subscribe()
+    //  this.dialog.dataEmitter3.subscribe((res)=>{
+    //   console.log(res)
+    //  })
   //    if(this.arraySongs[this.index].songPlay==false){
   //     for(let i=this.index+1;i<this.arraySongs.length;i++)
   //    {
@@ -74,8 +83,7 @@ export class AudioComponent implements OnChanges,OnInit{
     }
     else{
      this.arraySongs[j].songPlay=false;
-     this.streamObserver(this.arraySongs[j]?.url).subscribe(()=>{
-     })
+     this.streamObserver(this.arraySongs[j]?.url).subscribe()
     }
   }
   

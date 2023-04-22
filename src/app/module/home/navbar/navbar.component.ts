@@ -37,8 +37,6 @@ export class NavbarComponent {
     
   
   @ViewChild('myInput') myInput:any;
-  ngOnInit(){
-  }
 
   reqData:any;
   audioSongsArray:any=[]
@@ -138,6 +136,8 @@ export class NavbarComponent {
           })
        })
       }else{
+        this.spinner.show();
+        setTimeout(()=>{this.spinner.hide()},1000)
         this.playPause.sweet();
       }
     },5000)

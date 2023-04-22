@@ -82,4 +82,16 @@ export class PlayPauseService {
     })
     }
 
+    sweetAlert3(){
+      Swal.fire({
+        title: 'Audio Playing area is open...!',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
+    }
+
 }

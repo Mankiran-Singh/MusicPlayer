@@ -1,42 +1,48 @@
 <app-navbar></app-navbar>
-<div style="overflow-y: hidden;overflow-x: hidden;">
-    <div class="upper" style="overflow-y: hidden;">
-      <h3 style="color:white;text-align: center;" >Collections And Playlist</h3>
-      <br>
-      <table>
-        <tr *ngFor="let audio of audioArraySongs;let j=index">
-            <td>
-              <img class="audioImage" [src]='audio.image'>
-            </td>
-            <div class="getAudio">
-              <td>
-                <div class="alignText" (click)="getAudio(j)">{{audio.name}}</div>
-              </td>
-              
-            <td>
-              <ng-container *ngIf="audio.like;else dislike">
-                <button id="like" class="like" (click)="like(audio,j,audio.id)"><img style="border-radius: 50px;width:30px;" [src]="urlDislike"></button>
-              </ng-container>
-               <ng-template #dislike>
-                 <button  id="dislike" class="dislike" (click)="disLike(audio,j,audio.id)"><img style="border-radius: 50px;width:32px;padding:0px;" [src]="urlLike"></button>
-               </ng-template>
-            </td>
-            <td>
-              <div class="pay">
-                <ng-container *ngIf="audio.amount===0;else pay">
-                  <button id='paid' class="btn btn-success">$0</button>
-                </ng-container>
-                <ng-template #pay>
-                  <button id='pay' (click)="makePayment(audio.amount,j,audio.id,audio)" class="btn btn-danger btn-block">${{audio.amount}}</button>
-                </ng-template>
-              </div>
-            </td>
-            </div>
-        </tr>
-        <div class="app-songs">
-          <app-audio [arraySongs]="audioArraySongs" [index]="index"></app-audio>
+<div class="upper" style="overflow-y: hidden;overflow-x: hidden;">
+  <h2>Collections and PLayList</h2>
+  <br>
+  <table>
+    <tr *ngFor="let audio of audioArraySongs;let j=index">
+      <td><img class="audioImage" [src]='audio.image'></td>
+       <td>
+           <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.name}}</ul>
+       </td>
+      
+      <td>
+        <ng-container *ngIf="audio.play;else pause">
+         <button id="play" style="width:38px" (click)="play(j)"><img class="play" [src]="urlPlay"></button>
+         </ng-container>
+        <ng-template #pause>
+          <button  id="pause" style="width:38px" (click)="pauseAudio(j)"><img class="pause" [src]="urlPause"></button>
+        </ng-template>
+      </td>
+      <td>
+          <ng-container *ngIf="audio.like;else dislike">
+            <button id="like" style="width:38px" (click)="like(audio,j,audio.id)"><img class="dislike" [src]="urlDislike"></button>
+            </ng-container>
+           <ng-template #dislike>
+             <button  id="dislike" style="width:38px" (click)="disLike(audio,j,audio.id)"><img class="like" [src]="urlLike"></button>
+           </ng-template>
+      </td>
+      <td>
+        <div class="pay">
+          <ng-container *ngIf="audio.amount===0;else pay">
+            <button id='paid' class="btn btn-success">$0</button>
+          </ng-container>
+          <ng-template #pay>
+            <button id='pay' (click)="makePayment(audio.amount,j,audio.id,audio)" class="btn btn-danger btn-block">${{audio.amount}}</button>
+          </ng-template>
         </div>
-      </table>
-    </div>
+      </td>
+      <div class="arrow" (click)="showDivAppSong(j)" [ngClass]="showDiv ? 'downArrow' : 'arrow'">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </tr>
+  </table>
+  <div class="app-songs" *ngIf="showDiv" #appAudio>
+    <app-audio  [arraySongs]="audioArraySongs" [index]="index"></app-audio>
   </div>
-  
+</div>

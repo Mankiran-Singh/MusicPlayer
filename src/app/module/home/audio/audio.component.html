@@ -1,28 +1,29 @@
-<div class="container" *ngIf="!hide">
-   <ul (click)="hideContainer(ind)">X</ul>
+<div class="container">
    <img [src]="urlBackground" class="background">
-    <td><img class="songPlayImage" [src]="songPlayer?.image"></td>
-     <td>
+    <td class="imagePlaySong"><img class="songPlayImage" [src]="songPlayer?.image"></td>
+     <div class="buttons">
+      <td>
         <ng-container *ngIf="songPlayer?.songPlay;else pause">
-          <button id="play" class="play" (click)="play(ind)"><img class="playImage" [src]="urlPlay"></button>
+          <ul id="play" class="play" (click)="play(ind)"><img class="playImage" [src]="urlPlay"></ul>
         </ng-container>
         <ng-template #pause>
-          <button  id="pause" class="pause" (click)="pauseAudio(ind)"><img class="pauseImage" [src]="urlPause"></button>
+          <ul  id="pause" class="pause" (click)="pauseAudio(ind)"><img class="pauseImage" [src]="urlPause"></ul>
         </ng-template>
       </td>
       <td>
-         <button class="nextSong"><img class="nextSongImage" [src]="urlNextSong" (click)="nextSong(ind)"></button>
+         <ul class="nextSong"><img class="nextSongImage" [src]="urlNextSong" (click)="nextSong(ind)"></ul>
       </td>
       <td>
-         <button class="previousSong"><img class="previousSongImage" [src]="urlPreviousSong" (click)="previousSong(ind)"></button>
+         <ul class="previousSong"><img class="previousSongImage" [src]="urlPreviousSong" (click)="previousSong(ind)"></ul>
       </td>
+     </div>
       <br>
       <td>
         <div class="align">
          <h4>{{currentTime}}</h4>
          <input style="position:relative;right: 215px;" class="timeline" type="range" min="0" max="{{duration}}" [value]="seek" (input)="setSeekTo($event)">
          <h3>{{duration}}</h3>
-         <mat-icon style="color: white;">volume_up</mat-icon><input style="position:relative;right: 215px;bottom:80px;width:40px;" class="timeline" type="range" min="0" max="1" step="0.01" value="0.5" (input)="setVolume($event)">
+         <mat-icon style="color: white;">volume_up</mat-icon><input style="position:relative;right: 350px;bottom:55px;width:40px;" class="timeline" type="range" min="0" max="1" step="0.01" value="0.5" (input)="setVolume($event)">
         </div> 
       </td> 
 </div>

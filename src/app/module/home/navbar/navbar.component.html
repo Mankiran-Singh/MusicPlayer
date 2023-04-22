@@ -23,14 +23,24 @@
               <input class="chooseFile" type="file" (change)="chooseFile($event)"><br/>
               <button class="dataButton" [hidden]="!amount" [disabled]="clicked"   (click)="addData(file);clicked=true;">
                 <mat-icon class="fileIcon">file_upload</mat-icon>
-                <ngx-spinner type="ball-scale-multiple">
+                <ngx-spinner bdOpacity = 0.9
+                bdColor = "black"
+                size = "medium"
+                color = "#1010ee"
+                type = "ball-clip-rotate"
+                [fullScreen] = "false"  type="ball-scale-multiple">
                   <img class="gif" [src]="urlGif">
                 </ngx-spinner>
               </button>
               <button class="addImage"  (click)="uploadImage(file)">
                 <mat-icon class="matIconImage">image_upload</mat-icon>
                 <div *ngIf="addImage">
-                  <ngx-spinner type="ball-scale-multiple">
+                  <ngx-spinner bdOpacity = 0.9
+                  bdColor = "black"
+                  size = "medium"
+                  color = "#1010ee"
+                  type = "ball-clip-rotate"
+                  [fullScreen] = "false" type="ball-scale-multiple">
                     <img class="gif" [src]="urlGif">
                   </ngx-spinner>
                 </div>   

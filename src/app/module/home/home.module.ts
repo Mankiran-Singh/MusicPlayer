@@ -13,6 +13,7 @@ import { MatDialogModule} from '@angular/material/dialog'
 import { SpinnerComponent } from 'src/app/module/spinner/spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthRoutingModule } from '../auth/auth-routing.module';
+
 @NgModule({
   declarations: [
     HomeComponent,

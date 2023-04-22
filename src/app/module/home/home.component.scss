@@ -1,5 +1,4 @@
-
-.container {
+  .container {
     height: inherit; /* get parent height */
     width: 1170px;   /* add 970px for smaller screen */
     margin: 0 auto;
@@ -8,7 +7,7 @@
   }
 
   .upper { 
-    height: 576px;
+    height: 610px;
     //background: linear-gradient(#f037a5 -60%,#fae62d 140%);
     background-image: url("/../assets/backgroundImage.jpeg");    
   }
@@ -30,10 +29,11 @@
     position:relative;
   }
   h4{
+    background-color: black;
     color:white;
     height:25px;
     position:relative;
-    left:40px;
+    left:30px;
     width:450px;
     border-radius:50px;
   }
@@ -55,6 +55,7 @@ table{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
   width: 80px;
   height: 100px;
   top: 100px;
@@ -65,8 +66,8 @@ table{
 }
 .app-songs{
  position: relative;
- left:500px;
- bottom: 250px;
+ left:400px;
+ top:60px;
  padding: 0px;
 }
 audio::-webkit-media-controls-panel {
@@ -117,56 +118,111 @@ audio::-webkit-media-controls-volume-slider {
    right:300px;
    left:100px;
 }
-audio::-webkit-media-controls-mute-button{
+audio::-webkit-media-controls-mute-button {
   background-color: #B1D4E0;
   border-radius: 50%;
 }
 
-.pay{
-  position: relative;
-  right:170px;
-  bottom:5px;
+h2{
+    color: #fff;
+    font-style: italic;
+    position: relative;
+    left: 500px;
 }
 .audioImage{
   width:40px;
   height:40px;
   border-radius: 50px;
-  position:relative;
-  bottom:5px;
-  left: 30px;
 }
-.like{
-  width:38px;position:relative;right:180px;bottom:5px;
+.play{
+  border-radius: 50px;width:30px
+}
+.pause{
+  border-radius: 50px;width:30px;padding:0px
 }
 .dislike{
-  width:38px;position:relative;right:180px;bottom:5px;
-}
-.play{
-  width:38px;position:relative;left:150px;top:10px;
-}
-.pause{
-  width:38px;position:relative;left:150px;top:10px;
-}
-.playImage{
   border-radius: 50px;width:30px
 }
-.pauseImage{
-  border-radius: 50px;width:30px;padding:0px
+.like{
+  border-radius: 50px;width:32px;padding:0px
 }
-.getAudio{
-  position: fixed;
-}
-.alignText{
+.app-songs{
   position: relative;
-  right: 200px;
+  left:500px;
+  bottom: 150px;
+  padding: 0px;
+ }
+
+ body {
+  background-color: #322B2B;
 }
-.play{
-  border-radius: 50px;width:30px
+
+.arrow {
+  position: absolute;
+  top: 90%;
+  right: 60%;
+  transform: translate(-50%, -50%);
+  transform: rotate(180deg);
+  cursor: pointer;
 }
-.pause{
-  border-radius: 50px;width:30px;padding:0px
+
+.arrow span {
+  display: block;
+  width: 1.5vw;
+  height: 1.5vw;
+  border-bottom: 5px solid white;
+  border-right: 5px solid white;
+  transform: rotate(45deg);
+  margin: -10px;
+  animation: animate 2s infinite;
 }
-.playPause{
-  position: relative;
-  left:100px;
+
+.arrow span:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.arrow span:nth-child(3) {
+  animation-delay: -0.4s;
+}
+
+@keyframes animate {
+  0% {
+      opacity: 0;
+      transform: rotate(45deg) translate(-20px, -20px);
+  }
+  50% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+      transform: rotate(45deg) translate(20px, 20px);
+  }
+}
+
+.downArrow {
+  position: absolute;
+  top: 80%;
+  right: 60%;
+  transform: translate(-50%, -50%);
+  transform: rotate(360deg);
+  cursor: pointer;
+}
+
+.downArrow span {
+  display: block;
+  width: 1.5vw;
+  height: 1.5vw;
+  border-bottom: 5px solid white;
+  border-right: 5px solid white;
+  transform: rotate(45deg);
+  margin: -10px;
+  animation: animate 2s infinite;
+}
+
+.downArrow span:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.downArrow span:nth-child(3) {
+  animation-delay: -0.4s;
 }

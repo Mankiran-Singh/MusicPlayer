@@ -31,13 +31,11 @@ export class FavoriteComponent{
   index:any;
   audio=new Audio(); 
   getAudio(j:any){
-    if(this.audioArray[j].amount==0){
-      this.index=j;
-      this.audioArray[this.index].audioPlay=false
-      this.urlSound=this.audioArray[this.index].url
-      // this.showAudio=!this.showAudio
-     // this.playPauseService.audioArray[this.index].play=true
-    }
+      if(this.audioArray[j].amount==0){
+        this.index=j;
+        this.audioArray[this.index].audioPlay=false
+        this.urlSound=this.audioArray[this.index].url
+      }
     else{
       this.playPauseService.sweetAlert2()
     }
@@ -45,13 +43,12 @@ export class FavoriteComponent{
 
   playable=false;
   pauseAudio(j:any) { 
-    console.log("==>"+this.audioArray[j].res.url)
     this.audio.src=this.audioArray[j].url
     this.audio.pause();
     this.audioArray[j].play=true;
   } 
+
   play(j:any){
-    console.log(this.audioArray[j].url)
     this.audio.src=this.audioArray[j].url,
     this.audio.load()
     this.audio.play()
@@ -65,6 +62,13 @@ export class FavoriteComponent{
       {
         this.audioArray[i].play= true;
       }
+    }
+    if(this.showDiv==true){
+      for(let i=0;i<this.audioArray.length;i++)
+      {
+         this.pauseAudio(i)
+      }
+      this.playPauseService.sweetAlert3()
     }
   }
 
@@ -83,8 +87,7 @@ export class FavoriteComponent{
     console.log("===>",audioid)
     this.audioArray[j].like=true
     this.fireService.deleteFavourites(audioid).subscribe(()=>{
-      this.fireService.putAudiourl(audio,audio.id).subscribe(()=>{
-      })
+      this.fireService.putAudiourl(audio,audio.id).subscribe()
     })
   }
 
@@ -93,4 +96,9 @@ export class FavoriteComponent{
     this.dialog.raiseDataEmitterEvent(arraySongs)
     this.open=!this.open
   }
+
+  showDiv=false;
+   showDivAppSong(j:any){
+      this.showDiv=!this.showDiv
+   }
 }

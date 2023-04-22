@@ -59,22 +59,32 @@ export class RecentPlayedComponent{
         this.newAudioArray[i].play= true;
       }
     }
+    if(this.showDiv==true){
+      for(let i=0;i<this.newAudioArray.length;i++)
+      {
+         this.pauseAudio(i)
+      }
+      this.playPause.sweetAlert3()
+    }
   }
 
   index:any;
   urlSound:any;
   getAudio(j:any){
     if(this.newAudioArray[j].amount==0){
-      this.index=j;
-      this.newAudioArray[this.index].audioPlay=false
-      this.urlSound=this.newAudioArray[this.index].url
-      // this.showAudio=!this.showAudio
-     // this.playPauseService.audioArray[this.index].play=true
-    }
+        this.index=j;
+        this.newAudioArray[this.index].audioPlay=false
+        this.urlSound=this.newAudioArray[this.index].url
+      }
     else{
       this.playPause.sweetAlert2()
     }
-}
+   }
+
+   showDiv=false;
+   showDivAppSong(){
+      this.showDiv=!this.showDiv
+   }
 }
 
 

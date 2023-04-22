@@ -1,17 +1,21 @@
 .container{
    background-image: url('/../assets/backgroundImage.jpeg');
-   width:220px;
-   height: 350px;
+   width:500px;
+   height: 80px;
    border-radius: 50px;
    border: solid 2px rgb(252, 250, 250);
    margin: -2px;
+   position: relative;
+   right:500px;
 }
 img{
    border-radius: 50%;
-   width:200px;
-   height:200px;
+   width:70px;
+   height:70px;
+   position: relative;
+   top: 5px;
 }
-button{
+ul{
     border-radius: 60px;
     background-color: black;
     color:white;
@@ -31,6 +35,7 @@ button{
     background-image: linear-gradient(#2b0138, #2b0138);
     background-repeat: no-repeat;
     margin-right: var(--space);
+    width:200px;
   }
   
   .timeline::-webkit-slider-thumb {
@@ -114,23 +119,22 @@ button{
     position: relative;
     right:240px;top:20px;
     font-size: smaller;
+    color: white;
   }
   mat-icon{
     position:relative;
-    right:220px;
-    bottom:73px;
-    width:20px;
+    right:350px;
+    bottom:48px;
+    width:22px;
   }
   .align{
     position: relative;
-    left:250px;
-    bottom:100px;
+    left:450px;
+    bottom:225px;
   }
-ul{
-  color:#faf8f8;position: relative;left:150px;border-radius: 50px;top:10px;width:30px;
-}
+
 .songPlayImage{
-  position:relative;bottom:170px;left:30px;width:130px;height:130px;
+  position:relative;right:2px;bottom:50px;width:70px;height:70px;
 }
 .background{
    border: solid 2px rgb(255, 255, 255); margin: -2px;
@@ -148,17 +152,28 @@ ul{
   width:38px;position:relative;right:175px;bottom:40px;
 }
 .nextSongImage{
-  border-radius: 50px;height: 30px;width:30px;
+  border-radius: 50px;height: 30px;width:30px;position: relative;left:2px;bottom: 2px;
 }
 .previousSongImage{
   border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;
 }
 .playImage{
-  border-radius: 50px;height: 30px;width:30px;
+  border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;
 }
 .pauseImage{
   border-radius: 50px;width:30px;padding:0px;height: 30px;width:30px;
 }
 h3{
-  font-size: smaller;position:relative;right: 110px;bottom:30px;
+  font-size: smaller;position:relative;right: 30px;bottom:30px;
+  color: white;
 }
+.buttons{
+  position: relative;
+  left:360px;
+  bottom: 65px;
+}
+.imagePlaySong{
+  position: relative;
+  bottom: 70px;
+}
+

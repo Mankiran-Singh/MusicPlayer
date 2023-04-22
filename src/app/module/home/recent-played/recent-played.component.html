@@ -1,27 +1,30 @@
- <app-navbar></app-navbar>
- <div style="overflow-y: hidden;overflow-x: hidden;">
-    <div class="upper" style="overflow-y: hidden;">
-        <h2 style="color:beige;text-align: center;">Recently Played</h2>
-      <br>
-      <table style="position: fixed;">
-        <tr *ngFor="let audio of newAudioArray;let j=index">
-          <td><img class="addImage" [src]='audio.image'></td>
-            <td><ul style="padding: 0px;position: fixed;" (click)="getAudio(j)">{{audio.name}}
-            </ul></td>
-          <td>
-            <ng-container *ngIf="audio.play;else pause">
-             <button id="play" class="play" (click)="play(j)"><img class="playImage" [src]="urlPlay"></button>
-             </ng-container>
-            <ng-template #pause>
-              <button  id="pause" class="pause" (click)="pauseAudio(j)"><img class="pauseImage" [src]="urlPause"></button>
-            </ng-template>
-          </td>
-          <td>
-          </td>
-        </tr>
-      </table>
-      <div class="app-songs">
-        <app-audio [arraySongs]="newAudioArray" [index]="index"></app-audio>
-      </div>
-    </div>
+<app-navbar></app-navbar>
+<div class="upper" style="overflow-y: hidden;overflow-x: hidden;">
+  <h2>Recent PLayed</h2>
+  <br>
+  <table>
+    <tr *ngFor="let audio of newAudioArray;let j=index">
+      <td><img class="audioImage" [src]='audio.image'></td>
+       <td>
+           <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.name}}</ul>
+       </td>
+      
+      <td>
+        <ng-container *ngIf="audio.play;else pause">
+         <button id="play" style="width:38px" (click)="play(j)"><img class="play" [src]="urlPlay"></button>
+         </ng-container>
+        <ng-template #pause>
+          <button  id="pause" style="width:38px" (click)="pauseAudio(j)"><img class="pause" [src]="urlPause"></button>
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+  <div class="arrow" (click)="showDivAppSong()">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
+  <div class="app-songs" *ngIf="showDiv">
+    <app-audio [arraySongs]="audioArray" [index]="index"></app-audio>
+  </div>
+</div>

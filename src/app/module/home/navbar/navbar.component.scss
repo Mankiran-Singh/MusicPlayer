@@ -126,15 +126,17 @@ h6{
   font-size: smaller;color: white;
 }
 .ngx-spinner{
-  width:30px;
-  height: 30px;
-  visibility: hidden;
-  display: none;
+  size:0cap;
 }
 .gif{
    border-radius: 50px;
    width: 30px;
    height: 30px;
    position: relative;
-   bottom:15px;
+   bottom:0px;
+}
+.overlay[_ngcontent-serverApp-c52] {
+  border-radius: 50px;
+  height: 106% !important;
+  margin-top: -1px;
 }

@@ -5,6 +5,9 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { Images } from 'src/app/files/constant';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import Swal from 'sweetalert2';
+import { getAuth } from 'firebase/auth';
+import { PlayPauseService } from 'src/app/services/playPause/play-pause.service';
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -15,7 +18,9 @@ export class AuthComponent implements OnInit{
   urlBackground=Images.urlBackground
   signUpForm:any
 
-  constructor(private router:Router,private authService:AuthService,private toast:HotToastService){}
+  constructor(private router:Router,private authService:AuthService,private toast:HotToastService,private playPause:PlayPauseService){
+    //console.log(getAuth())
+  }
 
   ngOnInit(){
     this.signUpForm=new FormGroup({
@@ -23,27 +28,31 @@ export class AuthComponent implements OnInit{
       email:new FormControl('',[Validators.required,Validators.email]),
       password:new FormControl('',[Validators.required]),
       phoneNo:new FormControl('',[Validators.required]),
-      file:new FormControl('',[Validators.required]),
-      fileSource: new FormControl('', [Validators.required])
+      // file:new FormControl('',[Validators.required]),
+      // fileSource: new FormControl('', [Validators.required])
     },
     //{validators:passwordsMatchValidator()}
+    //this.authService.emailValidator() 
     );
   }
  
   showErrors=false;
   signUp(){
     if(this.signUpForm.valid){
-      const formData = new FormData();
+      // const formData = new FormData();
 
-      formData.append('file', this.signUpForm.get('fileSource').value);
+      // formData.append('file', this.signUpForm.get('fileSource').value);
       console.log(this.signUpForm.value)
       const {name,email,password}=this.signUpForm.value;
       this.authService.signUp(name,email,password).pipe(
         this.toast.observe({
+          loading: 'Please wait...',
+          success: 'SignUp successful!',
+          error: 'Either email already exists or Form is invalid',
         })
       ).subscribe(()=>{
-        this.router.navigate(['auth/login'])
-        this.sweetAlert();
+           this.router.navigate(['auth/login'])
+           this.sweetAlert();         
       })
     }else{
       this.showErrors=true;

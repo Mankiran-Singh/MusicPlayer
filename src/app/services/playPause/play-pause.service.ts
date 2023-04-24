@@ -82,6 +82,25 @@ export class PlayPauseService {
     })
     }
 
+    sweetAlertEmail(){
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'error',
+        title: 'Email already exists...!'
+      })
+      }
+
     sweetAlert3(){
       Swal.fire({
         title: 'Audio Playing area is open...!',

@@ -32,10 +32,10 @@
                        <!-- <span  style="font-size: small;color:rgb(251, 251, 252)" *ngIf="signUpForm.errors?.['passwordsDontMatch']">
                         Passwords should Match
                        </span> -->
-                          <div class="form-group">
+                          <!-- <div class="form-group">
                               <input class="form-control" formControlName="file" id="file" type="file"  (change)="onFileChange($event)">
                               <span style="font-size: small;color:rgb(251, 251, 252)" *ngIf="file && file.invalid && file.errors?.['required'] && showErrors">This field is not valid</span>
-                            </div>
+                            </div> -->
                           <button type="button" type="submit" class="btn btn-default" [disabled]="">Sign Up</button><br>
                            <h2 style="color: white;font-size:medium;">Already Registered ?</h2>
                           <button type="button" class="btn btn-default" (click)="goToLogin()">Login</button>

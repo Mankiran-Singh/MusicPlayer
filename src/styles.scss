@@ -2,7 +2,12 @@
 
 /* Importing Bootstrap SCSS file. */
 // @import "styles-variables";
+
+@use 'node_modules/@ngneat/hot-toast/src/styles/styles.scss';
 @import 'bootstrap/scss/bootstrap';
 @import '~bootstrap/dist/css/bootstrap.min.css';  
 // @import '~bootstrap/scss/bootstrap-reboot';
 // @import '~bootstrap/scss/bootstrap-grid'; 
+@media (max-width: 768px){
+    /* Styles for screens 768px or less */
+}

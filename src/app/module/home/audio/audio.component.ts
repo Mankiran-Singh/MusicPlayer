@@ -43,27 +43,14 @@ export class AudioComponent implements OnChanges,OnInit{
    ind:any=0;
    audioPlayable=false;
    ngOnInit(): void {
-      this.hideContainer(this.index);
+    this.songPlayer=this.arraySongs[this.index]
+    this?.play(this.index)
    }
   ngOnChanges(){
      this.ind=this.index;
      this.songPlayer=this.arraySongs[this.index]
      this?.play(this.index)
-     //this.arraySongs[this.index].play=false;
      this.fireService.postRecentlyPlayed(this.arraySongs[this.index]).subscribe()
-    //  this.dialog.dataEmitter3.subscribe((res)=>{
-    //   console.log(res)
-    //  })
-  //    if(this.arraySongs[this.index].songPlay==false){
-  //     for(let i=this.index+1;i<this.arraySongs.length;i++)
-  //    {
-  //     this.arraySongs[this.index].songPlay= true;
-  //    }
-  //     for(let i=this.index-1;i>=0;i--)
-  //    {
-  //     this.arraySongs[this.index].songPlay= true;
-  //    }
-  //  }
   }
 
   audio=new Audio();

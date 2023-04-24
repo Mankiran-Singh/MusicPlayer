@@ -79,7 +79,8 @@ export class HomeComponent implements OnInit{
   } 
   play(j:any){
     console.log(this.playPauseService.audioArray[j].url)
-    this.audio.src=this.playPauseService.audioArray[j].url,
+    if(this.playPauseService.audioArray[j].amount==0){
+      this.audio.src=this.playPauseService.audioArray[j].url,
     this.audio.load()
     this.audio.play()
     this.playPauseService.audioArray[j].play=false;
@@ -99,6 +100,9 @@ export class HomeComponent implements OnInit{
          this.pauseAudio(i)
       }
       this.playPauseService.sweetAlert3();
+    }
+    }else{
+      this.playPauseService.sweetAlert2()
     }
   }
 

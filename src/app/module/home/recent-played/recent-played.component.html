@@ -18,12 +18,13 @@
         </ng-template>
       </td>
     </tr>
+    <div class="arrow" (click)="showDivAppSong()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </table>
-  <div class="arrow" (click)="showDivAppSong()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  
   <div class="app-songs" *ngIf="showDiv">
     <app-audio [arraySongs]="audioArray" [index]="index"></app-audio>
   </div>

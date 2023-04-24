@@ -26,12 +26,10 @@ import {AngularFireModule} from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { WindowService } from 'src/app/services/recaptcha/window.service'
-import { HotToastModule } from '@ngneat/hot-toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CourseguardService } from './services/guards/courseguard.service';
 import { AuthguardService } from './services/guards/authguard.service';
-import { SpinnersAngularModule } from 'spinners-angular';
-import { SpinnerComponent } from 'src/app/module/spinner/spinner.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +48,6 @@ import { SpinnerComponent } from 'src/app/module/spinner/spinner.component';
     MatMenuModule,
     HttpClientModule,
     SafePipeModule,
-    HotToastModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(()=>getFirestore()),
@@ -61,7 +58,6 @@ import { SpinnerComponent } from 'src/app/module/spinner/spinner.component';
     AngularFireModule.initializeApp(environment.firebase), 
     AngularFireAuthModule,    
     AngularFirestoreModule,
-
   ],
     providers: [FirebaseService,
     AuthService,WindowService,Storage,

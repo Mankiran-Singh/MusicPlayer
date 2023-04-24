@@ -6,6 +6,8 @@ import { OtpComponent } from './otp/otp.component';
 import { AuthComponent } from './auth.component';
 import { RouterModule } from '@angular/router';
 import { AuthRoutingModule } from './auth-routing.module';
+import { FloatingLabelModule } from '@progress/kendo-angular-label';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { AuthRoutingModule } from './auth-routing.module';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    FloatingLabelModule,
+    HotToastModule.forRoot()
   ]
 })
 export class AuthModule { }

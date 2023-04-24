@@ -23,11 +23,7 @@ export class AudioComponent implements OnChanges,OnInit{
   @Input() audioPlay:any
 
   songPlayer:any={}
-  constructor(private fireService:FirebaseService,private playPause:PlayPauseService,private dialog:DialogService){
-    this.dialog.dataEmitter3.subscribe((res)=>{
-      console.log(res)
-    })
-  }
+  constructor(private fireService:FirebaseService,private playPause:PlayPauseService,private dialog:DialogService){}
   audioEvents = [
     "ended",
     "error",
@@ -48,6 +44,9 @@ export class AudioComponent implements OnChanges,OnInit{
    }
   ngOnChanges(){
      this.ind=this.index;
+     this.dialog.dataEmitter3.subscribe((res)=>{
+       this.pauseAudio(res)
+     })
      this.songPlayer=this.arraySongs[this.index]
      this?.play(this.index)
      this.fireService.postRecentlyPlayed(this.arraySongs[this.index]).subscribe()

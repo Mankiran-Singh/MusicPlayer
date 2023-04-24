@@ -12,9 +12,9 @@
     <ul>
       <li (click)="logOut()"><span class="material-icons">logout</span></li>
       <!-- <li><a routerLink="profile"><mat-icon>account_circle</mat-icon></a></li> -->
-      <li><a routerLink="/home/home"><mat-icon>home</mat-icon></a></li>
-      <li><a routerLink="/home/favorite"><mat-icon>favorite</mat-icon></a></li>
-      <li><a routerLink="/home/recent"><mat-icon>volume_up</mat-icon></a></li>
+      <li><a href="/home/home"><mat-icon>home</mat-icon></a></li>
+      <li><a href="/home/favorite"><mat-icon>favorite</mat-icon></a></li>
+      <li><a href="/home/recent"><mat-icon>volume_up</mat-icon></a></li>
       <div class="main">
         <li (click)="toggleDialog()"><mat-icon>note_add</mat-icon></li>
         <div *ngIf="isOpen" class="dialog">

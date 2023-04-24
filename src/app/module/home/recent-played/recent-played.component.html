@@ -17,12 +17,12 @@
           <button  id="pause" style="width:38px" (click)="pauseAudio(j)"><img class="pause" [src]="urlPause"></button>
         </ng-template>
       </td>
+      <div class="arrow" (click)="showDivAppSong(j)" [ngClass]="showDiv ? 'downArrow' : 'arrow'">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </tr>
-    <div class="arrow" (click)="showDivAppSong()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
   </table>
   
   <div class="app-songs" *ngIf="showDiv">

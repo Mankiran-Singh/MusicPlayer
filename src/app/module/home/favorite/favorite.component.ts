@@ -99,6 +99,9 @@ export class FavoriteComponent{
 
   showDiv=false;
    showDivAppSong(j:any){
-      this.showDiv=!this.showDiv
+    this.showDiv=!this.showDiv
+    if(!this.showDiv){
+      this.dialog.raiseDataEmitterEvent3(j)
+    }
    }
 }

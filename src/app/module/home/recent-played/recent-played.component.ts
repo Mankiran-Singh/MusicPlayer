@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { map } from 'rxjs';
 import { Images } from 'src/app/files/constant';
+import { DialogService } from 'src/app/services/events/dialog.service';
 import { FirebaseService } from 'src/app/services/firebase/firebase.service'
 import { PlayPauseService } from 'src/app/services/playPause/play-pause.service';
 
@@ -17,7 +18,7 @@ export class RecentPlayedComponent{
   newAudioArray:any = [];
   uniqueObject :any= {};
   audioArray:any=[]
-  constructor(private playPause:PlayPauseService,
+  constructor(private playPause:PlayPauseService,private dialog:DialogService,
     private fireService:FirebaseService){
     this.fireService.getRecentPlayed().pipe(map((res:any)=>{
       for(const key in res){
@@ -82,8 +83,11 @@ export class RecentPlayedComponent{
    }
 
    showDiv=false;
-   showDivAppSong(){
-      this.showDiv=!this.showDiv
+   showDivAppSong(j:any){
+    this.showDiv=!this.showDiv
+    if(!this.showDiv){
+      this.dialog.raiseDataEmitterEvent3(j)
+    }
    }
 }
 

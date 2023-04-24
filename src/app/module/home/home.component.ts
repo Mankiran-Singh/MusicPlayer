@@ -72,13 +72,13 @@ export class HomeComponent implements OnInit{
   audio=new Audio(); 
   playable=false;
   pauseAudio(j:any) { 
-    console.log("==>"+this.playPauseService.audioArray[j].url)
+   // console.log("==>"+this.playPauseService.audioArray[j].url)
     this.audio.src=this.playPauseService.audioArray[j].url
     this.audio.pause();
     this.playPauseService.audioArray[j].play=true;
   } 
   play(j:any){
-    console.log(this.playPauseService.audioArray[j].url)
+    //console.log(this.playPauseService.audioArray[j].url)
     if(this.playPauseService.audioArray[j].amount==0){
       this.audio.src=this.playPauseService.audioArray[j].url,
     this.audio.load()
@@ -165,14 +165,12 @@ export class HomeComponent implements OnInit{
     }
   }
    index:any;
-
    showDiv=false;
-   @ViewChild('appAudio') private appAudioSong:any;
+
    showDivAppSong(j:any){
       this.showDiv=!this.showDiv
-      if(this.showDiv===false){
-       // this.pauseAudio(j)
-          this.dialog.raiseDataEmitterEvent(this.playPauseService.audioArray[j]) 
+      if(!this.showDiv){
+        this.dialog.raiseDataEmitterEvent3(j)
       }
    }
 }

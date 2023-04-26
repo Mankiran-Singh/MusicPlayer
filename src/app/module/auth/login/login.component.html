@@ -1,22 +1,30 @@
 <div class="form-bg">
-  <h3>Login</h3>
-  <div class="container">
-      <div class="row">
-          <div class="col-md-4 col-md-offset-4">
-              <div class="form-container">
-                  <div class="form-icon"><img [src]='url1' width="100px"></div>
-                    <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="sendOTP()">
-                        <div class="form-group">
-                          <input class="form-control" type="tel" placeholder="phone Number" formControlName="phoneNo" min="10" max="15"><br>
-                          <span style="font-size: small;color:rgb(251, 251, 252)"*ngIf="phoneNo && phoneNo.invalid && phoneNo.errors?.['required'] && showErrors">This field is not valid</span>
-                        </div>
-                        <div class="recaptcha" id='recaptcha-container'></div>
-                        <button type="submit" class="btn btn-default" [disabled]="disableOtpSendButton">Get OTP</button>
-                        <br><br><button (click)="signUp()" style="position:relative;top:100px;left:2px" class="btn btn-default" >SignUp</button>
-                        <h1>If not Registered..!</h1>
-                    </form>
-              </div>
-          </div>
-      </div>
+	<h3>Login</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="form-container" style="position:relative;left:380px;top:80px">
+                    <div class="form-icon" style="position:relative;bottom: 28px;right:28px"><img [src]='url' width="100px"></div>
+
+                    <form class="form-horizontal justify-content-center align-item-center;margin:auto" [formGroup]="loginForm" (ngSubmit)="login()">
+                         <div class="form-group">
+                            <input class="form-control" type="email" placeholder="email address" formControlName="email"><br>
+                            <span style="font-size: small;color:rgb(251, 251, 252)"*ngIf="email && email.invalid && email.errors?.['required'] && showErrors">This field is not valid</span>
+                          </div>
+                        <div class="form-group" styel="padding:100px">
+                          <input class="form-control" [type]="changetype?'password':'text'" placeholder="password" name="password" formControlName="password">
+					 	              <span style="font-size:small;font-family: 'Times New Roman', Times, serif;color:rgb(251, 251, 252)"*ngIf="password && password.invalid && password.errors?.['required'] && showErrors">This field is not valid</span> 
+						              <span class="eyeicon" (click)="viewpass()"><i [ngClass]="visible?'fa fa-eye':'fa fa-eye-slash'"></i></span>
+                          <a routerLink="/auth/forget" style="color:white;font-size: smaller;">Forgot password?</a>
+                        </div><hr>
+				
+                        <button type="submit" class="btn btn-default">Login</button><br>
+						<h2 style="color: white;font-size: medium;">If not Registered?</h2>
+						<button type="button" class="btn btn-default" (click)="goToSignUp()">Sign Up</button>
+					</form>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
-</div>
+<router-outlet></router-outlet>

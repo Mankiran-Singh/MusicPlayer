@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { debounceTime, fromEvent, map } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -10,7 +10,7 @@ import {Storage,
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/events/dialog.service';
 import { PlayPauseService } from 'src/app/services/playPause/play-pause.service';
-import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -18,7 +18,7 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements AfterViewInit{
 
   clicked=false;
   token='';
@@ -104,6 +104,12 @@ export class NavbarComponent {
   public file:any={}
   chooseFile(event:any){
     this.file=event.target.files[0];
+    if(this.file.type=='image/jpeg' || 'image/png' || 'image/jpg'){
+      this.uploadImage(this.file)
+    }
+    else if(this.file.type=='audio/mpeg'){
+      this.addData(this.file)
+    }
   }
 
   addImage=false;

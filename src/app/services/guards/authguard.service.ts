@@ -8,8 +8,9 @@ export class AuthguardService {
   constructor(private router:Router) { }
   canActivate(): boolean  {
     
-    const token=localStorage.getItem('verificationId');
-    if(token)
+    const token1=localStorage.getItem('accessToken');
+    const token2=localStorage.getItem('verificationId');
+    if(token1 || token2)
     {
       this.router.navigate(['/home/home']);
       return false;

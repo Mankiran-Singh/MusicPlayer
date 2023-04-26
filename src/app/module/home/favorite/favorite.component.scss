@@ -124,11 +124,14 @@ audio::-webkit-media-controls-mute-button {
 }
 
 h2{
-    color: #fff;
-    font-style: italic;
-    position: relative;
-    left: 500px;
+  color: #fff;
+  font-style: italic;
+  font-size: medium;
+  position: relative;
+  left: 300px;
+  width:200px;
 }
+
 .audioImage{
   width:40px;
   height:40px;

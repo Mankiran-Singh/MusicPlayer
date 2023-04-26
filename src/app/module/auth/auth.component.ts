@@ -5,8 +5,8 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { Images } from 'src/app/files/constant';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import Swal from 'sweetalert2';
-import { getAuth } from 'firebase/auth';
 import { PlayPauseService } from 'src/app/services/playPause/play-pause.service';
+import { DialogService } from 'src/app/services/events/dialog.service';
 
 @Component({
   selector: 'app-auth',
@@ -18,31 +18,23 @@ export class AuthComponent implements OnInit{
   urlBackground=Images.urlBackground
   signUpForm:any
 
-  constructor(private router:Router,private authService:AuthService,private toast:HotToastService,private playPause:PlayPauseService){
-    //console.log(getAuth())
-  }
-
+  constructor(private router:Router,
+      private dialog:DialogService,private authService:AuthService,private toast:HotToastService,private playPause:PlayPauseService){}
+  
   ngOnInit(){
     this.signUpForm=new FormGroup({
       name:new FormControl('',[Validators.required]),
       email:new FormControl('',[Validators.required,Validators.email]),
       password:new FormControl('',[Validators.required]),
       phoneNo:new FormControl('',[Validators.required]),
-      // file:new FormControl('',[Validators.required]),
-      // fileSource: new FormControl('', [Validators.required])
-    },
-    //{validators:passwordsMatchValidator()}
-    //this.authService.emailValidator() 
+     }
     );
   }
  
   showErrors=false;
   signUp(){
     if(this.signUpForm.valid){
-      // const formData = new FormData();
-
-      // formData.append('file', this.signUpForm.get('fileSource').value);
-      console.log(this.signUpForm.value)
+      this.dialog.raiseDataEmitterEvent4(this.signUpForm.value.phoneNo)
       const {name,email,password}=this.signUpForm.value;
       this.authService.signUp(name,email,password).pipe(
         this.toast.observe({
@@ -51,8 +43,7 @@ export class AuthComponent implements OnInit{
           error: 'Either email already exists or Form is invalid',
         })
       ).subscribe(()=>{
-           this.router.navigate(['auth/login'])
-           this.sweetAlert();         
+           this.router.navigate(['auth/verify'])       
       })
     }else{
       this.showErrors=true;

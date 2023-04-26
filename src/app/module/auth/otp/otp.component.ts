@@ -71,7 +71,7 @@ export class OtpComponent {
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Login Successful',
+      title: 'SignUp Successful',
       showConfirmButton: false,
       timer: 1500,
       width:'400px',

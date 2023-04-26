@@ -98,10 +98,16 @@ export class FavoriteComponent{
   }
 
   showDiv=false;
-   showDivAppSong(j:any){
+  showDivAppSong(j:any){
     this.showDiv=!this.showDiv
+    for(const i in this.audioArray){
+      if(this.audioArray[i].play==false){
+        this.playPauseService.sweetAlert4();
+        this.showDiv=false
+      }
+    }
     if(!this.showDiv){
       this.dialog.raiseDataEmitterEvent3(j)
     }
-   }
+ }
 }

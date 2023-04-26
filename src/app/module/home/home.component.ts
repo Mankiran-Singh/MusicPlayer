@@ -6,6 +6,7 @@ import { FirebaseService } from 'src/app/services/firebase/firebase.service'
 import { PlayPauseService} from 'src/app/services/playPause/play-pause.service'
 import { DialogService } from 'src/app/services/events/dialog.service';
 import { arraySongs } from 'src/environments/environment';
+import { EncrDecrService } from 'src/app/services/EncrDecr/encr-decr.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -19,14 +20,14 @@ export class HomeComponent implements OnInit{
   urlPause=Images.urlPause
   idArray:any=[]
   token='';
-  id:number=0;
+  id=0;
 
   audioArraySongs=this.playPauseService.audioArray
   arrayPayment=this.playPauseService.arrayPayment
 
   constructor(public authService:AuthService,
       private playPauseService:PlayPauseService,
-      private fireService:FirebaseService,
+      private fireService:FirebaseService,private EncrDecr:EncrDecrService,
       private dialog:DialogService,private host: ElementRef<HTMLElement>){
         this.fireService.getPayment().pipe(map((res:any)=>{
           for(const key in res){
@@ -166,9 +167,14 @@ export class HomeComponent implements OnInit{
   }
    index:any;
    showDiv=false;
-
    showDivAppSong(j:any){
       this.showDiv=!this.showDiv
+      for(const i in this.playPauseService.audioArray){
+        if(this.playPauseService.audioArray[i].play==false){
+          this.playPauseService.sweetAlert4();
+          this.showDiv=false
+        }
+      }
       if(!this.showDiv){
         this.dialog.raiseDataEmitterEvent3(j)
       }

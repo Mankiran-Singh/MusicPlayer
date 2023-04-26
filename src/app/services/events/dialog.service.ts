@@ -1,6 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
-
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +27,11 @@ export class DialogService {
   raiseDataEmitterEvent3(data:any)
   {
       this.dataEmitter3.emit(data)
+  }
+
+  dataEmitter4=new EventEmitter<any>();
+  raiseDataEmitterEvent4(data:any)
+  {
+      this.dataEmitter4.emit(data)
   }
 }

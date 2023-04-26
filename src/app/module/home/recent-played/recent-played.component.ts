@@ -40,7 +40,7 @@ export class RecentPlayedComponent{
     
   playable=false;
   pauseAudio(j:any) { 
-    this.audio.src=this.newAudioArray[j].url
+    this.newAudioArray.src=this.newAudioArray[j].url
     this.audio.pause();
     this.newAudioArray[j].play=true;
   } 
@@ -73,22 +73,28 @@ export class RecentPlayedComponent{
   urlSound:any;
   getAudio(j:any){
     if(this.newAudioArray[j].amount==0){
-        this.index=j;
-        this.newAudioArray[this.index].audioPlay=false
-        this.urlSound=this.newAudioArray[this.index].url
-      }
-    else{
-      this.playPause.sweetAlert2()
+      this.index=j;
+      this.newAudioArray[this.index].audioPlay=false
+      this.urlSound=this.audioArray[this.index].url
     }
+  else{
+    this.playPause.sweetAlert2()
+  }
    }
 
    showDiv=false;
    showDivAppSong(j:any){
     this.showDiv=!this.showDiv
+    for(const i in this.newAudioArray){
+      if(this.newAudioArray[i].play==false){
+        this.playPause.sweetAlert4();
+        this.showDiv=false
+      }
+    }
     if(!this.showDiv){
       this.dialog.raiseDataEmitterEvent3(j)
     }
-   }
+ }
 }
 
 

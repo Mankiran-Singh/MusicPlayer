@@ -9,5 +9,7 @@ export const environment={
     authDomain: 'spotify-32974.firebaseapp.com',
     messagingSenderId: '548716744653',
   },
-    url:'https://spotify-32974-default-rtdb.firebaseio.com/'
+    url:'https://spotify-32974-default-rtdb.firebaseio.com/',
+    OPENAI_API_KEY:'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'
 };
+

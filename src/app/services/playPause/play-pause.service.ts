@@ -113,4 +113,16 @@ export class PlayPauseService {
       })
     }
 
+    sweetAlert4(){
+      Swal.fire({
+        title: 'Cannot open playing area audio is getting played...!',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
+    }
+
 }

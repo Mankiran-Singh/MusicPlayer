@@ -12,7 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatMenuModule} from '@angular/material/menu';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './services/auth/auth.service';
-import { provideAuth,getAuth, AuthModule } from '@angular/fire/auth';
+import { provideAuth,getAuth} from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore'
 import {provideStorage,getStorage} from '@angular/fire/storage'
@@ -29,10 +29,12 @@ import { WindowService } from 'src/app/services/recaptcha/window.service'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CourseguardService } from './services/guards/courseguard.service';
 import { AuthguardService } from './services/guards/authguard.service';
+import { NoPageComponent } from './module/no-page/no-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NoPageComponent
     ],
   imports: [
     BrowserModule,

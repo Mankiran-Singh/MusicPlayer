@@ -9,8 +9,9 @@ export class CourseguardService {
   constructor(private router:Router) { }
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   {
-    const token=localStorage.getItem('verificationId')
-    if(token){
+    const token1=localStorage.getItem('accessToken')
+    const token2=localStorage.getItem('verificationId')
+    if(token1 || token2){
       return true;
     }
     else{
@@ -18,4 +19,5 @@ export class CourseguardService {
       return false;
     }
    }  
+
 }

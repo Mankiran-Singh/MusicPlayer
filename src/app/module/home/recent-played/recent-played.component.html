@@ -8,8 +8,7 @@
        <td>
            <ul style="padding: 0px;" (click)="getAudio(j)">{{audio.name}}</ul>
        </td>
-      
-      <td>
+       <td>
         <ng-container *ngIf="audio.play;else pause">
          <button id="play" style="width:38px" (click)="play(j)"><img class="play" [src]="urlPlay"></button>
          </ng-container>

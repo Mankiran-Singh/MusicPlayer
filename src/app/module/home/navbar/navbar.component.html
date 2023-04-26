@@ -17,36 +17,20 @@
       <li><a href="/home/recent"><mat-icon>volume_up</mat-icon></a></li>
       <div class="main">
         <li (click)="toggleDialog()"><mat-icon>note_add</mat-icon></li>
-        <div *ngIf="isOpen" class="dialog">
+         <div *ngIf="isOpen" class="dialog">
           <mat-dialog-content>
             <mat-dialog-actions>
               <input class="chooseFile" type="file" (change)="chooseFile($event)"><br/>
-              <button class="dataButton" [hidden]="!amount" [disabled]="clicked"   (click)="addData(file);clicked=true;">
-                <mat-icon class="fileIcon">file_upload</mat-icon>
                 <ngx-spinner bdOpacity = 0.9
-                bdColor = "black"
-                size = "medium"
-                color = "#1010ee"
-                type = "ball-clip-rotate"
-                [fullScreen] = "false"  type="ball-scale-multiple">
+                 bdColor = "black"
+                 size = "medium"
+                 color = "#1010ee"
+                 type = "ball-clip-rotate"
+                 [fullScreen] = "false"  type="ball-scale-multiple">
                   <img class="gif" [src]="urlGif">
                 </ngx-spinner>
-              </button>
-              <button class="addImage"  (click)="uploadImage(file)">
-                <mat-icon class="matIconImage">image_upload</mat-icon>
-                <div *ngIf="addImage">
-                  <ngx-spinner bdOpacity = 0.9
-                  bdColor = "black"
-                  size = "medium"
-                  color = "#1010ee"
-                  type = "ball-clip-rotate"
-                  [fullScreen] = "false" type="ball-scale-multiple">
-                    <img class="gif" [src]="urlGif">
-                  </ngx-spinner>
-                </div>   
-              </button>
               <li mat-button mat-dialog-close><mat-icon style="color: white;">mat-dialog-close</mat-icon></li>
-              <form [formGroup]="payForm" (ngSubmit)="pay()" [hidden]="!addImage">
+              <form [formGroup]="payForm" (ngSubmit)="pay()">
                 <input class="pay" type="number" formControlName="payment" placeholder="Amount...">
                 <button class="submit" type="submit">Add</button>
               </form>

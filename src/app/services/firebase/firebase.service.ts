@@ -7,11 +7,11 @@ import { Injectable } from '@angular/core';
 
 export class FirebaseService {
   constructor(private http:HttpClient) { }
-  urlDownload='gs://spotify-32974.appspot.com/mimify'
-  url='https://spotify-32974-default-rtdb.firebaseio.com/mimicry'
-  urlFavorite='https://spotify-32974-default-rtdb.firebaseio.com/favourite/'
-  urlRecent='https://spotify-32974-default-rtdb.firebaseio.com/recentPlayed/'
-  urlPayment='https://spotify-32974-default-rtdb.firebaseio.com/paid'
+  urlDownload='gs://mimify-9c814.appspot.com'
+  url='https://mimify-9c814-default-rtdb.firebaseio.com/mimicry'
+  urlFavorite='https://mimify-9c814-default-rtdb.firebaseio.com/favourite/'
+  urlRecent='https://mimify-9c814-default-rtdb.firebaseio.com/recentPlayed/'
+  urlPayment='https://mimify-9c814-default-rtdb.firebaseio.com/paid'
 
   getAudio(){
     return this.http.get(this.url+".json");

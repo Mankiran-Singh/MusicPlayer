@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "spotify-32974"
-  }
+    "mimify": "mimify-9c814",
+    "default": "mimify-9c814"
+  },
+  "targets": {},
+  "etags": {}
 }

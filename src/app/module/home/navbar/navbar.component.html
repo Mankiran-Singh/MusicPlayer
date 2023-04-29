@@ -20,8 +20,10 @@
          <div *ngIf="isOpen" class="dialog">
           <mat-dialog-content>
             <mat-dialog-actions>
-              <input class="chooseFile" type="file" (change)="chooseFile($event)"><br/>
-                <ngx-spinner bdOpacity = 0.9
+              <form [formGroup]="payForm" (ngSubmit)="pay()">
+                <div class="form">
+                  <input class="image" formControlName="image" id="image" type="file"  (change)="chooseFile($event)">
+                  <ngx-spinner bdOpacity = 0.9
                  bdColor = "black"
                  size = "medium"
                  color = "#1010ee"
@@ -29,10 +31,23 @@
                  [fullScreen] = "false"  type="ball-scale-multiple">
                   <img class="gif" [src]="urlGif">
                 </ngx-spinner>
-              <li mat-button mat-dialog-close><mat-icon style="color: white;">mat-dialog-close</mat-icon></li>
-              <form [formGroup]="payForm" (ngSubmit)="pay()">
+                  <span style="font-size: small;color:rgb(251, 251, 252)" *ngIf="image && image.invalid && image.errors?.['required'] && showErrors">This field is not valid</span>
+           
                 <input class="pay" type="number" formControlName="payment" placeholder="Amount...">
-                <button class="submit" type="submit">Add</button>
+              
+                  <input class="file" formControlName="file" id="file" type="file"  (change)="onFileChange($event)">
+                  <ngx-spinner bdOpacity = 0.9
+                 bdColor = "black"
+                 size = "medium"
+                 color = "#1010ee"
+                 type = "ball-clip-rotate"
+                 [fullScreen] = "false"  type="ball-scale-multiple">
+                  <img class="gif" [src]="urlGif">
+                </ngx-spinner>
+                  <span style="font-size: small;color:rgb(251, 251, 252)" *ngIf="file && file.invalid && file.errors?.['required'] && showErrors">This field is not valid</span>
+             
+                  <button class="submit" type="submit">Add</button>
+                </div>
               </form>
             </mat-dialog-actions>
           </mat-dialog-content>

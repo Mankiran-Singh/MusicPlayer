@@ -11,6 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/events/dialog.service';
 import { PlayPauseService } from 'src/app/services/playPause/play-pause.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { read } from '@popperjs/core';
 
 
 @Component({
@@ -78,17 +79,30 @@ export class NavbarComponent implements AfterViewInit{
   }
 
   paymentArray:any=[]
-  payForm=new FormGroup({
-    payment: new FormControl('',[Validators.required])
-  })
+  
+  payForm:any;
+  ngOnInit(){
+    this.payForm=new FormGroup({
+      payment: new FormControl('',[Validators.required]),
+      file:new FormControl('',[Validators.required]),
+      image:new FormControl('',[Validators.required]),
+      fileSource:new FormControl('',[Validators.required]),
+      fileSourceImage:new FormControl('',[Validators.required]),
+      fileTypeFile:new FormControl('',[Validators.required]),
+      fileName:new FormControl('',[Validators.required])
+    })
+  }
 
-  amount=false;
-  submitted=false;
   pay(){
-    this.addImage=false;
-    this.paymentArray.push(this.payForm.value)
-    this.amount=true;
-    this.submitted=true;
+    console.log(this.payForm.value)
+    this.fireService.postAudioUrl({'image':this.payForm.value.fileSourceImage,
+     'like':true,'audioPlay':true,'showAudio':true,
+     'play':true,'name':this.payForm.value.fileName,'songPlay':true,
+     'type':this.payForm.fileTypeFile,'url':this.payForm.value.fileSource,'liked':true,'premium':true,'amount':this.payForm.value.payment})
+     .subscribe((res)=>{
+      console.log("===<.....",res)
+      this.dialog.raiseDataEmitterEvent2(res)
+    })
   }
   
   open=true;
@@ -103,75 +117,69 @@ export class NavbarComponent implements AfterViewInit{
 
   public file:any={}
   chooseFile(event:any){
-    this.file=event.target.files[0];
-    if(this.file.type=='image/jpeg' || 'image/png' || 'image/jpg'){
-      this.uploadImage(this.file)
-    }
-    else if(this.file.type=='audio/mpeg'){
-      this.addData(this.file)
+    if (event.target.files.length > 0){
+      const file = event.target.files[0];
+      this.spinner.show();
+         setTimeout(()=>{
+          const storageRef=ref(this.storage,`mimify/${file.name}`)
+          const uploadTask=uploadBytesResumable(storageRef,file);
+          uploadTask.on('state_changed',
+          (snapshot)=>{
+            const progress=(snapshot.bytesTransferred / snapshot.totalBytes)
+            console.log('upload is'+progress+'%done');
+          },
+          (error)=>{
+             console.log(error.message)
+          },
+          ()=>{
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
+              this.payForm.patchValue({
+                fileSourceImage: downloadURl,
+                fileTypeImage:file.type
+              }); 
+               this.spinner.hide();
+            })
+           })
+         })
     }
   }
 
-  addImage=false;
-  urlDownload:any;
-  addData(file:any){
-    this.spinner.show();
-    setTimeout(()=>{
-      this.amount=true;
-      if(file.type=='audio/mpeg' && this.paymentArray[0].payment!=undefined || null){
-        const storageRef=ref(this.storage,`mimify/${file.name}`)
-        const uploadTask=uploadBytesResumable(storageRef,file);
-        uploadTask.on('state_changed',
-        (snapshot)=>{
-          const progress=(snapshot.bytesTransferred / snapshot.totalBytes)
-          console.log('upload is'+progress+'%done');
-        },
-        (error)=>{
-           console.log(error.message)
-        },
-        ()=>{
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
-               this.fireService.postAudioUrl({'image':this.image,
-               'like':true,'audioPlay':true,'showAudio':true,
-               'play':true,'name':this.file.name,'songPlay':true,
-               'type':this.file.type,'url':downloadURl,'liked':true,'premium':true,'amount':this.paymentArray[0].payment})
-               .subscribe((res)=>{
-                this.spinner.hide();
-                this.dialog.raiseDataEmitterEvent2(res)
-              })
-          })
-       })
-      }else{
-        this.spinner.show();
-        setTimeout(()=>{this.spinner.hide()},1000)
-        this.playPause.sweet();
-      }
-    },5000)
-  }
-
-  image='';
-  uploadImage(file:any){
-     this.spinner.show();
-     
-     setTimeout(()=>{
-      const storageRef=ref(this.storage,`mimify/${file.name}`)
-      const uploadTask=uploadBytesResumable(storageRef,file);
-      uploadTask.on('state_changed',
-      (snapshot)=>{
-        const progress=(snapshot.bytesTransferred / snapshot.totalBytes)
-        console.log('upload is'+progress+'%done');
-        this.addImage=true;
-      },
-      (error)=>{
-         console.log(error.message)
-      },
-      ()=>{
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
-           this.image=downloadURl 
-           this.spinner.hide();
-        })
-     })
   
-     })
-  }
+  onFileChange(event:any) {
+    if (event.target.files.length > 0){
+     const file = event.target.files[0];
+     this.spinner.show();
+     setTimeout(()=>{
+       if(file.type=='audio/mpeg'){
+         const storageRef=ref(this.storage,`mimify/${file.name}`)
+         const uploadTask=uploadBytesResumable(storageRef,file);
+         uploadTask.on('state_changed',
+         (snapshot)=>{
+           const progress=(snapshot.bytesTransferred / snapshot.totalBytes)
+           console.log('upload is'+progress+'%done');
+         },
+         (error)=>{
+            console.log(error.message)
+         },
+         ()=>{
+           getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
+            this.payForm.patchValue({
+              fileSource: downloadURl,
+              fileTypeFile:file.type,
+              fileName:file.name
+             });
+           })
+        })
+       }else{
+         this.spinner.show();
+         setTimeout(()=>{this.spinner.hide()},1000)
+         this.playPause.sweet();
+       }
+     },5000)
+   }
+ }
+
+ get image(){
+  return this.payForm.get('image')
+ }
 }

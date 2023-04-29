@@ -75,7 +75,7 @@ li{
     color: white;position: relative;top: 12px;
 }
 .chooseFile{
-    position:relative;left:100px;
+    position:relative;left:50px;
 }
 .dataButton{
   position: relative;
@@ -93,10 +93,10 @@ li{
   background-color: black;
 }
 .pay{
-  border-radius: 20%;width:47px;position: relative;left:100px;bottom:0x;
+  border-radius: 20%;width:98px;position: relative;left:55px;top:10px;
 }
 .submit{
-  color:white;background-color: black;position: relative;left:120px;top:0px;
+  color:black;background-color: rgb(255, 255, 255);position: relative;left:77px;top:30px;
   border-radius: 40%;
 }
 .dialog {
@@ -139,4 +139,18 @@ h6{
   border-radius: 50px;
   height: 106% !important;
   margin-top: -1px;
+}
+.file{
+  position: relative;
+  left:54px;
+  top:20px;
+}
+.image{
+  position: relative;
+  left:54px;
+}
+.form{
+  background-image: url("/../assets/formBackground.webp"); 
+  width:200px;
+  height: 150px;
 }

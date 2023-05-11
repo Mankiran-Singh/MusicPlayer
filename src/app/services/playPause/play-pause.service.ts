@@ -116,7 +116,7 @@ export class PlayPauseService {
         
         Toast.fire({
           icon: 'error',
-          title: 'Enter valid price...'
+          title: 'Enter valid details...'
         })
         }
 

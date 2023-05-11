@@ -105,7 +105,6 @@ export class NavbarComponent implements AfterViewInit{
       
     }
     else{
-      this.showErrors=true;
       this.playPause.sweetPrice()
     }
   }
@@ -216,4 +215,8 @@ export class NavbarComponent implements AfterViewInit{
   return `${parseFloat(bytes.toFixed(2))} ${UNITS[index]}`;
  }
 
+ audioToggle=false
+ toggleAudioRecording(){
+    this.audioToggle=!this.audioToggle
+ }
 }

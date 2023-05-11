@@ -3,21 +3,18 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                <div class="form-container" style="position:relative;left:380px;top:80px">
-                    <div class="form-icon" style="position:relative;bottom: 28px;right:28px"><img [src]='url' width="100px"></div>
+                <div class="form-container">
+                    <div class="form-icon"><img [src]='url' width="100px"></div>
 
                     <form class="form-horizontal justify-content-center align-item-center;margin:auto" [formGroup]="loginForm" (ngSubmit)="login()">
                          <div class="form-group">
-                            <input class="form-control" type="email" placeholder="email address" formControlName="email"><br>
-                            <span style="font-size: small;color:rgb(251, 251, 252)"*ngIf="email && email.invalid && email.errors?.['required'] && showErrors">This field is not valid</span>
+                            <input class="form-control" type="email" placeholder="email address" formControlName="email" [ngClass]="{'error-border':email && email.invalid && (email.errors?.['required'] && showErrors) || ((email.dirty || email.touched) && email.errors?.email)}"><br>
                           </div>
-                        <div class="form-group" styel="padding:100px">
-                          <input class="form-control" [type]="changetype?'password':'text'" placeholder="password" name="password" formControlName="password">
-					 	              <span style="font-size:small;font-family: 'Times New Roman', Times, serif;color:rgb(251, 251, 252)"*ngIf="password && password.invalid && password.errors?.['required'] && showErrors">This field is not valid</span> 
-						              <span class="eyeicon" (click)="viewpass()"><i [ngClass]="visible?'fa fa-eye':'fa fa-eye-slash'"></i></span>
-                          <a routerLink="/auth/forget" style="color:white;font-size: smaller;">Forgot password?</a>
-                        </div><hr>
-				
+                          <div class="form-group">
+                            <input class="form-control" [type]="changetype?'password':'text'" placeholder="password" name="password" formControlName="password" [ngClass]="{'error-border':password && password.invalid && password.errors?.['required'] && showErrors}">
+                            <span [ngClass]="showErrors?'eyeicon1':'eyeicon'" (click)="viewpass()"><i [ngClass]="visible?'fa fa-eye':'fa fa-eye-slash'" style="padding: 0px;"></i></span>
+                            <a routerLink="/auth/forget" style="color:white;font-size: smaller;">Forgot password?</a>
+                          </div><hr>
                         <button type="submit" class="btn btn-default">Login</button><br>
 						<h2 style="color: white;font-size: medium;">If not Registered?</h2>
 						<button type="button" class="btn btn-default" (click)="goToSignUp()">Sign Up</button>

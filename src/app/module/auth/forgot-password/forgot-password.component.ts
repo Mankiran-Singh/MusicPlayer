@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Images } from 'src/app/files/constant';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -14,13 +14,16 @@ import { Auth } from '@angular/fire/auth';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss']
 })
-export class ForgotPasswordComponent{
+export class ForgotPasswordComponent implements OnInit{
   url1=Images.url
   windowRef:any;
 
-  forgetPasswordForm=new FormGroup({
-    email:new FormControl('',[Validators.required])
-  })
+  forgetPasswordForm:any;
+  ngOnInit(){
+    this.forgetPasswordForm=new FormGroup({
+      email:new FormControl('',[Validators.required,Validators.email])
+    })
+  }
   constructor(private router:Router,
     private windowService:WindowService,
     private authService:AuthService,

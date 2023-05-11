@@ -12,6 +12,7 @@ import { SongsComponent } from './songs/songs.component';
 import { MatDialogModule} from '@angular/material/dialog'
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthRoutingModule } from '../auth/auth-routing.module';
+import { SpeechToTextComponent } from './speech-to-text/speech-to-text.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { AuthRoutingModule } from '../auth/auth-routing.module';
     AudioComponent,
     FavoriteComponent,
     RecentPlayedComponent,
-    SongsComponent
+    SongsComponent,
+    SpeechToTextComponent
   ],
   imports: [
     CommonModule,

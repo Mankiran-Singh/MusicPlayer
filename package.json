@@ -30,6 +30,7 @@
     "@popperjs/core": "^2.11.6",
     "@progress/kendo-angular-label": "^11.6.0",
     "@sweetalert2/ngx-sweetalert2": "^12.1.0",
+    "@types/webspeechapi": "^0.0.14-alpha",
     "angular-animations": "^0.11.0",
     "angular-moment": "^1.3.0",
     "bootstrap": "^5.2.3",

@@ -93,7 +93,7 @@ li{
   background-color: black;
 }
 .pay{
-  border-radius: 20%;width:98px;position: relative;left:55px;top:10px;
+  border-radius: 20%;width:98px;position: relative;left:55px;bottom:5px;
 }
 .submit{
   color:black;background-color: rgb(255, 255, 255);position: relative;left:77px;top:30px;
@@ -152,5 +152,44 @@ h6{
 .form{
   background-image: url("/../assets/formBackground.webp"); 
   width:200px;
-  height: 150px;
+  height: 220px;
+  border-style: inset;
+  border-color: red;
+  border-width: 2px;
+  border-radius:50px;
+}
+
+.file-upload-button {
+  background-color: #ffffff;
+  border-radius: 50%;
+  height: 2rem;
+  overflow: hidden;
+  position: relative;
+  width: 2rem;
+
+&::after {
+  content: url("/../assets/imageUpload.png");
+  transform: scale(.2);
+  position: relative;
+  bottom: 20px;
+  right: 30px;
+  width: 2px;
+  height:2px;
+  background-size: 10px 20px;
+}
+
+input[type="file"] {
+      font-size: 100px;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+  }
+}
+
+.file-info {
+color: #060606;
+font-family: Lato;
+margin-left: 0.5rem;
+font-size: small;
 }

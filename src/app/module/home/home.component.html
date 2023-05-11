@@ -35,6 +35,14 @@
           </ng-template>
         </div>
       </td>
+      <td>
+        <div class="dropdown">
+         <mat-icon>more_horiz</mat-icon>
+          <div class="dropdown-content">
+            <span (click)="translate(j)" class="drop">Extract text</span>
+          </div>
+        </div>
+      </td>
       <div class="arrow" (click)="showDivAppSong(j)" [ngClass]="showDiv ? 'downArrow' : 'arrow'">
         <span></span>
         <span></span>
@@ -44,5 +52,8 @@
   </table>
   <div class="app-songs" *ngIf="showDiv" #appAudio>
     <app-audio  [arraySongs]="audioArraySongs" [index]="index"></app-audio>
+  </div>
+  <div class="app-speech-to-text" *ngIf="translateAudio">
+     <app-speech-to-text [audioObject]="audioArraySongs" [index]="indTranslate"></app-speech-to-text>
   </div>
 </div>

@@ -179,4 +179,14 @@ export class HomeComponent implements OnInit{
         this.dialog.raiseDataEmitterEvent3(j)
       }
    }
+ 
+   indTranslate:any=0
+   translateAudio=false;
+  translate(j:any){
+    this.indTranslate=j;
+    this.translateAudio=!this.translateAudio
+    if(!this.translateAudio){
+      this.dialog.raiseDataEmitterEvent5(j)
+    }
+  }
 }

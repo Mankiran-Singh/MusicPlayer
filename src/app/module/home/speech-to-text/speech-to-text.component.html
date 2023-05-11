@@ -1,0 +1,33 @@
+<div class="form-body">
+    <div class="row">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3>Speech to Text</h3>
+                    <p>You can change the text</p>
+                    <form class="requires-validation" novalidate>
+
+                        <!-- <div class="col-md-12">
+                           <input class="form-control" type="text" name="text" placeholder="Enter Text..." required>
+                        </div>
+
+                        <div class="form-button mt-3">
+                            <button id="submit" type="submit" class="btn btn-primary">Change</button>
+                        </div> -->
+
+                        <textarea>{{text}}</textarea>
+
+                        <ng-container *ngIf="obj.audioPlay;else pause">
+                            <button id="play" style="width:38px" (click)="play(ind)"><img class="play" [src]="urlPlay"></button>
+                            </ng-container>
+                           <ng-template #pause>
+                             <button  id="pause" style="width:38px" (click)="pauseAudio(ind)"><img class="pause" [src]="urlPause"></button>
+                        </ng-template>
+                        <!-- <button (click)="start(ind)">START</button> -->
+                    </form>
+                    <button (click)="speakText(text)">Speak</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

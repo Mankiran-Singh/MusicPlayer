@@ -82,6 +82,44 @@ export class PlayPauseService {
     })
     }
 
+    sweetImage(){
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'error',
+        title: 'Please select an image'
+      })
+      }
+
+      sweetPrice(){
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          title: 'Enter valid price...'
+        })
+        }
+
     sweetAlertEmail(){
       const Toast = Swal.mixin({
         toast: true,

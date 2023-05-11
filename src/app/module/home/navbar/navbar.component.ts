@@ -11,8 +11,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogService } from 'src/app/services/events/dialog.service';
 import { PlayPauseService } from 'src/app/services/playPause/play-pause.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { read } from '@popperjs/core';
-
 
 @Component({
   selector: 'app-navbar',
@@ -20,8 +18,6 @@ import { read } from '@popperjs/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements AfterViewInit{
-
-  clicked=false;
   token='';
   id:any=0;
   audioArray:any=[]
@@ -93,18 +89,33 @@ export class NavbarComponent implements AfterViewInit{
     })
   }
 
+  clicked=false
   pay(){
     console.log(this.payForm.value)
-    this.fireService.postAudioUrl({'image':this.payForm.value.fileSourceImage,
+    if(this.payForm.valid && this.payForm.value.payment>=0){
+      this.fireService.postAudioUrl({'image':this.payForm.value.fileSourceImage,
      'like':true,'audioPlay':true,'showAudio':true,
      'play':true,'name':this.payForm.value.fileName,'songPlay':true,
      'type':this.payForm.fileTypeFile,'url':this.payForm.value.fileSource,'liked':true,'premium':true,'amount':this.payForm.value.payment})
      .subscribe((res)=>{
       console.log("===<.....",res)
       this.dialog.raiseDataEmitterEvent2(res)
+      this.clicked=true
     })
+      
+    }
+    else{
+      this.showErrors=true;
+      this.playPause.sweetPrice()
+    }
   }
   
+  get payment(){
+    return this.payForm.get('payment')
+  }
+  get file(){
+    return this.payment.get('file')
+  }
   open=true;
   openSongs(arraySongs:any){
     if(arraySongs.amount==0){
@@ -115,10 +126,12 @@ export class NavbarComponent implements AfterViewInit{
     }
   }
 
-  public file:any={}
+  fileInfo=''
+//  public file:any={}
   chooseFile(event:any){
     if (event.target.files.length > 0){
       const file = event.target.files[0];
+      this.fileInfo = `${file.name} (${this.formatBytes(file.size)})`;
       this.spinner.show();
          setTimeout(()=>{
           const storageRef=ref(this.storage,`mimify/${file.name}`)
@@ -132,13 +145,18 @@ export class NavbarComponent implements AfterViewInit{
              console.log(error.message)
           },
           ()=>{
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
-              this.payForm.patchValue({
-                fileSourceImage: downloadURl,
-                fileTypeImage:file.type
-              }); 
-               this.spinner.hide();
-            })
+              if(file.type=="image/png" || file.type=="image/jpg" || file.type=="image/jpeg"){
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURl)=>{
+                  this.payForm.patchValue({
+                    fileSourceImage: downloadURl,
+                    fileTypeImage:file.type
+                  }); 
+                   this.spinner.hide();
+                })
+              }else{
+                this.spinner.hide();
+                this.playPause.sweetImage();
+              }
            })
          })
     }
@@ -168,6 +186,7 @@ export class NavbarComponent implements AfterViewInit{
               fileTypeFile:file.type,
               fileName:file.name
              });
+             this.spinner.hide();
            })
         })
        }else{
@@ -182,4 +201,19 @@ export class NavbarComponent implements AfterViewInit{
  get image(){
   return this.payForm.get('image')
  }
+
+
+ formatBytes(bytes: number): string {
+  const UNITS = ['Bytes', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const factor = 1024;
+  let index = 0;
+
+  while (bytes >= factor) {
+    bytes /= factor;
+    index++;
+  }
+
+  return `${parseFloat(bytes.toFixed(2))} ${UNITS[index]}`;
+ }
+
 }

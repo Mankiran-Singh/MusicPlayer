@@ -34,4 +34,10 @@ export class DialogService {
   {
       this.dataEmitter4.emit(data)
   }
+
+  dataEmitter5=new EventEmitter<any>();
+  raiseDataEmitterEvent5(data:any)
+  {
+      this.dataEmitter5.emit(data)
+  }
 }

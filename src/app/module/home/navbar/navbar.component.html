@@ -11,10 +11,9 @@
     </ul>
     <ul>
       <li (click)="logOut()"><span class="material-icons">logout</span></li>
-      <!-- <li><a routerLink="profile"><mat-icon>account_circle</mat-icon></a></li> -->
       <li><a href="/home/home"><mat-icon>home</mat-icon></a></li>
       <li><a href="/home/favorite"><mat-icon>favorite</mat-icon></a></li>
-      <li><a href="/home/recent"><mat-icon>volume_up</mat-icon></a></li>
+      <li><a href="/home/recent"><mat-icon>library_music</mat-icon></a></li>
       <div class="main">
         <li (click)="toggleDialog()"><mat-icon>note_add</mat-icon></li>
          <div *ngIf="isOpen" class="dialog">
@@ -22,7 +21,8 @@
             <mat-dialog-actions>
               <form [formGroup]="payForm" (ngSubmit)="pay()">
                 <div class="form">
-                  <input class="image" formControlName="image" id="image" type="file"  (change)="chooseFile($event)">
+                    <img [src]="'../assets/imageUpload.png'" style="height:20px;width:20px;position: relative;left:20px;top:20px;">
+                    <input class="image" formControlName="image" id="image" type="file"  (change)="chooseFile($event)">
                   <ngx-spinner bdOpacity = 0.9
                  bdColor = "black"
                  size = "medium"
@@ -33,8 +33,11 @@
                 </ngx-spinner>
                   <span style="font-size: small;color:rgb(251, 251, 252)" *ngIf="image && image.invalid && image.errors?.['required'] && showErrors">This field is not valid</span>
            
+                  <h3 style="position:relative;top: 20px;left:20px;width: 20px;height: 20px;color: black;">$</h3>
                 <input class="pay" type="number" formControlName="payment" placeholder="Amount...">
+                <span style="font-size: small;color:rgb(251, 251, 252)" *ngIf="payment && payment.invalid && payment.errors?.['required'] && showErrors">This field is not valid</span>
               
+                 <img [src]="'../assets/cloud-computing.png'" style="width:20px;height: 20px;position: relative;top:50px;right: 75px;">
                   <input class="file" formControlName="file" id="file" type="file"  (change)="onFileChange($event)">
                   <ngx-spinner bdOpacity = 0.9
                  bdColor = "black"
@@ -44,9 +47,9 @@
                  [fullScreen] = "false"  type="ball-scale-multiple">
                   <img class="gif" [src]="urlGif">
                 </ngx-spinner>
-                  <span style="font-size: small;color:rgb(251, 251, 252)" *ngIf="file && file.invalid && file.errors?.['required'] && showErrors">This field is not valid</span>
+                  <span style="font-size: small;color:rgb(251, 251, 252)" *ngIf="file && file.invalid && file.errors?.['required'] && payForm.value.payment<0 && showErrors">This field is not valid</span>
              
-                  <button class="submit" type="submit">Add</button>
+                  <button class="submit" type="submit" [disabled]="clicked">Add</button>
                 </div>
               </form>
             </mat-dialog-actions>
